@@ -162,16 +162,8 @@ export default async function MatchPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* Title — grey heading + red bar, like the reference */}
-      <header style={{ margin: '20px 0 0' }}>
-        <h1 style={{ fontSize: '1.15rem', fontWeight: 600, color: 'var(--text-muted)', marginBottom: 8 }}>
-          {match.fixture} Live Stream and TV Schedule
-        </h1>
-        <div style={{ height: 4, background: 'var(--red)', borderRadius: 1 }} />
-      </header>
-
       {/* Match meta cards — responsive grid, stacks on mobile */}
-      <ul className="match-meta">
+      <ul className="match-meta" style={{ marginTop: 20 }}>
         <li>
           <span className="match-meta-icon" aria-hidden="true">📅</span>
           <span>
@@ -220,6 +212,14 @@ export default async function MatchPage({ params }: Props) {
           </>
         )}
       </ul>
+
+      {/* Title — grey heading + red bar, channel table attaches below */}
+      <header style={{ margin: '6px 0 0' }}>
+        <h1 style={{ fontSize: '1.15rem', fontWeight: 600, color: 'var(--text-muted)', marginBottom: 8 }}>
+          {match.fixture} Live Stream and TV Schedule
+        </h1>
+        <div style={{ height: 4, background: 'var(--red)', borderRadius: 1 }} />
+      </header>
 
       {/* Country / channel table */}
       {tvChs.length === 0 ? (
