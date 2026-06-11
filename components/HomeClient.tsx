@@ -6,6 +6,7 @@ import { Match } from '@/types';
 import { buildChannelMap, isPopular, toSlug, todayYMD, dateFromYMD } from '@/lib/utils';
 import { QUICK_LEAGUES } from '@/config/leagues';
 import LeagueSection from './LeagueSection';
+import TzNote from './TzNote';
 
 const POPULAR_LEAGUES = [
   'Premier League', 'UEFA Champions League', 'La Liga', 'Serie A', 'Bundesliga',
@@ -162,7 +163,7 @@ export default function HomeClient({ allDayMatches }: Props) {
 
       {/* Match count */}
       <p className="tz-note" style={{ padding: '7px 0 10px', borderBottom: '1px solid var(--border-lt)', marginBottom: 10 }}>
-        {filteredMatches.length} match{filteredMatches.length !== 1 ? 'es' : ''} · All times in your local timezone
+        {filteredMatches.length} match{filteredMatches.length !== 1 ? 'es' : ''} · <TzNote />
       </p>
 
       {/* League sections */}

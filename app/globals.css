@@ -641,8 +641,18 @@ footer { background: var(--navy-dark); color: rgba(255,255,255,0.75); margin-top
   .date-tab-num { font-size: 1.1rem; }
   .channel-hero, .league-hero { padding: 16px 12px; }
   .seo-section { padding: 16px; }
-  .country-table td { padding: 7px 10px; font-size: 0.8rem; }
-  .country-table .ct-flag-name { width: 120px; font-size: 0.8rem; }
+
+  /* Country/channel table stacks: country header above its channels */
+  .country-table, .country-table tbody, .country-table tr, .country-table td { display: block; width: 100%; }
+  .country-table tr:nth-child(even) { background: none; }
+  .country-table .ct-flag-name {
+    width: 100%; background: var(--bg-section);
+    padding: 7px 12px; font-size: 0.78rem; border-bottom: none;
+  }
+  .country-table .ct-channels {
+    padding: 8px 12px 10px; font-size: 0.82rem;
+    border-bottom: 1px solid var(--border-lt);
+  }
 }
 @media (max-width:480px) {
   .match-row-fixture { font-size: 0.85rem; }

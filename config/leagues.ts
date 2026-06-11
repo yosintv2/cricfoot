@@ -29,7 +29,7 @@ export interface QuickLeague {
 export const QUICK_LEAGUES: QuickLeague[] = [
   { label: 'World Cup',   flag: '🏆', id: 16 },
   { label: 'Champions L.', flag: '⭐', name: 'UEFA Champions League' },
-  { label: 'Friendly',    flag: '🤝', name: 'International Friendly' },
+  { label: 'Friendly',    flag: '🤝', id: 851 },
   { label: 'EPL',         flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', name: 'Premier League' },
   { label: 'La Liga',     flag: '🇪🇸', name: 'La Liga' },
   { label: 'Serie A',     flag: '🇮🇹', name: 'Serie A' },

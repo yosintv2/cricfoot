@@ -115,20 +115,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function LeaguePage({ params }: Props) {
   const { name } = await params;
   const { leagueName, upcomingDays } = await getLeagueData(name);
-
-  const broadcastMap: Record<string, string[]> = {};
-  upcomingDays.forEach(({ matches }) =>
-    matches.forEach(m =>
-      (m.tv_channels ?? []).forEach(tv => {
-        const key = tv.country || 'International';
-        if (!broadcastMap[key]) broadcastMap[key] = [];
-        (tv.channels ?? []).forEach(ch => {
-          if (!broadcastMap[key].includes(ch)) broadcastMap[key].push(ch);
-        });
-      })
-    )
-  );
-
   const totalMatches = upcomingDays.reduce((s, d) => s + d.matches.length, 0);
 
   const jsonLd = {
@@ -154,7 +140,6 @@ export default async function LeaguePage({ params }: Props) {
       <LeaguePageClient
         leagueName={leagueName}
         upcomingDays={upcomingDays}
-        broadcastMap={broadcastMap}
         totalMatches={totalMatches}
       />
     </>

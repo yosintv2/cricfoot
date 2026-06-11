@@ -4,6 +4,7 @@ import { fetchMatches } from '@/lib/api';
 import { toSlug, toYMD, countryFlag, dateFromYMD, fmtDate, getLeagueFlag, matchSlug } from '@/lib/utils';
 import { Match } from '@/types';
 import LocalTime from '@/components/LocalTime';
+import TzNote from '@/components/TzNote';
 
 function next7Days(): string[] {
   return Array.from({ length: 7 }, (_, i) => {
@@ -90,7 +91,6 @@ export default async function MatchPage({ params }: Props) {
   const tvChs = [...(match.tv_channels ?? [])].sort((a, b) =>
     (a.country ?? '').localeCompare(b.country ?? '')
   );
-  const totalCh = tvChs.reduce((a, tv) => a + (tv.channels ?? []).length, 0);
   const dateLabel = fmtDate(dateFromYMD(ymd));
   const kickoffISO = match.kickoff ? new Date(match.kickoff * 1000).toISOString() : undefined;
 
@@ -140,7 +140,7 @@ export default async function MatchPage({ params }: Props) {
         )}
         {match.venue && <span>📍 {match.venue}</span>}
         <span style={{ marginLeft: 'auto', fontSize: '0.72rem', color: 'var(--text-muted)' }}>
-          {totalCh} channel{totalCh !== 1 ? 's' : ''} worldwide · times in your local timezone
+          <TzNote />
         </span>
       </div>
 

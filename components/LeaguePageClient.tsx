@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { Match } from '@/types';
-import { toSlug, todayYMD, toYMD, dateFromYMD, fmtDate, getLeagueFlag } from '@/lib/utils';
+import { todayYMD, toYMD, dateFromYMD, fmtDate, getLeagueFlag } from '@/lib/utils';
 import MatchCard from './MatchCard';
 
 interface DayData { ymd: string; matches: Match[] }
@@ -10,7 +10,6 @@ interface DayData { ymd: string; matches: Match[] }
 interface Props {
   leagueName: string;
   upcomingDays: DayData[];
-  broadcastMap: Record<string, string[]>;
   totalMatches: number;
 }
 
@@ -28,9 +27,7 @@ function shortLabel(ymd: string): string {
   return dateFromYMD(ymd).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 }
 
-export default function LeaguePageClient({ leagueName, upcomingDays, broadcastMap, totalMatches }: Props) {
-  const countryCount = Object.keys(broadcastMap).length;
-
+export default function LeaguePageClient({ leagueName, upcomingDays, totalMatches }: Props) {
   return (
     <>
       {/* League hero */}
@@ -39,8 +36,7 @@ export default function LeaguePageClient({ leagueName, upcomingDays, broadcastMa
         <div style={{ flex: 1, minWidth: 0 }}>
           <h1 className="league-hero-name">{leagueName}</h1>
           <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.78)', marginTop: 4 }}>
-            {totalMatches} match{totalMatches !== 1 ? 'es' : ''} next 7 days ·{' '}
-            {countryCount} broadcasting {countryCount === 1 ? 'country' : 'countries'}
+            {totalMatches} match{totalMatches !== 1 ? 'es' : ''} next 7 days
           </p>
         </div>
         <Link href="/" className="btn-back" style={{ flexShrink: 0 }}>← Back</Link>
@@ -82,32 +78,6 @@ export default function LeaguePageClient({ leagueName, upcomingDays, broadcastMa
             </section>
           );
         })
-      )}
-
-      {/* Broadcasting channels by country — after the fixtures */}
-      {countryCount > 0 && (
-        <>
-          <h2 className="section-heading">
-            <div className="accent-bar" />
-            Broadcasting Channels by Country
-          </h2>
-          <div className="broadcast-grid" style={{ marginBottom: 24 }}>
-            {Object.entries(broadcastMap)
-              .sort(([a], [b]) => a.localeCompare(b))
-              .map(([country, channels]) => (
-                <div key={country} className="broadcast-country-card">
-                  <div className="bc-country">{country}</div>
-                  <div className="bc-channels">
-                    {channels.map(ch => (
-                      <Link key={ch} href={`/channel/${toSlug(ch)}`} className="bc-ch">
-                        {ch}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              ))}
-          </div>
-        </>
       )}
 
       {/* SEO */}
