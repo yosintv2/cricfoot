@@ -233,7 +233,10 @@ export default async function MatchPage({ params }: Props) {
         <p>
           CricFoot provides TV listings and schedules only.{' '}
           <strong>We do not stream, host, or broadcast any content.</strong>{' '}
-          To watch the match, use your authorised TV service or broadcaster in your country.
+          To watch the match, use your authorised TV service or broadcaster in your country. For all of
+          today&apos;s fixtures, see the full{' '}
+          <Link href="/" style={{ color: 'var(--navy)', fontWeight: 600 }}>football on TV today</Link>{' '}
+          schedule.
         </p>
       </section>
 

@@ -41,7 +41,10 @@ export default function AboutPage() {
         <p>
           <strong>CricFoot</strong> is a free, comprehensive TV guide dedicated to live football coverage
           worldwide. Our platform aggregates TV schedules, channel listings and match fixtures across hundreds of
-          broadcasters globally — so you always know which channel to switch to for your favourite game.
+          broadcasters globally — so you always know which channel to switch to for your favourite game. If you
+          have used services like LiveSoccerTV, think of CricFoot as a free, fast alternative: every match of{' '}
+          <Link href="/" style={{ fontWeight: 600 }}>football on TV today</Link> and across a 14-day window,
+          with kick-off times in your local timezone.
         </p>
         <p>
           We cover every major competition, including the <strong>Premier League</strong>,{' '}

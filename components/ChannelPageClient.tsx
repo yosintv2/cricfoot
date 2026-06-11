@@ -116,7 +116,9 @@ export default function ChannelPageClient({ channelName, upcomingDays }: Props) 
         <p>
           CricFoot provides football TV schedules and channel guidance only.{' '}
           <strong>We do not host, stream, or broadcast any live TV channels or content.</strong>{' '}
-          For actual live streaming, please use your authorised TV service or broadcaster.
+          For actual live streaming, please use your authorised TV service or broadcaster. Browse all{' '}
+          <Link href="/" style={{ color: 'var(--navy)', fontWeight: 600 }}>football on TV today</Link>{' '}
+          to see every channel and competition.
         </p>
         <h3>Find {channelName} Live Football</h3>
         <div className="tag-cloud">

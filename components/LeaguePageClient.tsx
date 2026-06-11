@@ -81,7 +81,9 @@ export default function LeaguePageClient({ leagueName, upcomingDays, totalMatche
         <p>
           CricFoot covers all major football leagues including the <strong>Premier League</strong>,{' '}
           <strong>UEFA Champions League</strong>, <strong>La Liga</strong>, <strong>Serie A</strong>,{' '}
-          <strong>Bundesliga</strong>, <strong>Ligue 1</strong> and many more.
+          <strong>Bundesliga</strong>, <strong>Ligue 1</strong> and many more. See the full schedule of{' '}
+          <Link href="/" style={{ color: 'var(--navy)', fontWeight: 600 }}>live football on TV today</Link>{' '}
+          for every competition.
         </p>
         <p className="footer-disclaimer" style={{ marginTop: 10 }}>
           CricFoot does not host or stream any live TV channels. We provide football match TV schedules and channel guidance only.

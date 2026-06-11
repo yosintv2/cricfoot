@@ -51,12 +51,12 @@ export default function Footer() {
           </div>
 
           <div>
-            <div className="footer-col-title">Info</div>
+            <div className="footer-col-title">Popular Searches</div>
             <div className="footer-links">
-              <span className="footer-link">TV Schedule Guide</span>
-              <span className="footer-link">Channel Listings</span>
-              <span className="footer-link">Match Fixtures</span>
-              <span className="footer-link">Broadcasting Info</span>
+              <Link href="/" className="footer-link">Football on TV Today</Link>
+              <Link href="/" className="footer-link">Live Football on TV</Link>
+              <Link href="/" className="footer-link">Soccer Games Today</Link>
+              <Link href="/channels" className="footer-link">Live Soccer TV Channels</Link>
             </div>
           </div>
         </div>

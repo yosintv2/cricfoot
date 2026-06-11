@@ -104,6 +104,16 @@ export default function HomeClient({ allDayMatches }: Props) {
 
   return (
     <>
+      {/* Page heading */}
+      <header style={{ padding: '16px 0 2px' }}>
+        <h1 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text)' }}>
+          ⚽ Live Football on TV Today
+        </h1>
+        <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: 3 }}>
+          All soccer games today and the next two weeks — kick-off times and TV channels, free.
+        </p>
+      </header>
+
       {/* Date tabs — full 14 days on desktop, first 7 on mobile */}
       <div className="date-tabs-wrap" aria-label="Select day">
         <div className="date-tabs">
@@ -218,17 +228,20 @@ export default function HomeClient({ allDayMatches }: Props) {
 
       {/* SEO */}
       <section className="seo-section">
-        <h2><span className="y-bar" />About CricFoot Football TV Guide</h2>
+        <h2><span className="y-bar" />Football on TV Today — Your Live Soccer TV Guide</h2>
         <p>
-          <strong>CricFoot</strong> is your free 14-day football TV guide. Find match fixtures, kick-off times
-          and TV channel listings for the <strong>Premier League</strong>, <strong>UEFA Champions League</strong>,{' '}
+          <strong>CricFoot</strong> is your free guide to <strong>live football on TV</strong>. See every
+          football match today and over the next two weeks — fixtures, kick-off times and TV channel listings
+          for the <strong>Premier League</strong>, <strong>UEFA Champions League</strong>,{' '}
           <strong>La Liga</strong>, <strong>Serie A</strong>, <strong>Bundesliga</strong>, <strong>Ligue 1</strong>
           and hundreds more competitions worldwide.
         </p>
         <p>
-          Whether you watch on <strong>Sky Sports</strong>, <strong>ESPN</strong>, <strong>beIN Sports</strong>,{' '}
-          <strong>DAZN</strong>, <strong>TNT Sports</strong> or any other broadcaster, CricFoot shows you exactly
-          which channel to tune into — filtered by your country. All kick-off times in your local timezone.
+          Looking for <strong>soccer games today</strong>? Whether you watch on <strong>Sky Sports</strong>,{' '}
+          <strong>ESPN</strong>, <strong>beIN Sports</strong>, <strong>DAZN</strong>, <strong>TNT Sports</strong>{' '}
+          or any other broadcaster, our live soccer TV schedule shows exactly which channel to tune into —
+          country by country, with every kick-off in your local timezone. A free alternative to LiveSoccerTV,
+          updated daily.
         </p>
         <h3>Popular Football Leagues</h3>
         <div className="tag-cloud">

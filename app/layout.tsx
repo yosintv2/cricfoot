@@ -6,11 +6,11 @@ import ScriptLoaders from '@/components/ScriptLoaders';
 import AdUnit from '@/components/AdUnit';
 
 export const metadata: Metadata = {
-  title: 'CricFoot - Football Live on TV | Live TV Channels',
+  title: 'CricFoot – Live Football on TV Today | Live Soccer TV Guide',
   description:
-    'CricFoot is your ultimate free TV guide for live football matches worldwide. Find comprehensive schedules, match fixtures, and channel listings for Premier League, UEFA Champions League, La Liga, Serie A, Bundesliga and more.',
+    'Live football on TV today: every soccer game with kick-off times and TV channels worldwide. Free live soccer TV guide for the Premier League, UEFA Champions League, La Liga, Serie A, Bundesliga and more.',
   keywords:
-    'live football tv guide, soccer live stream, football tv channels, premier league live tv, champions league tv schedule, la liga live stream, serie a tv channels, bundesliga tv guide, cricfoot',
+    'football today, football on tv, live football on tv, football on tv today, soccer games today, live soccer tv, football tv channels, premier league live tv, champions league tv schedule, cricfoot',
   authors: [{ name: 'CricFoot' }],
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.cricfoot.net'),
   openGraph: {
