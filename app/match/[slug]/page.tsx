@@ -3,8 +3,6 @@ import Link from 'next/link';
 import { fetchMatches } from '@/lib/api';
 import { toSlug, toYMD, countryFlag, dateFromYMD, fmtDate, getLeagueFlag, matchSlug } from '@/lib/utils';
 import { Match } from '@/types';
-import LocalTime, { LocalDate } from '@/components/LocalTime';
-import TzNote from '@/components/TzNote';
 
 function next7Days(): string[] {
   return Array.from({ length: 7 }, (_, i) => {
@@ -131,17 +129,13 @@ export default async function MatchPage({ params }: Props) {
         padding: '12px 2px', borderBottom: '1px solid var(--border-lt)', marginBottom: 0,
         fontSize: '0.85rem', color: 'var(--text-mid)',
       }}>
-        <span style={{ fontWeight: 700, color: 'var(--text)' }}>🕒 <LocalTime unix={match.kickoff} /></span>
-        <span>📅 <LocalDate unix={match.kickoff} fallback={dateLabel} /></span>
+        <span>📅 {dateLabel}</span>
         {match.league && (
           <Link href={`/league/${toSlug(match.league)}`} style={{ color: 'var(--navy)', fontWeight: 600 }}>
             {getLeagueFlag(match.league)} {match.league}
           </Link>
         )}
         {match.venue && <span>📍 {match.venue}</span>}
-        <span style={{ marginLeft: 'auto', fontSize: '0.72rem', color: 'var(--text-muted)' }}>
-          <TzNote />
-        </span>
       </div>
 
       {/* Country / channel table */}
