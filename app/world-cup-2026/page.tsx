@@ -210,9 +210,6 @@ export default async function WorldCupPage() {
           <Link href="/" style={{ color: 'var(--navy)', fontWeight: 600 }}>football on TV today</Link> or{' '}
           <Link href="/tomorrow" style={{ color: 'var(--navy)', fontWeight: 600 }}>tomorrow&apos;s schedule</Link>.
         </p>
-        <p className="footer-disclaimer" style={{ marginTop: 10 }}>
-          CricFoot does not host or stream any live TV channels. We provide TV schedules and channel guidance only.
-        </p>
       </section>
 
       <Faq title="World Cup 2026 — FAQs" items={faqs} />

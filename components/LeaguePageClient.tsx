@@ -85,9 +85,6 @@ export default function LeaguePageClient({ leagueName, upcomingDays, totalMatche
           <Link href="/" style={{ color: 'var(--navy)', fontWeight: 600 }}>live football on TV today</Link>{' '}
           for every competition.
         </p>
-        <p className="footer-disclaimer" style={{ marginTop: 10 }}>
-          CricFoot does not host or stream any live TV channels. We provide football match TV schedules and channel guidance only.
-        </p>
       </section>
     </>
   );

@@ -4,6 +4,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ScriptLoaders from '@/components/ScriptLoaders';
 import AdUnit from '@/components/AdUnit';
+import SuperCounter from '@/components/SuperCounter';
 
 export const metadata: Metadata = {
   title: 'CricFoot – Live Football on TV Today | Live Soccer TV Guide',
@@ -80,8 +81,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
-        {/* SuperCounters hidden tracker */}
-        <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '1px', overflow: 'hidden', visibility: 'hidden', zIndex: 9999 }} aria-hidden="true" />
+        {/* SuperCounters online tracker — renders inside this in-body container */}
+        <SuperCounter />
         <Navbar />
         <div className="container">
           {children}

@@ -65,9 +65,6 @@ export default function Footer() {
         </div>
 
       </div>
-      <div className="footer-disclaimer-bar">
-        📺 CricFoot does not host or stream any live TV channels. We provide football match TV schedules and channel guidance only.
-      </div>
       <div className="footer-inner" style={{ paddingTop: 0, paddingBottom: 16 }}>
         <div className="footer-bottom">
           <span>© {new Date().getFullYear()} CricFoot. TV listings &amp; schedules only.</span>
