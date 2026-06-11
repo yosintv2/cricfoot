@@ -16,5 +16,7 @@ export default function DayLabel({ ymd }: { ymd: string }) {
     else if (ymd === toYMD(d)) setLabel('Tomorrow');
     else setLabel(full);
   }, [ymd, full]);
-  return <span suppressHydrationWarning>{label}</span>;
+  // fmtDate is locale-fixed, so server HTML and first client render match;
+  // the effect upgrade is a real diff and always reaches the DOM.
+  return <span>{label}</span>;
 }

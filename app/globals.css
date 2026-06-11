@@ -307,6 +307,25 @@ body {
   color: var(--text-mid); flex-shrink: 0;
   font-variant-numeric: tabular-nums;
 }
+
+.match-status {
+  flex-shrink: 0;
+  font-size: 0.6rem; font-weight: 800;
+  letter-spacing: 0.5px;
+  padding: 2px 7px; border-radius: 4px;
+  line-height: 1.4;
+}
+.match-status.live {
+  background: var(--red); color: #fff;
+  animation: live-pulse 1.6s ease-in-out infinite;
+}
+.match-status.over {
+  background: var(--bg-section); color: var(--text-muted);
+}
+@keyframes live-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
 .match-row-fixture {
   flex: 1; font-size: 0.9rem; font-weight: 700;
   color: var(--blue-link); min-width: 0;
