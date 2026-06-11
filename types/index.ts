@@ -4,7 +4,9 @@ export interface TVChannelGroup {
 }
 
 export interface Match {
+  match_id?: number;
   fixture: string;
+  league_id?: number;
   league: string;
   kickoff: number;
   venue: string;

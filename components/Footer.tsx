@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { toSlug } from '@/lib/utils';
+import Logo from './Logo';
 
 const TOP_LEAGUES = [
   'Premier League',
@@ -17,12 +18,7 @@ export default function Footer() {
         <div className="footer-grid">
           <div>
             <div className="footer-logo-row">
-              <div className="footer-logo-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="12" cy="12" r="10" />
-                  <polygon points="10,8 16,12 10,16 10,8" fill="white" stroke="none" />
-                </svg>
-              </div>
+              <Logo size={30} />
               <span className="footer-brand-name">CricFoot</span>
             </div>
             <p className="footer-desc">
