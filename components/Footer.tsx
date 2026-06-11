@@ -1,0 +1,81 @@
+import Link from 'next/link';
+import { toSlug } from '@/lib/utils';
+
+const TOP_LEAGUES = [
+  'Premier League',
+  'UEFA Champions League',
+  'La Liga',
+  'Serie A',
+  'Bundesliga',
+  'Ligue 1',
+];
+
+export default function Footer() {
+  return (
+    <footer>
+      <div className="footer-inner">
+        <div className="footer-grid">
+          <div>
+            <div className="footer-logo-row">
+              <div className="footer-logo-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <polygon points="10,8 16,12 10,16 10,8" fill="white" stroke="none" />
+                </svg>
+              </div>
+              <span className="footer-brand-name">CricFoot</span>
+            </div>
+            <p className="footer-desc">
+              Your ultimate TV guide for live football and soccer matches worldwide. Find comprehensive schedules, match fixtures, and channel listings for all major leagues.
+            </p>
+            <p className="footer-disclaimer">
+              We provide TV listings and schedules only. We do not stream or broadcast any content.
+            </p>
+          </div>
+
+          <div>
+            <div className="footer-col-title">Quick Links</div>
+            <div className="footer-links">
+              <Link href="/" className="footer-link">Home / Today&apos;s Matches</Link>
+              <Link href="/channels" className="footer-link">All Channels</Link>
+              <Link href="/" className="footer-link">All Leagues</Link>
+              <Link href="/about" className="footer-link">About Us</Link>
+            </div>
+          </div>
+
+          <div>
+            <div className="footer-col-title">Top Leagues</div>
+            <div className="footer-links">
+              {TOP_LEAGUES.map(l => (
+                <Link key={l} href={`/league/${toSlug(l)}`} className="footer-link">
+                  {l}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <div className="footer-col-title">Info</div>
+            <div className="footer-links">
+              <span className="footer-link">TV Schedule Guide</span>
+              <span className="footer-link">Channel Listings</span>
+              <span className="footer-link">Match Fixtures</span>
+              <span className="footer-link">Broadcasting Info</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div className="footer-disclaimer-bar">
+        📺 CricFoot does not host or stream any live TV channels. We provide football match TV schedules and channel guidance only.
+      </div>
+      <div className="footer-inner" style={{ paddingTop: 0, paddingBottom: 16 }}>
+        <div className="footer-bottom">
+          <span>© {new Date().getFullYear()} CricFoot. TV listings &amp; schedules only.</span>
+          <span>All kick-off times shown in your local timezone.</span>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
