@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { fetchMatches } from '@/lib/api';
-import { todayYMD, fromSlug, toSlug, toYMD } from '@/lib/utils';
+import { fromSlug, toSlug, toYMD } from '@/lib/utils';
 import ChannelPageClient from '@/components/ChannelPageClient';
 
 export async function generateStaticParams() {
@@ -78,9 +78,49 @@ function channelKeywords(ch: string): string[] {
   ];
 }
 
+// Resolve the real channel name from the API by slug comparison — slugs are
+// lossy ("Disney+ Premium Chile" → "Disney-Premium-Chile"), so the name can't
+// be reconstructed from the URL. Next dedupes the underlying fetches, so
+// calling this from both generateMetadata and the page costs nothing extra.
+async function getChannelData(nameParam: string) {
+  const slug = decodeURIComponent(nameParam);
+  const days = Array.from({ length: 7 }, (_, i) => {
+    const d = new Date();
+    d.setDate(d.getDate() + i);
+    return toYMD(d);
+  });
+  const dayData = await Promise.all(
+    days.map(async (ymd) => ({ ymd, matches: await fetchMatches(ymd) }))
+  );
+
+  let channelName: string | null = null;
+  outer: for (const { matches } of dayData) {
+    for (const m of matches) {
+      for (const tv of m.tv_channels ?? []) {
+        for (const ch of tv.channels ?? []) {
+          if (toSlug(ch) === slug) { channelName = ch; break outer; }
+        }
+      }
+    }
+  }
+
+  const upcomingDays = channelName
+    ? dayData
+        .map(({ ymd, matches }) => ({
+          ymd,
+          matches: matches.filter(m =>
+            (m.tv_channels ?? []).some(tv => (tv.channels ?? []).includes(channelName!))
+          ),
+        }))
+        .filter(d => d.matches.length > 0)
+    : [];
+
+  return { channelName: channelName ?? fromSlug(slug), upcomingDays };
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { name } = await params;
-  const channelName = fromSlug(name);
+  const { channelName } = await getChannelData(name);
   const kws = channelKeywords(channelName);
 
   return {
@@ -103,26 +143,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ChannelPage({ params }: Props) {
   const { name } = await params;
-  const channelName = fromSlug(name);
+  const { channelName, upcomingDays } = await getChannelData(name);
   const kws = channelKeywords(channelName);
-
-  const days = Array.from({ length: 7 }, (_, i) => {
-    const d = new Date();
-    d.setDate(d.getDate() + i);
-    return toYMD(d);
-  });
-
-  const upcomingDays = (
-    await Promise.all(
-      days.map(async (ymd) => {
-        const all = await fetchMatches(ymd);
-        const matches = all.filter(m =>
-          (m.tv_channels ?? []).some(tv => (tv.channels ?? []).includes(channelName))
-        );
-        return { ymd, matches };
-      })
-    )
-  ).filter((d) => d.matches.length > 0);
 
   const jsonLd = {
     '@context': 'https://schema.org',

@@ -93,10 +93,19 @@ export function groupByLeague(matches: Match[]): Record<string, Match[]> {
   );
 }
 
+// URL-safe slug: spaces → dashes, strip anything that would need percent-encoding
+// (e.g. "+", "/", "(") so static-export folder names always match the requested URL.
+// Unicode letters (é, ü, …) are kept — browsers and Next encode/decode those reliably.
 export function toSlug(name: string): string {
-  return encodeURIComponent(name.replace(/\s+/g, '-'));
+  return name
+    .replace(/\s+/g, '-')
+    .replace(/[^\p{L}\p{N}-]/gu, '')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
 }
 
+// Display-only fallback when the original name can't be resolved from the API
+// (slugs are lossy — always prefer slug-matching against real data).
 export function fromSlug(slug: string): string {
   return decodeURIComponent(slug).replace(/-/g, ' ');
 }

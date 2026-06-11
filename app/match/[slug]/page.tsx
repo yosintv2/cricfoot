@@ -42,7 +42,7 @@ async function findMatch(slug: string): Promise<{ match: Match | null; ymd: stri
   const fixtureSlug = decoded.slice(9); // skip the dash after the date
   if (!/^\d{8}$/.test(ymd) || !fixtureSlug) return { match: null, ymd };
   const matches = await fetchMatches(ymd);
-  const match = matches.find(m => m.fixture && decodeURIComponent(toSlug(m.fixture)) === fixtureSlug) ?? null;
+  const match = matches.find(m => m.fixture && toSlug(m.fixture) === fixtureSlug) ?? null;
   return { match, ymd };
 }
 

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { fetchMatches } from '@/lib/api';
-import { fromSlug, toSlug, toYMD, todayYMD } from '@/lib/utils';
+import { fromSlug, toSlug, toYMD } from '@/lib/utils';
 import LeaguePageClient from '@/components/LeaguePageClient';
 
 const STATIC_LEAGUES = [
@@ -10,10 +10,18 @@ const STATIC_LEAGUES = [
   'Scottish Premiership',
 ];
 
+function next7Days(): string[] {
+  return Array.from({ length: 7 }, (_, i) => {
+    const d = new Date();
+    d.setDate(d.getDate() + i);
+    return toYMD(d);
+  });
+}
+
 export async function generateStaticParams() {
-  const matches = await fetchMatches(todayYMD());
+  const allMatches = (await Promise.all(next7Days().map(fetchMatches))).flat();
   const leagues = new Set<string>(STATIC_LEAGUES);
-  matches.forEach(m => { if (m.league) leagues.add(m.league); });
+  allMatches.forEach(m => { if (m.league) leagues.add(m.league); });
   return [...leagues].map(l => ({ name: toSlug(l) }));
 }
 
@@ -21,9 +29,40 @@ interface Props {
   params: Promise<{ name: string }>;
 }
 
+// Resolve the real league name from the API by slug comparison — slugs are
+// lossy, so reconstructing the name from the URL breaks on special characters.
+// Next dedupes the underlying fetches between generateMetadata and the page.
+async function getLeagueData(nameParam: string) {
+  const slug = decodeURIComponent(nameParam);
+  const dayData = await Promise.all(
+    next7Days().map(async (ymd) => ({ ymd, matches: await fetchMatches(ymd) }))
+  );
+
+  let leagueName: string | null = null;
+  outer: for (const { matches } of dayData) {
+    for (const m of matches) {
+      if (m.league && toSlug(m.league) === slug) { leagueName = m.league; break outer; }
+    }
+  }
+  if (!leagueName) {
+    leagueName = STATIC_LEAGUES.find(l => toSlug(l) === slug) ?? null;
+  }
+
+  const upcomingDays = leagueName
+    ? dayData
+        .map(({ ymd, matches }) => ({
+          ymd,
+          matches: matches.filter(m => (m.league ?? '') === leagueName),
+        }))
+        .filter(d => d.matches.length > 0)
+    : [];
+
+  return { leagueName: leagueName ?? fromSlug(slug), upcomingDays };
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { name } = await params;
-  const leagueName = fromSlug(name);
+  const { leagueName } = await getLeagueData(name);
 
   return {
     title: `${leagueName} TV Schedule – Live Matches & Fixtures | CricFoot`,
@@ -44,23 +83,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function LeaguePage({ params }: Props) {
   const { name } = await params;
-  const leagueName = fromSlug(name);
-
-  const days = Array.from({ length: 7 }, (_, i) => {
-    const d = new Date();
-    d.setDate(d.getDate() + i);
-    return toYMD(d);
-  });
-
-  const upcomingDays = (
-    await Promise.all(
-      days.map(async (ymd) => {
-        const all = await fetchMatches(ymd);
-        const matches = all.filter(m => (m.league ?? '') === leagueName);
-        return { ymd, matches };
-      })
-    )
-  ).filter(d => d.matches.length > 0);
+  const { leagueName, upcomingDays } = await getLeagueData(name);
 
   const broadcastMap: Record<string, string[]> = {};
   upcomingDays.forEach(({ matches }) =>
