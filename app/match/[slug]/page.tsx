@@ -162,53 +162,20 @@ export default async function MatchPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* Match meta cards — responsive grid, stacks on mobile */}
-      <ul className="match-meta" style={{ marginTop: 20 }}>
-        <li>
-          <span className="match-meta-icon" aria-hidden="true">📅</span>
-          <span>
-            <span className="match-meta-label">Date</span>
-            <span className="match-meta-value">{dateLabel}</span>
-          </span>
-        </li>
+      {/* Match meta — compact pills */}
+      <ul className="match-meta" style={{ marginTop: 18 }}>
+        <li><span aria-hidden="true">📅</span> {dateLabel}</li>
         {match.league && (
           <li>
-            <span className="match-meta-icon" aria-hidden="true">{getLeagueFlag(match.league)}</span>
-            <span>
-              <span className="match-meta-label">Competition</span>
-              <span className="match-meta-value">
-                <Link href={`/league/${toSlug(match.league)}`}>{match.league}</Link>
-              </span>
-            </span>
+            <span aria-hidden="true">{getLeagueFlag(match.league)}</span>
+            <Link href={`/league/${toSlug(match.league)}`}>{match.league}</Link>
           </li>
         )}
-        {match.venue && (
-          <li>
-            <span className="match-meta-icon" aria-hidden="true">📍</span>
-            <span>
-              <span className="match-meta-label">Venue</span>
-              <span className="match-meta-value">{match.venue}</span>
-            </span>
-          </li>
-        )}
+        {match.venue && <li><span aria-hidden="true">📍</span> {match.venue}</li>}
         {homeTeam && awayTeam && (
           <>
-            <li>
-              <span>
-                <span className="match-meta-label">Team</span>
-                <span className="match-meta-value">
-                  <Link href={`/team/${toSlug(homeTeam.trim())}`}>{homeTeam.trim()}</Link>
-                </span>
-              </span>
-            </li>
-            <li>
-              <span>
-                <span className="match-meta-label">Team</span>
-                <span className="match-meta-value">
-                  <Link href={`/team/${toSlug(awayTeam.trim())}`}>{awayTeam.trim()}</Link>
-                </span>
-              </span>
-            </li>
+            <li>Team: <Link href={`/team/${toSlug(homeTeam.trim())}`}>{homeTeam.trim()}</Link></li>
+            <li>Team: <Link href={`/team/${toSlug(awayTeam.trim())}`}>{awayTeam.trim()}</Link></li>
           </>
         )}
       </ul>
