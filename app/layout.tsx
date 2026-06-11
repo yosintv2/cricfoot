@@ -3,6 +3,7 @@ import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ScriptLoaders from '@/components/ScriptLoaders';
+import AdUnit from '@/components/AdUnit';
 
 export const metadata: Metadata = {
   title: 'CricFoot - Football Live on TV | Live TV Channels',
@@ -63,7 +64,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* SuperCounters hidden tracker */}
         <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '1px', overflow: 'hidden', visibility: 'hidden', zIndex: 9999 }} aria-hidden="true" />
         <Navbar />
-        <div className="container">{children}</div>
+        <div className="container">
+          {children}
+          <AdUnit />
+        </div>
         <Footer />
         <ScriptLoaders />
       </body>
