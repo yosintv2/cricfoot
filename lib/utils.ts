@@ -101,6 +101,10 @@ export function fromSlug(slug: string): string {
   return decodeURIComponent(slug).replace(/-/g, ' ');
 }
 
+export function matchSlug(ymd: string, fixture: string): string {
+  return `${ymd}-${toSlug(fixture)}`;
+}
+
 export function filterMatches(matches: Match[], q: string, country: string): Match[] {
   if (!q && !country) return matches;
   return matches.filter(m => {

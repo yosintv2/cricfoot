@@ -101,7 +101,7 @@ export default function ChannelPageClient({ channelName, upcomingDays }: Props) 
                 <span className="day-section-count">{matches.length} match{matches.length !== 1 ? 'es' : ''}</span>
               </div>
               {Object.entries(grouped).map(([league, lmatches]) => (
-                <LeagueSection key={league} league={league} matches={lmatches} showLeague />
+                <LeagueSection key={league} league={league} matches={lmatches} showLeague ymd={ymd} />
               ))}
             </section>
           );

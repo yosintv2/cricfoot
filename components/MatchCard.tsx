@@ -1,20 +1,26 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Match } from '@/types';
-import { fmtKick, toSlug, countryFlag } from '@/lib/utils';
+import { fmtKick, toSlug, toYMD, todayYMD, matchSlug } from '@/lib/utils';
 
 interface Props {
   match: Match;
   showLeague?: boolean;
+  ymd?: string;
 }
 
-export default function MatchCard({ match, showLeague }: Props) {
-  const [open, setOpen] = useState(false);
+export default function MatchCard({ match, showLeague, ymd }: Props) {
+  const router = useRouter();
   const tvChs = match.tv_channels ?? [];
   const totalCh = tvChs.reduce((a, tv) => a + (tv.channels ?? []).length, 0);
   const kickoffISO = match.kickoff ? new Date(match.kickoff * 1000).toISOString() : '';
+
+  // The API groups matches into per-date files; fall back to kickoff date when
+  // the parent doesn't pass the file's ymd down.
+  const dayYmd = ymd ?? (match.kickoff ? toYMD(new Date(match.kickoff * 1000)) : todayYMD());
+  const href = match.fixture ? `/match/${matchSlug(dayYmd, match.fixture)}` : null;
 
   // Collect up to 3 unique preview channels across all countries
   const previewChannels: string[] = [];
@@ -27,20 +33,19 @@ export default function MatchCard({ match, showLeague }: Props) {
   }
   const hasMore = totalCh > previewChannels.length;
 
-  const sorted = [...tvChs].sort((a, b) => (a.country ?? '').localeCompare(b.country ?? ''));
+  function openMatch() {
+    if (href) router.push(href);
+  }
 
   return (
     <article itemScope itemType="https://schema.org/SportsEvent">
-
-      {/* ── Match row ── */}
       <div
-        className={`match-row${open ? ' expanded' : ''}`}
-        onClick={() => setOpen(o => !o)}
-        role="button"
+        className="match-row"
+        onClick={openMatch}
+        role="link"
         tabIndex={0}
-        onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && setOpen(o => !o)}
-        aria-expanded={open}
-        aria-label={`${match.fixture || 'Match'} — click to see TV channels`}
+        onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && openMatch()}
+        aria-label={`${match.fixture || 'Match'} — view all TV channels`}
       >
         <div
           className="match-row-time"
@@ -85,63 +90,6 @@ export default function MatchCard({ match, showLeague }: Props) {
           <span className="match-row-no-tv">No TV info</span>
         ) : null}
       </div>
-
-      {/* ── Expandable country/channel table (image 2 style) ── */}
-      {open && (
-        <div className="match-detail-wrap">
-          <div className="match-detail-header">
-            <div className="match-detail-title">
-              {match.fixture} Live Stream and TV Schedule
-            </div>
-            <div className="match-detail-meta">
-              {match.league && <>{match.league}</>}
-              {match.league && match.venue && ' · '}
-              {match.venue && (
-                <span itemProp="location" itemScope itemType="https://schema.org/Place">
-                  <span itemProp="name">📍 {match.venue}</span>
-                </span>
-              )}
-              {' · '}{fmtKick(match.kickoff)}
-            </div>
-          </div>
-
-          {sorted.length === 0 ? (
-            <p style={{ padding: '14px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-              No broadcast information available for this match.
-            </p>
-          ) : (
-            <table className="country-table" aria-label="TV channels by country">
-              <tbody>
-                {sorted.map((tv, ti) => (
-                  <tr key={ti}>
-                    <td className="ct-flag-name">
-                      <span className="ct-flag-icon" aria-hidden="true">
-                        {countryFlag(tv.country ?? '')}
-                      </span>
-                      {tv.country || 'International'}
-                    </td>
-                    <td className="ct-channels">
-                      {(tv.channels ?? []).map((ch, i) => (
-                        <span key={ch}>
-                          <Link
-                            href={`/channel/${toSlug(ch)}`}
-                            className="ct-ch-link"
-                            onClick={e => e.stopPropagation()}
-                            title={`View all matches on ${ch}`}
-                          >
-                            {ch}
-                          </Link>
-                          {i < (tv.channels ?? []).length - 1 && ', '}
-                        </span>
-                      ))}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-        </div>
-      )}
     </article>
   );
 }

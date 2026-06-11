@@ -103,7 +103,7 @@ export default function LeaguePageClient({ leagueName, upcomingDays, broadcastMa
                 <span className="day-section-count">{matches.length} match{matches.length !== 1 ? 'es' : ''}</span>
               </div>
               <div style={{ border: '1px solid var(--border-lt)', borderTop: 'none', borderRadius: '0 0 6px 6px', overflow: 'hidden', marginBottom: 4 }}>
-                {matches.map((m, i) => <MatchCard key={i} match={m} />)}
+                {matches.map((m, i) => <MatchCard key={i} match={m} ymd={ymd} />)}
               </div>
             </section>
           );

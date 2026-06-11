@@ -11,9 +11,10 @@ interface Props {
   matches: Match[];
   showLeague?: boolean;
   defaultOpen?: boolean;
+  ymd?: string;
 }
 
-export default function LeagueSection({ league, matches, showLeague, defaultOpen = true }: Props) {
+export default function LeagueSection({ league, matches, showLeague, defaultOpen = true, ymd }: Props) {
   const [open, setOpen] = useState(defaultOpen);
 
   return (
@@ -47,7 +48,7 @@ export default function LeagueSection({ league, matches, showLeague, defaultOpen
         <div className="league-block-body" role="list" aria-label={`${league} matches`}>
           {matches.map((m, i) => (
             <div key={i} role="listitem">
-              <MatchCard match={m} showLeague={showLeague} />
+              <MatchCard match={m} showLeague={showLeague} ymd={ymd} />
             </div>
           ))}
         </div>

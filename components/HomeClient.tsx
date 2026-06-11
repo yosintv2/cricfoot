@@ -185,7 +185,7 @@ export default function HomeClient({ allDayMatches }: Props) {
       ) : (
         <div>
           {Object.entries(groupedMatches).map(([league, matches]) => (
-            <LeagueSection key={league} league={league} matches={matches} />
+            <LeagueSection key={league} league={league} matches={matches} ymd={activeDay} />
           ))}
         </div>
       )}

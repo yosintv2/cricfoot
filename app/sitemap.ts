@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next';
 import { fetchMatches } from '@/lib/api';
-import { todayYMD, toSlug, toYMD } from '@/lib/utils';
+import { todayYMD, toSlug, toYMD, matchSlug } from '@/lib/utils';
 
 export const dynamic = 'force-static';
 
@@ -17,15 +17,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const days = Array.from({ length: 7 }, (_, i) => {
     const d = new Date(); d.setDate(d.getDate() + i); return toYMD(d);
   });
-  const allMatches = (await Promise.all(days.map(fetchMatches))).flat();
+  const dayMatches = await Promise.all(days.map(async ymd => ({ ymd, matches: await fetchMatches(ymd) })));
 
   const channels = new Set<string>();
   const leagues = new Set<string>(STATIC_LEAGUES);
+  const matchSlugs = new Set<string>();
 
-  allMatches.forEach(m => {
-    if (m.league) leagues.add(m.league);
-    (m.tv_channels ?? []).forEach(tv => (tv.channels ?? []).forEach(ch => channels.add(ch)));
-  });
+  dayMatches.forEach(({ ymd, matches }) =>
+    matches.forEach(m => {
+      if (m.league) leagues.add(m.league);
+      if (m.fixture) matchSlugs.add(matchSlug(ymd, m.fixture));
+      (m.tv_channels ?? []).forEach(tv => (tv.channels ?? []).forEach(ch => channels.add(ch)));
+    })
+  );
 
   const now = new Date();
 
@@ -43,11 +47,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
+  const matchUrls: MetadataRoute.Sitemap = [...matchSlugs].map(slug => ({
+    url: `${SITE_URL}/match/${slug}`,
+    lastModified: now,
+    changeFrequency: 'daily',
+    priority: 0.6,
+  }));
+
   return [
     { url: SITE_URL, lastModified: now, changeFrequency: 'hourly', priority: 1 },
     { url: `${SITE_URL}/channels`, lastModified: now, changeFrequency: 'daily', priority: 0.9 },
     { url: `${SITE_URL}/about`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
     ...leagueUrls,
     ...channelUrls,
+    ...matchUrls,
   ];
 }
