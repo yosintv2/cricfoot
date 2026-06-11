@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { fetchMatches } from '@/lib/api';
 import { toSlug, toYMD, countryFlag, dateFromYMD, fmtDate, getLeagueFlag, matchSlug } from '@/lib/utils';
 import { Match } from '@/types';
-import LocalTime from '@/components/LocalTime';
+import LocalTime, { LocalDate } from '@/components/LocalTime';
 import TzNote from '@/components/TzNote';
 
 function next7Days(): string[] {
@@ -132,7 +132,7 @@ export default async function MatchPage({ params }: Props) {
         fontSize: '0.85rem', color: 'var(--text-mid)',
       }}>
         <span style={{ fontWeight: 700, color: 'var(--text)' }}>🕒 <LocalTime unix={match.kickoff} /></span>
-        <span>📅 {dateLabel}</span>
+        <span>📅 <LocalDate unix={match.kickoff} fallback={dateLabel} /></span>
         {match.league && (
           <Link href={`/league/${toSlug(match.league)}`} style={{ color: 'var(--navy)', fontWeight: 600 }}>
             {getLeagueFlag(match.league)} {match.league}

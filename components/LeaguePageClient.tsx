@@ -2,8 +2,9 @@
 
 import Link from 'next/link';
 import { Match } from '@/types';
-import { todayYMD, toYMD, dateFromYMD, fmtDate, getLeagueFlag } from '@/lib/utils';
+import { dateFromYMD, fmtDate, getLeagueFlag } from '@/lib/utils';
 import MatchCard from './MatchCard';
+import DayLabel from './DayLabel';
 
 interface DayData { ymd: string; matches: Match[] }
 
@@ -11,16 +12,6 @@ interface Props {
   leagueName: string;
   upcomingDays: DayData[];
   totalMatches: number;
-}
-
-function dayLabel(ymd: string): { primary: string; secondary: string } {
-  const today = todayYMD();
-  const d = new Date(); d.setDate(d.getDate() + 1);
-  const tomorrow = toYMD(d);
-  const full = fmtDate(dateFromYMD(ymd));
-  if (ymd === today) return { primary: 'Today', secondary: full };
-  if (ymd === tomorrow) return { primary: 'Tomorrow', secondary: full };
-  return { primary: full, secondary: '' };
 }
 
 function shortLabel(ymd: string): string {
@@ -62,13 +53,13 @@ export default function LeaguePageClient({ leagueName, upcomingDays, totalMatche
         </div>
       ) : (
         upcomingDays.map(({ ymd, matches }) => {
-          const { primary, secondary } = dayLabel(ymd);
+          const full = fmtDate(dateFromYMD(ymd));
           return (
-            <section key={ymd} id={`lday-${ymd}`} className="day-section" aria-label={`${leagueName} matches on ${primary}`}>
+            <section key={ymd} id={`lday-${ymd}`} className="day-section" aria-label={`${leagueName} matches on ${full}`}>
               <div className="day-section-header">
                 <div>
-                  <div className="day-section-label">{primary}</div>
-                  {secondary && <div className="day-section-date">{secondary}</div>}
+                  <div className="day-section-label"><DayLabel ymd={ymd} /></div>
+                  <div className="day-section-date">{full}</div>
                 </div>
                 <span className="day-section-count">{matches.length} match{matches.length !== 1 ? 'es' : ''}</span>
               </div>

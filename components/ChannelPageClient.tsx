@@ -2,8 +2,9 @@
 
 import Link from 'next/link';
 import { Match } from '@/types';
-import { toSlug, todayYMD, toYMD, dateFromYMD, fmtDate, getLeagueFlag } from '@/lib/utils';
+import { dateFromYMD, fmtDate } from '@/lib/utils';
 import LeagueSection from './LeagueSection';
+import DayLabel from './DayLabel';
 
 interface DayData { ymd: string; matches: Match[] }
 
@@ -12,13 +13,8 @@ interface Props {
   upcomingDays: DayData[];
 }
 
-function dayLabel(ymd: string): string {
-  const today = todayYMD();
-  const d = new Date(); d.setDate(d.getDate() + 1);
-  const tomorrow = toYMD(d);
-  if (ymd === today) return 'Today';
-  if (ymd === tomorrow) return 'Tomorrow';
-  return fmtDate(dateFromYMD(ymd));
+function shortLabel(ymd: string): string {
+  return dateFromYMD(ymd).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 }
 
 function groupByLeague(matches: Match[]): Record<string, Match[]> {
@@ -69,7 +65,7 @@ export default function ChannelPageClient({ channelName, upcomingDays }: Props) 
           <div className="day-tabs-page">
             {upcomingDays.map(({ ymd, matches }) => (
               <a key={ymd} href={`#cday-${ymd}`} className="day-tab-page">
-                {dayLabel(ymd)} ({matches.length})
+                {shortLabel(ymd)} ({matches.length})
               </a>
             ))}
           </div>
@@ -91,12 +87,13 @@ export default function ChannelPageClient({ channelName, upcomingDays }: Props) 
       ) : (
         upcomingDays.map(({ ymd, matches }) => {
           const grouped = groupByLeague(matches);
-          const label = dayLabel(ymd);
+          const full = fmtDate(dateFromYMD(ymd));
           return (
-            <section key={ymd} id={`cday-${ymd}`} aria-label={`${channelName} matches on ${label}`} style={{ marginBottom: 20 }}>
+            <section key={ymd} id={`cday-${ymd}`} aria-label={`${channelName} matches on ${full}`} style={{ marginBottom: 20 }}>
               <div className="day-section-header" style={{ borderRadius: 6, marginBottom: 8 }}>
                 <div>
-                  <div className="day-section-label">📅 {label}</div>
+                  <div className="day-section-label">📅 <DayLabel ymd={ymd} /></div>
+                  <div className="day-section-date">{full}</div>
                 </div>
                 <span className="day-section-count">{matches.length} match{matches.length !== 1 ? 'es' : ''}</span>
               </div>

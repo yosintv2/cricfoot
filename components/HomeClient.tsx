@@ -33,10 +33,13 @@ export default function HomeClient({ allDayMatches }: Props) {
   const [onTvOnly, setOnTvOnly] = useState(false);
   const [leagueFilter, setLeagueFilter] = useState('');
 
-  // Scroll active tab into view on mount
+  // On mount, snap to the visitor's own "today" (build server may be a day
+  // off in their timezone) and scroll the active tab into view.
   useEffect(() => {
-    const el = document.getElementById(`dtab-${activeDay}`);
-    el?.scrollIntoView({ block: 'nearest', inline: 'center' });
+    const clientToday = todayYMD();
+    const day = allDayMatches.some(d => d.ymd === clientToday) ? clientToday : activeDay;
+    if (day !== activeDay) setActiveDay(day);
+    document.getElementById(`dtab-${day}`)?.scrollIntoView({ block: 'nearest', inline: 'center' });
   }, []);
 
   const activeDayData = useMemo(

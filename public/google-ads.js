@@ -158,8 +158,7 @@
 
   w.GoogleAdsManager = { createFixedAd: createFixedAd, createInlineAd: createInlineAd, loadScript: loadScript };
 
-  // Auto-init sticky bottom ad
-  function init() { createFixedAd({ position: 'bottom', closeable: true, accountIndex: 0 }); }
-  d.readyState === 'loading' ? d.addEventListener('DOMContentLoaded', init) : init();
+  // No auto-placed overlay ads — AdSense Auto ads handle placements.
+  // Call GoogleAdsManager.createFixedAd(...) / createInlineAd(...) manually if needed.
 
 }(window, document));
