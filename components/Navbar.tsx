@@ -9,13 +9,16 @@ import Logo from './Logo';
 
 // Pretty URL from the config label: "World Cup" → /league/world-cup/.
 // The league page maps the label slug back to the entry's id or name.
-function quickLeagueHref(l: { label: string }): string {
-  return `/league/${toSlug(l.label)}`;
+// Entries with an explicit href (e.g. the World Cup hub) use it directly.
+function quickLeagueHref(l: { label: string; href?: string }): string {
+  return l.href ?? `/league/${toSlug(l.label)}`;
 }
 
 const NAV_LINKS = [
   { href: '/', label: 'Matches' },
+  { href: '/world-cup-2026', label: 'World Cup 2026' },
   { href: '/channels', label: 'Channels' },
+  { href: '/countries', label: 'Countries' },
   { href: '/about', label: 'About' },
 ];
 

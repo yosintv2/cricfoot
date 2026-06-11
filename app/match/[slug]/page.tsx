@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { fetchMatches } from '@/lib/api';
-import { toSlug, countryFlag, dateFromYMD, fmtDate, getLeagueFlag, matchSlug, scheduleDays } from '@/lib/utils';
+import { toSlug, countryFlag, dateFromYMD, fmtDate, getLeagueFlag, matchSlug, pairSlug, scheduleDays } from '@/lib/utils';
 import { Match } from '@/types';
 import Faq from '@/components/Faq';
 
@@ -183,6 +183,16 @@ export default async function MatchPage({ params }: Props) {
           </Link>
         )}
         {match.venue && <span>📍 {match.venue}</span>}
+        {homeTeam && awayTeam && (
+          <>
+            <Link href={`/team/${toSlug(homeTeam.trim())}`} style={{ color: 'var(--navy)', fontWeight: 600 }}>
+              ⚽ {homeTeam.trim()}
+            </Link>
+            <Link href={`/team/${toSlug(awayTeam.trim())}`} style={{ color: 'var(--navy)', fontWeight: 600 }}>
+              ⚽ {awayTeam.trim()}
+            </Link>
+          </>
+        )}
       </div>
 
       {/* Country / channel table */}
@@ -200,7 +210,11 @@ export default async function MatchPage({ params }: Props) {
                 <tr key={ti}>
                   <td className="ct-flag-name">
                     <span className="ct-flag-icon" aria-hidden="true">{countryFlag(tv.country ?? '')}</span>
-                    {tv.country || 'International'}
+                    {tv.country ? (
+                      <Link href={`/country/${toSlug(tv.country)}`} style={{ color: 'inherit' }} title={`Football on TV in ${tv.country}`}>
+                        {tv.country}
+                      </Link>
+                    ) : 'International'}
                   </td>
                   <td className="ct-channels">
                     {(tv.channels ?? []).map((ch, i) => (
@@ -238,6 +252,19 @@ export default async function MatchPage({ params }: Props) {
           <Link href="/" style={{ color: 'var(--navy)', fontWeight: 600 }}>football on TV today</Link>{' '}
           schedule.
         </p>
+        {homeTeam && awayTeam && (
+          <p>
+            Following this rivalry? The{' '}
+            <Link href={`/fixtures/${pairSlug(homeTeam.trim(), awayTeam.trim())}`} style={{ color: 'var(--navy)', fontWeight: 600 }}>
+              {homeTeam.trim()} vs {awayTeam.trim()} TV guide
+            </Link>{' '}
+            covers every meeting, and the{' '}
+            <Link href={`/team/${toSlug(homeTeam.trim())}`} style={{ color: 'var(--navy)', fontWeight: 600 }}>{homeTeam.trim()}</Link>{' '}
+            and{' '}
+            <Link href={`/team/${toSlug(awayTeam.trim())}`} style={{ color: 'var(--navy)', fontWeight: 600 }}>{awayTeam.trim()}</Link>{' '}
+            pages list each team&apos;s next matches on TV.
+          </p>
+        )}
       </section>
 
       <Faq title={`${match.fixture} — FAQs`} items={matchFaqs} />

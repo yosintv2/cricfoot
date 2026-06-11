@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
   schedule:
-    - cron: '0 0 */2 * *'   # Rebuilds every 2 days at 00:00 UTC for fresh match data
+    - cron: '0 0 * * *'   # Rebuilds daily at 00:00 UTC so /tomorrow, /tonight and /this-weekend stay accurate
   workflow_dispatch:       # Allow manual trigger from GitHub Actions tab
 
 permissions:

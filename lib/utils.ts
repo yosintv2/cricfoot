@@ -47,6 +47,24 @@ export function scheduleDays(): string[] {
   });
 }
 
+export function tomorrowYMD(): string {
+  const d = new Date();
+  d.setDate(d.getDate() + 1);
+  return toYMD(d);
+}
+
+// Upcoming weekend: next Saturday + Sunday. On a Saturday that's today and
+// tomorrow; on a Sunday it's yesterday and today (both inside the
+// scheduleDays window, which starts at yesterday).
+export function weekendYMDs(): string[] {
+  const d = new Date();
+  const sat = new Date(d);
+  sat.setDate(d.getDate() + (d.getDay() === 0 ? -1 : 6 - d.getDay()));
+  const sun = new Date(sat);
+  sun.setDate(sat.getDate() + 1);
+  return [toYMD(sat), toYMD(sun)];
+}
+
 export function prevDay(ymd: string): string {
   const d = dateFromYMD(ymd);
   d.setDate(d.getDate() - 1);
@@ -125,6 +143,23 @@ export function fromSlug(slug: string): string {
 
 export function matchSlug(ymd: string, fixture: string): string {
   return `${ymd}-${toSlug(fixture)}`;
+}
+
+// "Arsenal vs Chelsea" → ["Arsenal", "Chelsea"]; null when the fixture
+// doesn't follow the two-team format (e.g. "TBA").
+export function splitFixture(fixture: string | null | undefined): [string, string] | null {
+  if (!fixture) return null;
+  const parts = fixture.split(/\s+vs\.?\s+/i);
+  if (parts.length !== 2) return null;
+  const home = parts[0].trim();
+  const away = parts[1].trim();
+  if (!home || !away || !toSlug(home) || !toSlug(away)) return null;
+  return [home, away];
+}
+
+// Evergreen head-to-head slug: "Arsenal", "Chelsea" → "arsenal-vs-chelsea".
+export function pairSlug(home: string, away: string): string {
+  return `${toSlug(home)}-vs-${toSlug(away)}`;
 }
 
 export function filterMatches(matches: Match[], q: string, country: string): Match[] {

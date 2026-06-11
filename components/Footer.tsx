@@ -33,8 +33,9 @@ export default function Footer() {
             <div className="footer-col-title">Quick Links</div>
             <div className="footer-links">
               <Link href="/" className="footer-link">Home / Today&apos;s Matches</Link>
+              <Link href="/world-cup-2026" className="footer-link">World Cup 2026 TV Guide</Link>
               <Link href="/channels" className="footer-link">All Channels</Link>
-              <Link href="/" className="footer-link">All Leagues</Link>
+              <Link href="/countries" className="footer-link">Browse by Country</Link>
               <Link href="/about" className="footer-link">About Us</Link>
             </div>
           </div>
@@ -54,8 +55,10 @@ export default function Footer() {
             <div className="footer-col-title">Popular Searches</div>
             <div className="footer-links">
               <Link href="/" className="footer-link">Football on TV Today</Link>
-              <Link href="/" className="footer-link">Live Football on TV</Link>
-              <Link href="/" className="footer-link">Soccer Games Today</Link>
+              <Link href="/tonight" className="footer-link">Football on TV Tonight</Link>
+              <Link href="/tomorrow" className="footer-link">Football on TV Tomorrow</Link>
+              <Link href="/this-weekend" className="footer-link">Football This Weekend</Link>
+              <Link href="/world-cup-2026" className="footer-link">Where to Watch World Cup 2026</Link>
               <Link href="/channels" className="footer-link">Live Soccer TV Channels</Link>
             </div>
           </div>

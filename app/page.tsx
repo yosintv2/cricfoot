@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { fetchMatches } from '@/lib/api';
 import { scheduleDays } from '@/lib/utils';
 import HomeClient from '@/components/HomeClient';
@@ -56,6 +57,20 @@ export default async function HomePage() {
   return (
     <>
       <HomeClient allDayMatches={allDayMatches} />
+
+      {/* Schedule shortcuts */}
+      <section className="seo-section" aria-label="More TV schedules">
+        <h2><span className="y-bar" />More TV Schedules</h2>
+        <div className="tag-cloud">
+          <Link href="/tonight" className="tag-pill">🌙 Football on TV Tonight</Link>
+          <Link href="/tomorrow" className="tag-pill">📅 Football on TV Tomorrow</Link>
+          <Link href="/this-weekend" className="tag-pill">🗓️ Football This Weekend</Link>
+          <Link href="/world-cup-2026" className="tag-pill">🏆 World Cup 2026 TV Guide</Link>
+          <Link href="/countries" className="tag-pill">🌍 Browse by Country</Link>
+          <Link href="/channels" className="tag-pill">📺 All TV Channels</Link>
+        </div>
+      </section>
+
       <Faq items={HOME_FAQS} />
     </>
   );

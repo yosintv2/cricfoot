@@ -24,10 +24,15 @@ export interface QuickLeague {
   flag: string;
   id?: number;
   name?: string;
+  /** Override the default /league/<label-slug>/ destination (e.g. a hub page). */
+  href?: string;
 }
 
+// API league_id shared by every "FIFA World Cup, Group X" entry.
+export const WORLD_CUP_ID = 16;
+
 export const QUICK_LEAGUES: QuickLeague[] = [
-  { label: 'World Cup',   flag: '🏆', id: 16 },
+  { label: 'World Cup',   flag: '🏆', id: WORLD_CUP_ID, href: '/world-cup-2026' },
   { label: 'Champions L.', flag: '⭐', name: 'UEFA Champions League' },
   { label: 'Friendly',    flag: '🤝', id: 851 },
   { label: 'EPL',         flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', name: 'Premier League' },
