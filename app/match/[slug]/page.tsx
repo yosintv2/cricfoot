@@ -170,30 +170,38 @@ export default async function MatchPage({ params }: Props) {
         <div style={{ height: 4, background: 'var(--red)', borderRadius: 1 }} />
       </header>
 
-      {/* Match meta strip */}
-      <div style={{
-        display: 'flex', flexWrap: 'wrap', gap: '6px 18px', alignItems: 'center',
-        padding: '12px 2px', borderBottom: '1px solid var(--border-lt)', marginBottom: 0,
+      {/* Match meta list — one detail per line, mobile friendly */}
+      <ul style={{
+        listStyle: 'none', margin: 0, display: 'flex', flexDirection: 'column', gap: 8,
+        padding: '12px 2px', borderBottom: '1px solid var(--border-lt)',
         fontSize: '0.85rem', color: 'var(--text-mid)',
       }}>
-        <span>📅 {dateLabel}</span>
+        <li>📅 {dateLabel}</li>
         {match.league && (
-          <Link href={`/league/${toSlug(match.league)}`} style={{ color: 'var(--navy)', fontWeight: 600 }}>
-            {getLeagueFlag(match.league)} {match.league}
-          </Link>
+          <li>
+            <Link href={`/league/${toSlug(match.league)}`} style={{ color: 'var(--navy)', fontWeight: 600 }}>
+              {getLeagueFlag(match.league)} {match.league}
+            </Link>
+          </li>
         )}
-        {match.venue && <span>📍 {match.venue}</span>}
+        {match.venue && <li>📍 {match.venue}</li>}
         {homeTeam && awayTeam && (
           <>
-            <Link href={`/team/${toSlug(homeTeam.trim())}`} style={{ color: 'var(--navy)', fontWeight: 600 }}>
-              ⚽ {homeTeam.trim()}
-            </Link>
-            <Link href={`/team/${toSlug(awayTeam.trim())}`} style={{ color: 'var(--navy)', fontWeight: 600 }}>
-              ⚽ {awayTeam.trim()}
-            </Link>
+            <li>
+              Team:{' '}
+              <Link href={`/team/${toSlug(homeTeam.trim())}`} style={{ color: 'var(--navy)', fontWeight: 600 }}>
+                {homeTeam.trim()}
+              </Link>
+            </li>
+            <li>
+              Team:{' '}
+              <Link href={`/team/${toSlug(awayTeam.trim())}`} style={{ color: 'var(--navy)', fontWeight: 600 }}>
+                {awayTeam.trim()}
+              </Link>
+            </li>
           </>
         )}
-      </div>
+      </ul>
 
       {/* Country / channel table */}
       {tvChs.length === 0 ? (
