@@ -6,9 +6,9 @@ import { usePathname, useRouter } from 'next/navigation';
 import { toSlug } from '@/lib/utils';
 
 const QUICK_LEAGUES = [
-  { name: 'World Cup', flag: '🏆', href: '/league/FIFA-World-Cup' },
-  { name: 'Champions L.', flag: '⭐', href: '/league/UEFA-Champions-League' },
-  { name: 'Friendly', flag: '🤝', href: '/league/International-Friendly' },
+  { name: 'World Cup', flag: '🏆', href: `/league/${toSlug('FIFA World Cup')}` },
+  { name: 'Champions L.', flag: '⭐', href: `/league/${toSlug('UEFA Champions League')}` },
+  { name: 'Friendly', flag: '🤝', href: `/league/${toSlug('International Friendly')}` },
   { name: 'EPL', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', href: `/league/${toSlug('Premier League')}` },
   { name: 'La Liga', flag: '🇪🇸', href: `/league/${toSlug('La Liga')}` },
   { name: 'Serie A', flag: '🇮🇹', href: `/league/${toSlug('Serie A')}` },
