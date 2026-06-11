@@ -85,30 +85,8 @@ export default function HomeClient({ allDayMatches }: Props) {
     return [...chMap.entries()].sort((a, b) => b[1].matches.length - a[1].matches.length);
   }, [allDayMatches]);
 
-  const totalMatches  = allDayMatches.reduce((s, d) => s + d.matches.length, 0);
-  const totalLeagues  = new Set(allDayMatches.flatMap(d => d.matches.map(m => m.league).filter(Boolean))).size;
-  const totalChannels = new Set(
-    allDayMatches.flatMap(d => d.matches.flatMap(m => (m.tv_channels ?? []).flatMap(tv => tv.channels ?? [])))
-  ).size;
-
   return (
     <>
-      {/* Stats */}
-      <div className="stats-row">
-        <div className="stat-card">
-          <div className="stat-val">{totalMatches}</div>
-          <div className="stat-label">Matches (7 days)</div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-val">{totalLeagues}</div>
-          <div className="stat-label">Leagues</div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-val">{totalChannels}</div>
-          <div className="stat-label">Channels</div>
-        </div>
-      </div>
-
       {/* Date tabs */}
       <div className="date-tabs-wrap" aria-label="Select day">
         <div className="date-tabs">
@@ -129,7 +107,6 @@ export default function HomeClient({ allDayMatches }: Props) {
               </button>
             );
           })}
-          <div className="date-tab date-tab-cal" title="Calendar view">📅</div>
         </div>
       </div>
 
