@@ -10,7 +10,7 @@
   // ── AdSense account config ────────────────────────────────
   // Replace ca-pub-XXXXXXXXXXXXXXXX with your actual publisher ID
   var ACCOUNTS = [
-    { client: 'ca-pub-XXXXXXXXXXXXXXXX' }, // account 0 – primary
+    { client: 'ca-pub-5525538810839147' }, // account 0 – primary
     // { client: 'ca-pub-YYYYYYYYYYYYYYYY' }, // account 1 – secondary
   ];
 
