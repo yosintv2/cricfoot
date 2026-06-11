@@ -576,6 +576,31 @@ body {
 .seo-section ul { list-style: none; padding: 0; line-height: 2; }
 .footer-disclaimer { font-size: 0.7rem; color: var(--text-muted); margin-top: 8px; }
 
+/* ── FAQ ────────────────────────────────────────────────────── */
+.faq-section { margin: 24px 0; }
+.faq-item {
+  background: #fff; border: 1px solid var(--border-lt);
+  border-radius: 8px; margin-bottom: 6px; overflow: hidden;
+}
+.faq-q {
+  cursor: pointer; padding: 11px 14px;
+  font-size: 0.875rem; font-weight: 600; color: var(--text);
+  list-style: none; position: relative; user-select: none;
+  transition: background 0.12s;
+}
+.faq-q:hover { background: var(--bg-alt); }
+.faq-q::-webkit-details-marker { display: none; }
+.faq-q::after {
+  content: '+'; position: absolute; right: 14px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted); font-size: 1rem; font-weight: 400;
+}
+.faq-item[open] .faq-q::after { content: '–'; }
+.faq-a {
+  padding: 0 14px 12px; font-size: 0.85rem;
+  color: var(--text-mid); line-height: 1.7;
+}
+
 /* ── Tag cloud ──────────────────────────────────────────────── */
 .tag-cloud { display: flex; flex-wrap: wrap; gap: 5px; }
 .tag-pill {

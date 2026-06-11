@@ -3,6 +3,7 @@ import { fetchMatches } from '@/lib/api';
 import { fromSlug, toSlug, toYMD } from '@/lib/utils';
 import { QUICK_LEAGUES } from '@/config/leagues';
 import LeaguePageClient from '@/components/LeaguePageClient';
+import Faq from '@/components/Faq';
 
 const STATIC_LEAGUES = [
   'Premier League', 'UEFA Champions League', 'La Liga', 'Serie A',
@@ -141,6 +142,25 @@ export default async function LeaguePage({ params }: Props) {
         leagueName={leagueName}
         upcomingDays={upcomingDays}
         totalMatches={totalMatches}
+      />
+      <Faq
+        title={`${leagueName} — FAQs`}
+        items={[
+          {
+            q: `Where can I watch ${leagueName} matches on TV?`,
+            a: `Click any ${leagueName} fixture above to see the full list of broadcasting TV channels country by country. Every listed broadcaster holds official rights for its region.`,
+          },
+          {
+            q: `How many ${leagueName} matches are scheduled this week?`,
+            a: totalMatches > 0
+              ? `There ${totalMatches === 1 ? 'is 1 match' : `are ${totalMatches} matches`} of ${leagueName} scheduled over the next 7 days. The day-by-day fixture list with kick-off times is shown above.`
+              : `There are no ${leagueName} matches listed for the next 7 days. Schedules update daily, so check back soon.`,
+          },
+          {
+            q: `Are ${leagueName} kick-off times shown in my local time?`,
+            a: 'Yes — every kick-off time on CricFoot is automatically converted to your device’s local timezone.',
+          },
+        ]}
       />
     </>
   );

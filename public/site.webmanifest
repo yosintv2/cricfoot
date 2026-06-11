@@ -1,0 +1,17 @@
+{
+  "name": "CricFoot — Football Live on TV",
+  "short_name": "CricFoot",
+  "description": "Free 7-day football TV guide: every match, kick-off time and channel worldwide.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1a3a6b",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

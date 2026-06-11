@@ -19,7 +19,6 @@ export const metadata: Metadata = {
     title: 'CricFoot - Football Live on TV | Live TV Channels',
     description:
       'Find live football TV schedules, match fixtures and channel listings for all major leagues worldwide.',
-    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'CricFoot Football TV Guide' }],
   },
   twitter: {
     card: 'summary_large_image',
@@ -28,20 +27,40 @@ export const metadata: Metadata = {
   },
   robots: { index: true, follow: true },
   alternates: { canonical: 'https://www.cricfoot.net' },
+  manifest: '/site.webmanifest',
+  applicationName: 'CricFoot',
+  category: 'sports',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    name: 'CricFoot',
-    url: 'https://www.cricfoot.net/',
-    description: 'CricFoot is your ultimate TV guide for live football matches worldwide.',
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: { '@type': 'EntryPoint', urlTemplate: 'https://www.cricfoot.net/?q={search_term_string}' },
-      'query-input': 'required name=search_term_string',
-    },
+    '@graph': [
+      {
+        '@type': 'WebSite',
+        '@id': 'https://www.cricfoot.net/#website',
+        name: 'CricFoot',
+        url: 'https://www.cricfoot.net/',
+        description: 'CricFoot is your ultimate TV guide for live football matches worldwide.',
+        publisher: { '@id': 'https://www.cricfoot.net/#organization' },
+        potentialAction: {
+          '@type': 'SearchAction',
+          target: { '@type': 'EntryPoint', urlTemplate: 'https://www.cricfoot.net/?q={search_term_string}' },
+          'query-input': 'required name=search_term_string',
+        },
+      },
+      {
+        '@type': 'Organization',
+        '@id': 'https://www.cricfoot.net/#organization',
+        name: 'CricFoot',
+        url: 'https://www.cricfoot.net/',
+        logo: {
+          '@type': 'ImageObject',
+          url: 'https://www.cricfoot.net/icon.svg',
+        },
+        description: 'Free worldwide football TV guide: match schedules, kick-off times and broadcaster listings.',
+      },
+    ],
   };
 
   return (

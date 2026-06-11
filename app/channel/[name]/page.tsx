@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { fetchMatches } from '@/lib/api';
 import { fromSlug, toSlug, toYMD } from '@/lib/utils';
 import ChannelPageClient from '@/components/ChannelPageClient';
+import Faq from '@/components/Faq';
 
 export async function generateStaticParams() {
   const days = Array.from({ length: 7 }, (_, i) => {
@@ -168,6 +169,26 @@ export default async function ChannelPage({ params }: Props) {
     },
   };
 
+  const totalMatches = upcomingDays.reduce((s, d) => s + d.matches.length, 0);
+  const leagues = [...new Set(upcomingDays.flatMap(d => d.matches.map(m => m.league).filter(Boolean)))].slice(0, 6);
+
+  const channelFaqs = [
+    {
+      q: `Which football matches are on ${channelName} this week?`,
+      a: totalMatches > 0
+        ? `${channelName} is broadcasting ${totalMatches} football match${totalMatches !== 1 ? 'es' : ''} over the next 7 days${leagues.length ? `, covering ${leagues.join(', ')}` : ''}. The full day-by-day schedule with kick-off times is listed above.`
+        : `${channelName} has no football matches listed for the next 7 days. Schedules update daily, so check back soon.`,
+    },
+    {
+      q: `What time do matches start on ${channelName}?`,
+      a: `Every kick-off time on this page is shown in your local timezone automatically — the time you see is the time the broadcast starts where you live.`,
+    },
+    {
+      q: `How can I watch ${channelName}?`,
+      a: `${channelName} is available through its official TV, cable, satellite or streaming providers in its licensed regions. CricFoot is a TV guide only — we list what's on ${channelName}, but we don't stream content.`,
+    },
+  ];
+
   return (
     <>
       <script
@@ -175,6 +196,7 @@ export default async function ChannelPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <ChannelPageClient channelName={channelName} upcomingDays={upcomingDays} />
+      <Faq title={`${channelName} — FAQs`} items={channelFaqs} />
     </>
   );
 }

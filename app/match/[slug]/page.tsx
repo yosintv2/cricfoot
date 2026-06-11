@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { fetchMatches } from '@/lib/api';
 import { toSlug, toYMD, countryFlag, dateFromYMD, fmtDate, getLeagueFlag, matchSlug } from '@/lib/utils';
 import { Match } from '@/types';
+import Faq from '@/components/Faq';
 
 function next7Days(): string[] {
   return Array.from({ length: 7 }, (_, i) => {
@@ -91,22 +92,76 @@ export default async function MatchPage({ params }: Props) {
   );
   const dateLabel = fmtDate(dateFromYMD(ymd));
   const kickoffISO = match.kickoff ? new Date(match.kickoff * 1000).toISOString() : undefined;
+  const kickoffGMT = match.kickoff
+    ? new Date(match.kickoff * 1000).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' })
+    : null;
+
+  const [homeTeam, awayTeam] = (match.fixture ?? '').split(/\s+vs\.?\s+/i);
+  const allChannelNames = [...new Set(tvChs.flatMap(tv => tv.channels ?? []))];
+  const topChannels = allChannelNames.slice(0, 8);
 
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'SportsEvent',
-    name: match.fixture,
-    ...(kickoffISO && { startDate: kickoffISO }),
-    ...(match.venue && { location: { '@type': 'Place', name: match.venue } }),
-    ...(match.league && { superEvent: { '@type': 'SportsEvent', name: match.league } }),
-    breadcrumb: {
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.cricfoot.net/' },
-        { '@type': 'ListItem', position: 2, name: match.fixture },
-      ],
-    },
+    '@graph': [
+      {
+        '@type': 'SportsEvent',
+        name: match.fixture,
+        sport: 'Soccer',
+        eventStatus: 'https://schema.org/EventScheduled',
+        eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+        ...(kickoffISO && { startDate: kickoffISO }),
+        ...(match.venue && { location: { '@type': 'Place', name: match.venue } }),
+        ...(homeTeam && awayTeam && {
+          homeTeam: { '@type': 'SportsTeam', name: homeTeam.trim() },
+          awayTeam: { '@type': 'SportsTeam', name: awayTeam.trim() },
+          competitor: [
+            { '@type': 'SportsTeam', name: homeTeam.trim() },
+            { '@type': 'SportsTeam', name: awayTeam.trim() },
+          ],
+        }),
+        ...(match.league && { superEvent: { '@type': 'SportsEvent', name: match.league } }),
+        ...(topChannels.length > 0 && {
+          subjectOf: topChannels.map(ch => ({
+            '@type': 'BroadcastEvent',
+            name: `${match.fixture} on ${ch}`,
+            isLiveBroadcast: true,
+            ...(kickoffISO && { startDate: kickoffISO }),
+            publishedOn: { '@type': 'BroadcastService', name: ch },
+          })),
+        }),
+        organizer: { '@id': 'https://www.cricfoot.net/#organization' },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.cricfoot.net/' },
+          { '@type': 'ListItem', position: 2, name: match.league || 'Matches', item: match.league ? `https://www.cricfoot.net/league/${toSlug(match.league)}/` : 'https://www.cricfoot.net/' },
+          { '@type': 'ListItem', position: 3, name: match.fixture },
+        ],
+      },
+    ],
   };
+
+  const matchFaqs = [
+    {
+      q: `What time does ${match.fixture} kick off?`,
+      a: `${match.fixture} kicks off ${kickoffGMT ? `at ${kickoffGMT} GMT` : 'at the scheduled time'} on ${dateLabel}${match.venue ? ` at ${match.venue}` : ''}. On CricFoot the kick-off time is shown automatically converted to your local timezone.`,
+    },
+    {
+      q: `Which TV channels are broadcasting ${match.fixture}?`,
+      a: topChannels.length > 0
+        ? `${match.fixture} is broadcast on ${allChannelNames.length} channels worldwide, including ${topChannels.join(', ')}. See the full country-by-country channel table above to find the broadcaster in your region.`
+        : `TV listings for ${match.fixture} have not been published yet. Check back closer to kick-off for the full country-by-country broadcaster list.`,
+    },
+    {
+      q: `Where can I watch ${match.fixture} in my country?`,
+      a: `Find your country in the channel table above — every listed broadcaster holds official rights for that region. To watch, use your TV or streaming subscription with that broadcaster. CricFoot is a TV guide and does not stream matches.`,
+    },
+    ...(match.league ? [{
+      q: `What competition is ${match.fixture} part of?`,
+      a: `${match.fixture} is a ${match.league} fixture${match.venue ? `, played at ${match.venue}` : ''}.`,
+    }] : []),
+  ];
 
   return (
     <>
@@ -189,6 +244,8 @@ export default async function MatchPage({ params }: Props) {
           To watch the match, use your authorised TV service or broadcaster in your country.
         </p>
       </section>
+
+      <Faq title={`${match.fixture} — FAQs`} items={matchFaqs} />
     </>
   );
 }
