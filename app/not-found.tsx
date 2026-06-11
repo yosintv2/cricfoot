@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Page Not Found – CricFoot',
-  description: 'The page you are looking for could not be found. This channel may have no matches scheduled in the next 7 days.',
+  description: 'The page you are looking for could not be found. This channel may have no matches scheduled in the current 14-day window.',
   robots: { index: false },
 };
 

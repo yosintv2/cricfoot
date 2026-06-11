@@ -37,6 +37,16 @@ export function todayYMD(): string {
   return toYMD(new Date());
 }
 
+// Site-wide schedule window: yesterday + today + next 12 days (14 total).
+// Days the API hasn't published yet just return [] from fetchMatches.
+export function scheduleDays(): string[] {
+  return Array.from({ length: 14 }, (_, i) => {
+    const d = new Date();
+    d.setDate(d.getDate() + i - 1);
+    return toYMD(d);
+  });
+}
+
 export function prevDay(ymd: string): string {
   const d = dateFromYMD(ymd);
   d.setDate(d.getDate() - 1);

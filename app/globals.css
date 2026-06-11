@@ -207,6 +207,11 @@ body {
 .date-tab.active .date-tab-day { color: rgba(255,255,255,0.85); }
 .date-tab-num { font-size: 1.2rem; font-weight: 800; color: var(--text); line-height: 1.1; }
 .date-tab.active .date-tab-num { color: #fff; }
+.date-tab-month {
+  font-size: 0.55rem; font-weight: 700;
+  letter-spacing: 0.5px; color: var(--text-muted);
+}
+.date-tab.active .date-tab-month { color: rgba(255,255,255,0.8); }
 .date-tab-cal {
   width: 28px; height: 28px; display: flex;
   align-items: center; justify-content: center;
@@ -683,6 +688,7 @@ footer { background: var(--navy-dark); color: rgba(255,255,255,0.75); margin-top
   .nav-hamburger { display: flex; }
   .date-tab { min-width: 48px; padding: 5px 10px; }
   .date-tab-num { font-size: 1.1rem; }
+  .date-tab-far { display: none; }  /* mobile shows the first 7 days only */
   .channel-hero, .league-hero { padding: 16px 12px; }
   .seo-section { padding: 16px; }
 

@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next';
 import { fetchMatches } from '@/lib/api';
-import { todayYMD, toSlug, toYMD, matchSlug } from '@/lib/utils';
+import { toSlug, matchSlug, scheduleDays } from '@/lib/utils';
 
 export const dynamic = 'force-static';
 
@@ -14,10 +14,9 @@ const STATIC_LEAGUES = [
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const days = Array.from({ length: 7 }, (_, i) => {
-    const d = new Date(); d.setDate(d.getDate() + i); return toYMD(d);
-  });
-  const dayMatches = await Promise.all(days.map(async ymd => ({ ymd, matches: await fetchMatches(ymd) })));
+  const dayMatches = await Promise.all(
+    scheduleDays().map(async ymd => ({ ymd, matches: await fetchMatches(ymd) }))
+  );
 
   const channels = new Set<string>();
   const leagues = new Set<string>(STATIC_LEAGUES);

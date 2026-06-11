@@ -22,6 +22,7 @@ function getTabParts(ymd: string) {
   return {
     day: d.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase(),
     date: d.getDate(),
+    month: d.toLocaleDateString('en-US', { month: 'short' }).toUpperCase(),
   };
 }
 
@@ -103,16 +104,16 @@ export default function HomeClient({ allDayMatches }: Props) {
 
   return (
     <>
-      {/* Date tabs */}
+      {/* Date tabs — full 14 days on desktop, first 7 on mobile */}
       <div className="date-tabs-wrap" aria-label="Select day">
         <div className="date-tabs">
-          {allDayMatches.map(({ ymd, matches }) => {
-            const { day, date } = getTabParts(ymd);
+          {allDayMatches.map(({ ymd, matches }, idx) => {
+            const { day, date, month } = getTabParts(ymd);
             return (
               <button
                 key={ymd}
                 id={`dtab-${ymd}`}
-                className={`date-tab${activeDay === ymd ? ' active' : ''}`}
+                className={`date-tab${activeDay === ymd ? ' active' : ''}${idx >= 7 ? ' date-tab-far' : ''}`}
                 onClick={() => { setActiveDay(ymd); setLeagueFilter(''); setQ(''); setOnTvOnly(false); }}
                 aria-pressed={activeDay === ymd}
                 title={`${matches.length} matches`}
@@ -120,6 +121,7 @@ export default function HomeClient({ allDayMatches }: Props) {
               >
                 <span className="date-tab-day">{day}</span>
                 <span className="date-tab-num">{date}</span>
+                <span className="date-tab-month">{month}</span>
               </button>
             );
           })}
@@ -218,7 +220,7 @@ export default function HomeClient({ allDayMatches }: Props) {
       <section className="seo-section">
         <h2><span className="y-bar" />About CricFoot Football TV Guide</h2>
         <p>
-          <strong>CricFoot</strong> is your free 7-day football TV guide. Find match fixtures, kick-off times
+          <strong>CricFoot</strong> is your free 14-day football TV guide. Find match fixtures, kick-off times
           and TV channel listings for the <strong>Premier League</strong>, <strong>UEFA Champions League</strong>,{' '}
           <strong>La Liga</strong>, <strong>Serie A</strong>, <strong>Bundesliga</strong>, <strong>Ligue 1</strong>
           and hundreds more competitions worldwide.

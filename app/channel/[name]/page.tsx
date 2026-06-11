@@ -1,16 +1,11 @@
 import type { Metadata } from 'next';
 import { fetchMatches } from '@/lib/api';
-import { fromSlug, toSlug, toYMD } from '@/lib/utils';
+import { fromSlug, toSlug, scheduleDays } from '@/lib/utils';
 import ChannelPageClient from '@/components/ChannelPageClient';
 import Faq from '@/components/Faq';
 
 export async function generateStaticParams() {
-  const days = Array.from({ length: 7 }, (_, i) => {
-    const d = new Date();
-    d.setDate(d.getDate() + i);
-    return toYMD(d);
-  });
-  const allMatches = (await Promise.all(days.map(fetchMatches))).flat();
+  const allMatches = (await Promise.all(scheduleDays().map(fetchMatches))).flat();
   const channels = new Set<string>();
   allMatches.forEach(m =>
     (m.tv_channels ?? []).forEach(tv =>
@@ -85,13 +80,8 @@ function channelKeywords(ch: string): string[] {
 // calling this from both generateMetadata and the page costs nothing extra.
 async function getChannelData(nameParam: string) {
   const slug = decodeURIComponent(nameParam);
-  const days = Array.from({ length: 7 }, (_, i) => {
-    const d = new Date();
-    d.setDate(d.getDate() + i);
-    return toYMD(d);
-  });
   const dayData = await Promise.all(
-    days.map(async (ymd) => ({ ymd, matches: await fetchMatches(ymd) }))
+    scheduleDays().map(async (ymd) => ({ ymd, matches: await fetchMatches(ymd) }))
   );
 
   let channelName: string | null = null;
@@ -176,8 +166,8 @@ export default async function ChannelPage({ params }: Props) {
     {
       q: `Which football matches are on ${channelName} this week?`,
       a: totalMatches > 0
-        ? `${channelName} is broadcasting ${totalMatches} football match${totalMatches !== 1 ? 'es' : ''} over the next 7 days${leagues.length ? `, covering ${leagues.join(', ')}` : ''}. The full day-by-day schedule with kick-off times is listed above.`
-        : `${channelName} has no football matches listed for the next 7 days. Schedules update daily, so check back soon.`,
+        ? `${channelName} is broadcasting ${totalMatches} football match${totalMatches !== 1 ? 'es' : ''} over the 14-day schedule${leagues.length ? `, covering ${leagues.join(', ')}` : ''}. The full day-by-day schedule with kick-off times is listed above.`
+        : `${channelName} has no football matches listed for the next 14 days. Schedules update daily, so check back soon.`,
     },
     {
       q: `What time do matches start on ${channelName}?`,

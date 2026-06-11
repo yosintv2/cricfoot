@@ -1,20 +1,12 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { fetchMatches } from '@/lib/api';
-import { toSlug, toYMD, countryFlag, dateFromYMD, fmtDate, getLeagueFlag, matchSlug } from '@/lib/utils';
+import { toSlug, countryFlag, dateFromYMD, fmtDate, getLeagueFlag, matchSlug, scheduleDays } from '@/lib/utils';
 import { Match } from '@/types';
 import Faq from '@/components/Faq';
 
-function next7Days(): string[] {
-  return Array.from({ length: 7 }, (_, i) => {
-    const d = new Date();
-    d.setDate(d.getDate() + i);
-    return toYMD(d);
-  });
-}
-
 export async function generateStaticParams() {
-  const days = next7Days();
+  const days = scheduleDays();
   const params: { slug: string }[] = [];
   const seen = new Set<string>();
   await Promise.all(
@@ -236,7 +228,7 @@ export default async function MatchPage({ params }: Props) {
           Find every TV channel broadcasting <strong>{match.fixture}</strong>
           {match.league && <> in the <strong>{match.league}</strong></>} on {dateLabel}.
           The table above lists official broadcasters country by country — click any channel to see its full
-          football schedule for the next 7 days.
+          football schedule for the next 14 days.
         </p>
         <p>
           CricFoot provides TV listings and schedules only.{' '}

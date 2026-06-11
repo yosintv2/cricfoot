@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { fetchMatches } from '@/lib/api';
-import { fromSlug, toSlug, toYMD } from '@/lib/utils';
+import { fromSlug, toSlug, scheduleDays } from '@/lib/utils';
 import { QUICK_LEAGUES } from '@/config/leagues';
 import LeaguePageClient from '@/components/LeaguePageClient';
 import Faq from '@/components/Faq';
@@ -12,16 +12,8 @@ const STATIC_LEAGUES = [
   'Scottish Premiership',
 ];
 
-function next7Days(): string[] {
-  return Array.from({ length: 7 }, (_, i) => {
-    const d = new Date();
-    d.setDate(d.getDate() + i);
-    return toYMD(d);
-  });
-}
-
 export async function generateStaticParams() {
-  const allMatches = (await Promise.all(next7Days().map(fetchMatches))).flat();
+  const allMatches = (await Promise.all(scheduleDays().map(fetchMatches))).flat();
   const slugs = new Set<string>();
   STATIC_LEAGUES.forEach(l => slugs.add(toSlug(l)));
   QUICK_LEAGUES.forEach(l => slugs.add(toSlug(l.label)));
@@ -42,7 +34,7 @@ interface Props {
 async function getLeagueData(nameParam: string) {
   const slug = decodeURIComponent(nameParam);
   const dayData = await Promise.all(
-    next7Days().map(async (ymd) => ({ ymd, matches: await fetchMatches(ymd) }))
+    scheduleDays().map(async (ymd) => ({ ymd, matches: await fetchMatches(ymd) }))
   );
 
   const cfg = QUICK_LEAGUES.find(l => toSlug(l.label) === slug);
@@ -98,7 +90,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: `${leagueName} TV Schedule – Live Matches & Fixtures | CricFoot`,
-    description: `Full 7-day ${leagueName} TV schedule on CricFoot. Every match, kick-off time, venue and which TV channels are broadcasting ${leagueName} fixtures live worldwide.`,
+    description: `Full 14-day ${leagueName} TV schedule on CricFoot. Every match, kick-off time, venue and which TV channels are broadcasting ${leagueName} fixtures live worldwide.`,
     openGraph: {
       title: `${leagueName} TV Schedule | CricFoot`,
       description: `Complete ${leagueName} fixture list with TV channel information for every match.`,
@@ -153,8 +145,8 @@ export default async function LeaguePage({ params }: Props) {
           {
             q: `How many ${leagueName} matches are scheduled this week?`,
             a: totalMatches > 0
-              ? `There ${totalMatches === 1 ? 'is 1 match' : `are ${totalMatches} matches`} of ${leagueName} scheduled over the next 7 days. The day-by-day fixture list with kick-off times is shown above.`
-              : `There are no ${leagueName} matches listed for the next 7 days. Schedules update daily, so check back soon.`,
+              ? `There ${totalMatches === 1 ? 'is 1 match' : `are ${totalMatches} matches`} of ${leagueName} scheduled over the 14-day window. The day-by-day fixture list with kick-off times is shown above.`
+              : `There are no ${leagueName} matches listed for the next 14 days. Schedules update daily, so check back soon.`,
           },
           {
             q: `Are ${leagueName} kick-off times shown in my local time?`,
