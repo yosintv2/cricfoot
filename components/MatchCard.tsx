@@ -3,7 +3,8 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Match } from '@/types';
-import { fmtKick, toSlug, toYMD, todayYMD, matchSlug } from '@/lib/utils';
+import { toSlug, toYMD, todayYMD, matchSlug } from '@/lib/utils';
+import LocalTime from './LocalTime';
 
 interface Props {
   match: Match;
@@ -52,7 +53,7 @@ export default function MatchCard({ match, showLeague, ymd }: Props) {
           itemProp="startDate"
           content={kickoffISO}
         >
-          {fmtKick(match.kickoff)}
+          <LocalTime unix={match.kickoff} />
         </div>
 
         <div className="match-row-fixture" itemProp="name">

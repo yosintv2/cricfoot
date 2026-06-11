@@ -57,32 +57,6 @@ export default function LeaguePageClient({ leagueName, upcomingDays, broadcastMa
         </div>
       )}
 
-      {/* Broadcasting channels by country */}
-      {countryCount > 0 && (
-        <>
-          <h2 className="section-heading">
-            <div className="accent-bar" />
-            Broadcasting Channels by Country
-          </h2>
-          <div className="broadcast-grid" style={{ marginBottom: 24 }}>
-            {Object.entries(broadcastMap)
-              .sort(([a], [b]) => a.localeCompare(b))
-              .map(([country, channels]) => (
-                <div key={country} className="broadcast-country-card">
-                  <div className="bc-country">{country}</div>
-                  <div className="bc-channels">
-                    {channels.map(ch => (
-                      <Link key={ch} href={`/channel/${toSlug(ch)}`} className="bc-ch">
-                        {ch}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              ))}
-          </div>
-        </>
-      )}
-
       {/* 7-day fixtures */}
       {upcomingDays.length === 0 ? (
         <div className="state-center">
@@ -108,6 +82,32 @@ export default function LeaguePageClient({ leagueName, upcomingDays, broadcastMa
             </section>
           );
         })
+      )}
+
+      {/* Broadcasting channels by country — after the fixtures */}
+      {countryCount > 0 && (
+        <>
+          <h2 className="section-heading">
+            <div className="accent-bar" />
+            Broadcasting Channels by Country
+          </h2>
+          <div className="broadcast-grid" style={{ marginBottom: 24 }}>
+            {Object.entries(broadcastMap)
+              .sort(([a], [b]) => a.localeCompare(b))
+              .map(([country, channels]) => (
+                <div key={country} className="broadcast-country-card">
+                  <div className="bc-country">{country}</div>
+                  <div className="bc-channels">
+                    {channels.map(ch => (
+                      <Link key={ch} href={`/channel/${toSlug(ch)}`} className="bc-ch">
+                        {ch}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ))}
+          </div>
+        </>
       )}
 
       {/* SEO */}

@@ -5,15 +5,18 @@
  * Add, remove or reorder entries freely.
  *
  * Each entry:
- *   label — text shown in the bar (keep it short)
+ *   label — text shown in the bar; also becomes the URL,
+ *           e.g. "World Cup" → /league/world-cup/
  *   flag  — emoji shown before the label
- *   id    — "league_id" from the API (preferred). Links to /league/<id>/
- *           and aggregates ALL matches with that id, e.g. id 16 covers
- *           "FIFA World Cup, Group A", "Group B", … in one page.
- *   name  — alternative to id: exact league name from the API.
- *           Links to /league/<name-slug>/ and matches by name only.
+ *   id    — "league_id" from the API (preferred). The page aggregates ALL
+ *           matches with that id, e.g. id 16 covers "FIFA World Cup,
+ *           Group A", "Group B", … in one page.
+ *   name  — alternative to id: exact league name from the API,
+ *           matches by name only.
  *
  * Use id when you know it; fall back to name otherwise.
+ * Entries with an id are also pinned to the top of the home page
+ * match list, in the order they appear here.
  */
 
 export interface QuickLeague {

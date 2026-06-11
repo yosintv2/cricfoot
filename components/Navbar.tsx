@@ -7,8 +7,10 @@ import { toSlug } from '@/lib/utils';
 import { QUICK_LEAGUES } from '@/config/leagues';
 import Logo from './Logo';
 
-function quickLeagueHref(l: { id?: number; name?: string }): string {
-  return l.id != null ? `/league/${l.id}` : `/league/${toSlug(l.name ?? '')}`;
+// Pretty URL from the config label: "World Cup" → /league/world-cup/.
+// The league page maps the label slug back to the entry's id or name.
+function quickLeagueHref(l: { label: string }): string {
+  return `/league/${toSlug(l.label)}`;
 }
 
 const NAV_LINKS = [
