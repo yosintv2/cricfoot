@@ -720,10 +720,15 @@ footer { background: var(--navy-dark); color: rgba(255,255,255,0.75); margin-top
   .league-block-header { padding: 6px 10px; gap: 7px; }
   .league-block-name { font-size: 0.8rem; }
   .league-flag { font-size: 0.9rem; }
-  .match-row { padding: 6px 10px; gap: 8px; min-height: 32px; }
+  /* Fixture gets the full first line; channels drop to their own line below */
+  .match-row { padding: 6px 10px; gap: 8px; min-height: 32px; flex-wrap: wrap; row-gap: 2px; }
   .match-row-time { width: 50px; font-size: 0.67rem; }
   .match-row-fixture { font-size: 0.8rem; font-weight: 600; }
-  .match-row-channels { font-size: 0.7rem; max-width: 36%; }
+  .match-row-channels {
+    font-size: 0.7rem;
+    flex-basis: 100%; max-width: 100%;
+    margin-left: 58px; /* aligns under the fixture name (time width + gap) */
+  }
   .day-section-header { padding: 8px 10px; }
 
   /* Country/channel table stacks: country header above its channels */
@@ -740,8 +745,7 @@ footer { background: var(--navy-dark); color: rgba(255,255,255,0.75); margin-top
 }
 @media (max-width:480px) {
   .match-row-fixture { font-size: 0.78rem; }
-  /* keep a tiny truncated channel preview instead of hiding it */
-  .match-row-channels { max-width: 32%; font-size: 0.66rem; }
+  .match-row-channels { font-size: 0.66rem; margin-left: 54px; }
   .match-row-time { width: 46px; font-size: 0.63rem; }
   .section-heading { font-size: 0.95rem; }
 }
