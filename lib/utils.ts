@@ -1,4 +1,5 @@
 import { Match } from '@/types';
+import { QUICK_LEAGUES } from '@/config/leagues';
 
 export function pad(n: number): string {
   return String(n).padStart(2, '0');
@@ -118,6 +119,33 @@ export function groupByLeague(matches: Match[]): Record<string, Match[]> {
     Object.entries(byLeague).sort(([a], [b]) =>
       a === 'Other' ? 1 : b === 'Other' ? -1 : a.localeCompare(b)
     )
+  );
+}
+
+// Group by league with config/leagues.ts entries pinned first, in config
+// order (matched by league_id or exact name); the rest alphabetical,
+// Other last. Used by the home page and every day-schedule page.
+export function groupByLeaguePinned(matches: Match[]): Record<string, Match[]> {
+  const byLeague: Record<string, Match[]> = {};
+  matches.forEach(m => {
+    const k = m.league || 'Other';
+    if (!byLeague[k]) byLeague[k] = [];
+    byLeague[k].push(m);
+  });
+  const priority = (league: string, ms: Match[]) => {
+    if (league === 'Other') return Number.MAX_SAFE_INTEGER;
+    const lid = ms[0]?.league_id;
+    const idx = QUICK_LEAGUES.findIndex(l =>
+      (l.id != null && l.id === lid) || (l.name != null && l.name === league)
+    );
+    return idx === -1 ? QUICK_LEAGUES.length : idx;
+  };
+  return Object.fromEntries(
+    Object.entries(byLeague).sort(([a, am], [b, bm]) => {
+      const pa = priority(a, am);
+      const pb = priority(b, bm);
+      return pa !== pb ? pa - pb : a.localeCompare(b);
+    })
   );
 }
 

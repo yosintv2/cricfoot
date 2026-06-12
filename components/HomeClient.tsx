@@ -3,8 +3,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import { Match } from '@/types';
-import { buildChannelMap, isPopular, toSlug, todayYMD, dateFromYMD, isoFromYMD } from '@/lib/utils';
-import { QUICK_LEAGUES } from '@/config/leagues';
+import { buildChannelMap, groupByLeaguePinned, isPopular, toSlug, todayYMD, dateFromYMD, isoFromYMD } from '@/lib/utils';
 import LeagueSection from './LeagueSection';
 
 const POPULAR_LEAGUES = [
@@ -71,31 +70,7 @@ export default function HomeClient({ allDayMatches }: Props) {
     return ms;
   }, [activeDayData, q, onTvOnly, leagueFilter]);
 
-  const groupedMatches = useMemo(() => {
-    const byLeague: Record<string, Match[]> = {};
-    filteredMatches.forEach(m => {
-      const k = m.league || 'Other';
-      if (!byLeague[k]) byLeague[k] = [];
-      byLeague[k].push(m);
-    });
-    // Leagues from config/leagues.ts are pinned first, in config order
-    // (matched by league_id or exact name); the rest alphabetical, Other last.
-    const priority = (league: string, ms: Match[]) => {
-      if (league === 'Other') return Number.MAX_SAFE_INTEGER;
-      const lid = ms[0]?.league_id;
-      const idx = QUICK_LEAGUES.findIndex(l =>
-        (l.id != null && l.id === lid) || (l.name != null && l.name === league)
-      );
-      return idx === -1 ? QUICK_LEAGUES.length : idx;
-    };
-    return Object.fromEntries(
-      Object.entries(byLeague).sort(([a, am], [b, bm]) => {
-        const pa = priority(a, am);
-        const pb = priority(b, bm);
-        return pa !== pb ? pa - pb : a.localeCompare(b);
-      })
-    );
-  }, [filteredMatches]);
+  const groupedMatches = useMemo(() => groupByLeaguePinned(filteredMatches), [filteredMatches]);
 
   const allChannels = useMemo(() => {
     const chMap = buildChannelMap(allDayMatches.flatMap(d => d.matches));

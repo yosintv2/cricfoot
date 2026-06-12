@@ -1,5 +1,5 @@
 import { Match } from '@/types';
-import { dateFromYMD, fmtDate, groupByLeague } from '@/lib/utils';
+import { dateFromYMD, fmtDate, groupByLeaguePinned } from '@/lib/utils';
 import LeagueSection from './LeagueSection';
 import DayLabel from './DayLabel';
 
@@ -34,7 +34,7 @@ export default function DaySchedule({ days, subject }: { days: DayData[]; subjec
               <span className="day-section-count">{matches.length} match{matches.length !== 1 ? 'es' : ''}</span>
             </div>
             <div style={{ marginTop: 10 }}>
-              {Object.entries(groupByLeague(matches)).map(([league, ms]) => (
+              {Object.entries(groupByLeaguePinned(matches)).map(([league, ms]) => (
                 <LeagueSection key={league} league={league} matches={ms} ymd={ymd} />
               ))}
             </div>
