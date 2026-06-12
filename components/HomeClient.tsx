@@ -105,11 +105,9 @@ export default function HomeClient({ allDayMatches }: Props) {
   return (
     <>
       {/* Page heading */}
-      <header style={{ padding: '16px 0 2px' }}>
-        <h1 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text)' }}>
-          ⚽ Live Football on TV Today
-        </h1>
-        <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: 3 }}>
+      <header className="page-head">
+        <h1 className="page-title">⚽ Live Football on TV Today</h1>
+        <p className="page-sub">
           All soccer games today and the next two weeks — kick-off times and TV channels, free.
         </p>
       </header>

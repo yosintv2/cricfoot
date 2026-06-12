@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { fetchMatches } from '@/lib/api';
 import { dateFromYMD, fmtDate, isoFromYMD, scheduleDays } from '@/lib/utils';
 import DaySchedule from '@/components/DaySchedule';
+import DateTabs from '@/components/DateTabs';
 import Faq from '@/components/Faq';
 
 export async function generateStaticParams() {
@@ -96,30 +97,13 @@ export default async function SchedulePage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <header style={{ padding: '16px 0 2px' }}>
-        <h1 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text)' }}>
-          ⚽ Football on TV — {label}
-        </h1>
-        <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: 3 }}>
-          Every match, kick-off time and TV channel for this day.
-        </p>
+      <header className="page-head">
+        <h1 className="page-title">⚽ Football on TV — {label}</h1>
+        <p className="page-sub">Every match, kick-off time and TV channel for this day.</p>
       </header>
 
-      {/* All days in the window as crawlable links */}
-      <div className="day-tabs-wrap-page" aria-label="Other days">
-        <div className="day-tabs-page">
-          {windowDays.map(d => (
-            <Link
-              key={d}
-              href={`/schedules/${isoFromYMD(d)}`}
-              className="day-tab-page"
-              style={d === ymd ? { color: 'var(--red)', fontWeight: 700 } : undefined}
-            >
-              {dateFromYMD(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-            </Link>
-          ))}
-        </div>
-      </div>
+      {/* Same date strip as the homepage, current date highlighted */}
+      <DateTabs days={windowDays} activeYmd={ymd} />
 
       <DaySchedule days={[{ ymd, matches }]} subject={label} />
 
