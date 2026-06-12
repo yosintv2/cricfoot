@@ -125,16 +125,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const kws = channelKeywords(channelName);
 
   return {
-    title: `${channelName} Live Match Today – ${channelName} Live TV Channel Guide | CricFoot`,
-    description: `What match is on ${channelName} today? Full ${channelName} live TV channel guide: today's football matches, kick-off times in your local timezone and every fixture broadcast on ${channelName} over the next 14 days.`,
-    keywords: kws.join(', '),
+    title: `Live Football on ${channelName} – ${channelName} Live Match Today | CricFoot`,
+    description: `Live football on ${channelName}: what match is on ${channelName} today, kick-off times in your local timezone and every fixture broadcast live on ${channelName} over the next 14 days.`,
+    keywords: `live football on ${channelName}, ${channelName} live match today, ${channelName} live football today, ${kws.join(', ')}`,
     openGraph: {
-      title: `${channelName} Live Stream Free | ${channelName} Live TV Channel Guide – CricFoot`,
-      description: `Complete ${channelName} football TV schedule. Match fixtures, kick-off times and competition information for today and upcoming days.`,
+      title: `Live Football on ${channelName} – Live Match Today & TV Guide`,
+      description: `Complete ${channelName} live football schedule: today's matches, kick-off times and upcoming fixtures.`,
     },
     twitter: {
-      title: `${channelName} Live TV Channel Guide – CricFoot`,
-      description: `Full ${channelName} live football TV schedule. Find every upcoming match.`,
+      title: `Live Football on ${channelName} – CricFoot`,
+      description: `${channelName} live match today and the full 14-day football schedule.`,
     },
     alternates: {
       canonical: `/channel/${toSlug(channelName)}`,
@@ -155,7 +155,7 @@ export default async function ChannelPage({ params }: Props) {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
-    name: `${channelName} Live TV Channel Guide`,
+    name: `Live Football on ${channelName}`,
     description: `Live football matches broadcast on ${channelName}. Full TV schedule and upcoming match fixtures.`,
     keywords: kws,
     breadcrumb: {

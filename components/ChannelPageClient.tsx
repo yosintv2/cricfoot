@@ -45,7 +45,7 @@ export default function ChannelPageClient({ channelName, upcomingDays, countries
       <header className="channel-hero">
         <div className="channel-hero-icon" aria-hidden="true">{initials}</div>
         <div className="channel-hero-info">
-          <h1 className="channel-hero-name">{channelName}</h1>
+          <h1 className="channel-hero-name">Live Football on {channelName}</h1>
           <p className="channel-hero-meta">
             {totalMatches} match{totalMatches !== 1 ? 'es' : ''} scheduled · 14-day guide
           </p>
@@ -101,10 +101,10 @@ export default function ChannelPageClient({ channelName, upcomingDays, countries
 
       {/* SEO */}
       <section className="seo-section">
-        <h2><span className="y-bar" />{channelName} Live Match Today &amp; TV Guide</h2>
+        <h2><span className="y-bar" />Live Football on {channelName} — Match Today &amp; TV Guide</h2>
         <p>
-          Looking for the <strong>{channelName} live match today</strong>? This page is the complete{' '}
-          <strong>{channelName} live TV channel guide</strong>
+          Looking for the <strong>{channelName} live match today</strong>? This page is the complete guide to{' '}
+          <strong>live football on {channelName}</strong>
           {nextFixtures.length > 0 && nextDay ? (
             <>
               {' '}— on {fmtDate(dateFromYMD(nextDay.ymd))} the channel shows{' '}

@@ -54,7 +54,8 @@ export default function Footer() {
           <div>
             <div className="footer-col-title">Popular Searches</div>
             <div className="footer-links">
-              <Link href="/" className="footer-link">Football on TV Today</Link>
+              <Link href="/" className="footer-link">Live Football Match Today</Link>
+              <Link href="/" className="footer-link">Live Football on TV</Link>
               <Link href="/tonight" className="footer-link">Football on TV Tonight</Link>
               <Link href="/tomorrow" className="footer-link">Football on TV Tomorrow</Link>
               <Link href="/this-weekend" className="footer-link">Football This Weekend</Link>

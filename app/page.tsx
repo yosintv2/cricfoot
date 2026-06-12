@@ -6,18 +6,22 @@ import HomeClient from '@/components/HomeClient';
 import Faq from '@/components/Faq';
 
 export const metadata: Metadata = {
-  title: 'Football on TV Today – Live Football & Soccer Games Today | CricFoot',
+  title: 'Live Football Match Today – Live Football on TV | CricFoot',
   description:
-    'Live football on TV today: every soccer game today with kick-off times and TV channels. Free live soccer TV guide for the World Cup, Premier League, Champions League, La Liga, Serie A, Bundesliga and more.',
+    'Live football match today: every game with kick-off times in your local timezone and the channels showing live football on TV. Free guide for the World Cup, Premier League, Champions League, La Liga, Serie A, Bundesliga and more.',
   keywords:
-    'football today, football on tv, live football on tv, football on tv today, soccer games today, live soccer tv, soccer on tv today, football tv schedule, what football is on tv tonight',
+    'live football match today, live football on tv, football match today, live football today, football on tv today, soccer games today, live soccer tv, football tv schedule, what football is on tv tonight',
   alternates: { canonical: '/' },
 };
 
 const HOME_FAQS = [
   {
-    q: 'What football is on TV today?',
-    a: 'CricFoot lists every football match on TV today, grouped by league with kick-off times in your local timezone. Use the date tabs above to see today’s soccer games, and click any fixture for the full list of TV channels broadcasting it in your country.',
+    q: 'Which live football matches are on today?',
+    a: 'CricFoot lists every live football match today, grouped by league with kick-off times in your local timezone. Use the date tabs above to see today’s games, and click any fixture for the full list of TV channels showing it live in your country.',
+  },
+  {
+    q: 'Where can I find live football on TV?',
+    a: 'All live football on TV is listed right here — every competition, every channel, every country. Click a match for its country-by-country broadcaster table, or browse by channel, league, team or country using the menus.',
   },
   {
     q: 'How do I find out which TV channel is showing a football match?',

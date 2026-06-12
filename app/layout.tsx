@@ -7,24 +7,24 @@ import AdUnit from '@/components/AdUnit';
 import SuperCounter from '@/components/SuperCounter';
 
 export const metadata: Metadata = {
-  title: 'CricFoot – Live Football on TV Today | Live Soccer TV Guide',
+  title: 'Live Football Match Today – Live Football on TV | CricFoot',
   description:
-    'Live football on TV today: every soccer game with kick-off times and TV channels worldwide. Free live soccer TV guide for the Premier League, UEFA Champions League, La Liga, Serie A, Bundesliga and more.',
+    'Live football match today: every game with kick-off times in your local timezone and the channels showing live football on TV worldwide. Free guide for the World Cup, Premier League, Champions League, La Liga and more.',
   keywords:
-    'football today, football on tv, live football on tv, football on tv today, soccer games today, live soccer tv, football tv channels, premier league live tv, champions league tv schedule, cricfoot',
+    'live football match today, live football on tv, football match today, live football today, football on tv today, live soccer tv, football tv channels, premier league live tv, champions league tv schedule, cricfoot',
   authors: [{ name: 'CricFoot' }],
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.cricfoot.net'),
   openGraph: {
     type: 'website',
     siteName: 'CricFoot',
-    title: 'CricFoot - Football Live on TV | Live TV Channels',
+    title: 'Live Football Match Today – Live Football on TV | CricFoot',
     description:
-      'Find live football TV schedules, match fixtures and channel listings for all major leagues worldwide.',
+      'Every live football match today with kick-off times and TV channel listings for all major leagues worldwide.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'CricFoot - Football Live on TV | Live TV Channels',
-    description: 'Live football TV schedules, channel listings and match fixtures for all major leagues worldwide.',
+    title: 'Live Football Match Today – Live Football on TV | CricFoot',
+    description: 'Every live football match today with kick-off times and TV channels worldwide.',
   },
   robots: { index: true, follow: true },
   alternates: { canonical: 'https://www.cricfoot.net' },
