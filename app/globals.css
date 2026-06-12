@@ -380,7 +380,6 @@ body {
 .match-ch-name:hover { text-decoration: underline; color: var(--navy); }
 .match-ch-sep { color: var(--text-muted); margin: 0 1px; }
 .match-ch-more { color: var(--text-muted); margin-left: 2px; }
-.match-row-no-tv { font-size: 0.72rem; color: var(--text-muted); flex-shrink: 0; }
 
 /* ── Match detail panel ─────────────────────────────────────── */
 .match-detail-wrap { background: #fff; border-bottom: 1px solid var(--border-lt); }

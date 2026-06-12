@@ -89,8 +89,6 @@ export default function MatchCard({ match, showLeague, ymd }: Props) {
             ))}
             {hasMore && <span className="match-ch-more">...</span>}
           </div>
-        ) : totalCh === 0 ? (
-          <span className="match-row-no-tv">No TV info</span>
         ) : null}
       </div>
     </article>
