@@ -5,7 +5,7 @@ import { countryFlag, scheduleDays, toSlug } from '@/lib/utils';
 import Faq from '@/components/Faq';
 
 export const metadata: Metadata = {
-  title: 'Live Football on TV Schedules by Country – Where to Watch in Your Country | CricFoot',
+  title: 'Live Football on TV by Country – Where to Watch in Your Country | CricFoot',
   description:
     'Live Football TV guides for every country: see which channels broadcast live soccer in the United States, United Kingdom, Canada, India, Australia and 100+ more countries.',
   keywords:
