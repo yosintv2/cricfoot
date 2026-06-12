@@ -68,15 +68,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { countryName } = await getCountryData(name);
 
   return {
-    title: `Football on TV in ${countryName} – Soccer TV Schedule & Channels | CricFoot`,
-    description: `Football on TV in ${countryName} today and the next 14 days: every match, kick-off time in your local timezone and the ${countryName} TV channels broadcasting each game.`,
+    title: `Live Football on TV in ${countryName} – Soccer TV Schedule & Channels | CricFoot`,
+    description: `Live Football on TV in ${countryName} today and the next 14 days: every match, kick-off time in your local timezone and the ${countryName} TV channels broadcasting each game.`,
     keywords: `football on tv ${countryName}, soccer on tv in ${countryName}, ${countryName} football tv guide, ${countryName} soccer tv schedule, what channel is the game on in ${countryName}, live football ${countryName} tv`,
     openGraph: {
-      title: `Football on TV in ${countryName}`,
+      title: `Live Football on TV in ${countryName}`,
       description: `Every football match broadcast in ${countryName} — kick-off times and channels.`,
     },
     twitter: {
-      title: `Football on TV in ${countryName}`,
+      title: `Live Football on TV in ${countryName}`,
       description: `The full ${countryName} soccer TV schedule.`,
     },
     alternates: { canonical: `/country/${decodeURIComponent(name)}` },
@@ -92,7 +92,7 @@ export default async function CountryPage({ params }: Props) {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
-    name: `Football on TV in ${countryName}`,
+    name: `Live Football on TV in ${countryName}`,
     description: `Football matches broadcast on TV in ${countryName}, with kick-off times and channels.`,
     breadcrumb: {
       '@type': 'BreadcrumbList',
@@ -134,7 +134,7 @@ export default async function CountryPage({ params }: Props) {
       <header className="league-hero">
         <div className="league-hero-icon" aria-hidden="true">{countryFlag(countryName)}</div>
         <div style={{ flex: 1, minWidth: 0 }}>
-          <h1 className="league-hero-name">Football on TV in {countryName}</h1>
+          <h1 className="league-hero-name">Live Football on TV in {countryName}</h1>
           <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.78)', marginTop: 4 }}>
             {totalMatches} match{totalMatches !== 1 ? 'es' : ''} · 14-day TV guide
           </p>
