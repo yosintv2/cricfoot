@@ -15,7 +15,7 @@ export function toISO(d: Date): string {
 
 export function fmtKick(unix: number | null | undefined): string {
   if (!unix) return '—:—';
-  return new Date(unix * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  return new Date(unix * 1000).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false });
 }
 
 export function fmtDate(d: Date): string {

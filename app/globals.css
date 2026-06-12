@@ -329,7 +329,7 @@ body {
 .match-row.expanded { background: #ebf3ff; border-bottom: none; }
 
 .match-row-time {
-  width: 58px; font-size: 0.74rem; font-weight: 600;
+  width: 48px; font-size: 0.74rem; font-weight: 600;
   color: var(--text-muted); flex-shrink: 0;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
@@ -714,21 +714,26 @@ footer { background: var(--navy-dark); color: rgba(255,255,255,0.75); margin-top
   .channel-hero, .league-hero { padding: 16px 12px; }
   .seo-section { padding: 16px; }
 
-  /* Compact listing — tighter rows and headers on phones */
-  .page-title { font-size: 1.02rem; }
-  .page-sub { font-size: 0.72rem; }
-  .league-block-header { padding: 6px 10px; gap: 7px; }
-  .league-block-name { font-size: 0.8rem; }
-  .league-flag { font-size: 0.9rem; }
-  /* Fixture gets the full first line; channels drop to their own line below */
-  .match-row { padding: 6px 10px; gap: 8px; min-height: 32px; flex-wrap: wrap; row-gap: 2px; }
-  .match-row-time { width: 50px; font-size: 0.67rem; }
-  .match-row-fixture { font-size: 0.8rem; font-weight: 600; }
-  .match-row-channels {
-    font-size: 0.7rem;
-    flex-basis: 100%; max-width: 100%;
-    margin-left: 58px; /* aligns under the fixture name (time width + gap) */
+  /* Compact listing — two-line rows on phones:
+     line 1: time + fixture · line 2: status chip + channels */
+  .page-title { font-size: 1.1rem; }
+  .page-sub { font-size: 0.78rem; }
+  .league-block-header { padding: 7px 10px; gap: 7px; }
+  .league-block-name { font-size: 0.85rem; }
+  .league-flag { font-size: 0.95rem; }
+  .match-row { padding: 7px 10px; gap: 8px; min-height: 34px; flex-wrap: wrap; row-gap: 3px; }
+  .match-row-time { width: 44px; font-size: 0.78rem; }
+  .match-row-fixture {
+    font-size: 0.875rem; font-weight: 600;
+    flex: 0 0 calc(100% - 52px); /* fill line 1 so status + channels wrap below */
   }
+  .match-status { order: 3; width: 44px; text-align: center; }
+  .match-row-channels {
+    order: 4; font-size: 0.78rem;
+    flex: 1 1 0; max-width: none; min-width: 0;
+    margin-left: 52px; /* aligns under the fixture name (time width + gap) */
+  }
+  .match-status ~ .match-row-channels { margin-left: 0; } /* chip already fills the time column */
   .day-section-header { padding: 8px 10px; }
 
   /* Country/channel table stacks: country header above its channels */
@@ -744,8 +749,8 @@ footer { background: var(--navy-dark); color: rgba(255,255,255,0.75); margin-top
   }
 }
 @media (max-width:480px) {
-  .match-row-fixture { font-size: 0.78rem; }
-  .match-row-channels { font-size: 0.66rem; margin-left: 54px; }
-  .match-row-time { width: 46px; font-size: 0.63rem; }
+  .match-row-fixture { font-size: 0.85rem; }
+  .match-row-channels { font-size: 0.75rem; }
+  .match-row-time { font-size: 0.75rem; }
   .section-heading { font-size: 0.95rem; }
 }
