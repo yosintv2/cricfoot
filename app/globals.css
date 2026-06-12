@@ -329,8 +329,8 @@ body {
 .match-row.expanded { background: #ebf3ff; border-bottom: none; }
 
 .match-row-time {
-  width: 66px; font-size: 0.875rem; font-weight: 600;
-  color: var(--text-mid); flex-shrink: 0;
+  width: 58px; font-size: 0.74rem; font-weight: 600;
+  color: var(--text-muted); flex-shrink: 0;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
@@ -721,7 +721,7 @@ footer { background: var(--navy-dark); color: rgba(255,255,255,0.75); margin-top
   .league-block-name { font-size: 0.8rem; }
   .league-flag { font-size: 0.9rem; }
   .match-row { padding: 6px 10px; gap: 8px; min-height: 32px; }
-  .match-row-time { width: 54px; font-size: 0.72rem; }
+  .match-row-time { width: 50px; font-size: 0.67rem; }
   .match-row-fixture { font-size: 0.8rem; font-weight: 600; }
   .match-row-channels { font-size: 0.7rem; max-width: 36%; }
   .day-section-header { padding: 8px 10px; }
@@ -742,6 +742,6 @@ footer { background: var(--navy-dark); color: rgba(255,255,255,0.75); margin-top
   .match-row-fixture { font-size: 0.78rem; }
   /* keep a tiny truncated channel preview instead of hiding it */
   .match-row-channels { max-width: 32%; font-size: 0.66rem; }
-  .match-row-time { width: 50px; font-size: 0.68rem; }
+  .match-row-time { width: 46px; font-size: 0.63rem; }
   .section-heading { font-size: 0.95rem; }
 }
