@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { fetchMatches } from '@/lib/api';
-import { fromSlug, toSlug, scheduleDays } from '@/lib/utils';
+import { fromSlug, toSlug, scheduleDays, todayYMD, dateFromYMD, fmtDate } from '@/lib/utils';
 import ChannelPageClient from '@/components/ChannelPageClient';
 import Faq from '@/components/Faq';
 
@@ -106,7 +106,17 @@ async function getChannelData(nameParam: string) {
         .filter(d => d.matches.length > 0)
     : [];
 
-  return { channelName: channelName ?? fromSlug(slug), upcomingDays };
+  // Countries where this channel carries matches (for "available in …" copy).
+  const countrySet = new Set<string>();
+  upcomingDays.forEach(d =>
+    d.matches.forEach(m =>
+      (m.tv_channels ?? []).forEach(tv => {
+        if (tv.country && (tv.channels ?? []).includes(channelName!)) countrySet.add(tv.country);
+      })
+    )
+  );
+
+  return { channelName: channelName ?? fromSlug(slug), upcomingDays, countries: [...countrySet].sort() };
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -115,8 +125,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const kws = channelKeywords(channelName);
 
   return {
-    title: `${channelName} Live Stream Free | ${channelName} Live TV Channel Guide – CricFoot`,
-    description: `${channelName} live football schedule on CricFoot. Full TV guide with match fixtures, kick-off times and upcoming matches broadcast on ${channelName}.`,
+    title: `${channelName} Live Match Today – ${channelName} Live TV Channel Guide | CricFoot`,
+    description: `What match is on ${channelName} today? Full ${channelName} live TV channel guide: today's football matches, kick-off times in your local timezone and every fixture broadcast on ${channelName} over the next 14 days.`,
     keywords: kws.join(', '),
     openGraph: {
       title: `${channelName} Live Stream Free | ${channelName} Live TV Channel Guide – CricFoot`,
@@ -134,8 +144,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ChannelPage({ params }: Props) {
   const { name } = await params;
-  const { channelName, upcomingDays } = await getChannelData(name);
+  const { channelName, upcomingDays, countries } = await getChannelData(name);
   const kws = channelKeywords(channelName);
+
+  const todayData = upcomingDays.find(d => d.ymd === todayYMD());
+  const todayFixtures = (todayData?.matches ?? []).map(m => m.fixture).filter(Boolean).slice(0, 4);
+  const nextDayData = upcomingDays.find(d => d.ymd >= todayYMD()) ?? upcomingDays[0];
+  const nextFixture = nextDayData?.matches[0];
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -164,18 +179,30 @@ export default async function ChannelPage({ params }: Props) {
 
   const channelFaqs = [
     {
+      q: `What match is on ${channelName} today?`,
+      a: todayFixtures.length > 0
+        ? `${channelName} is showing ${todayFixtures.length === 1 ? 'one live match today' : `${todayData!.matches.length} live matches today`}: ${todayFixtures.join(', ')}. Kick-off times in the schedule above are converted to your local timezone.`
+        : nextFixture
+          ? `${channelName} has no match listed today. Its next live match is ${nextFixture.fixture}${nextFixture.league ? ` (${nextFixture.league})` : ''} on ${fmtDate(dateFromYMD(nextDayData!.ymd))} — see the full schedule above.`
+          : `${channelName} has no football matches listed right now. Schedules update daily, so check back soon.`,
+    },
+    {
       q: `Which football matches are on ${channelName} this week?`,
       a: totalMatches > 0
         ? `${channelName} is broadcasting ${totalMatches} football match${totalMatches !== 1 ? 'es' : ''} over the 14-day schedule${leagues.length ? `, covering ${leagues.join(', ')}` : ''}. The full day-by-day schedule with kick-off times is listed above.`
         : `${channelName} has no football matches listed for the next 14 days. Schedules update daily, so check back soon.`,
     },
     {
+      q: `How can I watch ${channelName} live on TV, Android or iPhone?`,
+      a: `Watch ${channelName} through its official TV, cable, satellite or streaming providers in its licensed regions — most broadcasters also offer an official app for Android and iPhone, and some stream selected matches on their official YouTube channel. CricFoot is a TV guide only: we show what's on ${channelName}, we don't stream content.`,
+    },
+    ...(countries.length > 0 ? [{
+      q: `Which countries is ${channelName} available in?`,
+      a: `Based on current listings, ${channelName} carries matches in ${countries.slice(0, 6).join(', ')}${countries.length > 6 ? ` and ${countries.length - 6} more countries` : ''}. Broadcast rights vary by competition and territory.`,
+    }] : []),
+    {
       q: `What time do matches start on ${channelName}?`,
       a: `Every kick-off time on this page is shown in your local timezone automatically — the time you see is the time the broadcast starts where you live.`,
-    },
-    {
-      q: `How can I watch ${channelName}?`,
-      a: `${channelName} is available through its official TV, cable, satellite or streaming providers in its licensed regions. CricFoot is a TV guide only — we list what's on ${channelName}, but we don't stream content.`,
     },
   ];
 
@@ -185,7 +212,7 @@ export default async function ChannelPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <ChannelPageClient channelName={channelName} upcomingDays={upcomingDays} />
+      <ChannelPageClient channelName={channelName} upcomingDays={upcomingDays} countries={countries} />
       <Faq title={`${channelName} — FAQs`} items={channelFaqs} />
     </>
   );

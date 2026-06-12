@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { Match } from '@/types';
-import { dateFromYMD, fmtDate } from '@/lib/utils';
+import { dateFromYMD, fmtDate, toSlug } from '@/lib/utils';
 import LeagueSection from './LeagueSection';
 import DayLabel from './DayLabel';
 
@@ -11,6 +11,7 @@ interface DayData { ymd: string; matches: Match[] }
 interface Props {
   channelName: string;
   upcomingDays: DayData[];
+  countries?: string[];
 }
 
 function shortLabel(ymd: string): string {
@@ -31,19 +32,12 @@ function groupByLeague(matches: Match[]): Record<string, Match[]> {
   );
 }
 
-const CHANNEL_KEYWORDS = (ch: string) => [
-  `${ch} Live Stream Free`, `${ch} Free Live Streaming`, `Watch ${ch} Live Online`,
-  `${ch} Live TV Free`, `${ch} Football Live Stream`, `Watch Football on ${ch}`,
-  `${ch} Soccer Live TV`, `${ch} Sports Channel Live`, `${ch} HD Live Stream`,
-  `${ch} Live Match Today`, `${ch} Football Today`, `${ch} TV Guide Today`,
-  `${ch} Live Football Schedule`, `${ch} Match Fixtures Today`, `${ch} Live Sports TV`,
-  `${ch} UEFA Champions League Live`, `${ch} Premier League Live`, `${ch} La Liga Live Stream`,
-  `${ch} Serie A Live`, `${ch} Bundesliga Live TV`,
-];
-
-export default function ChannelPageClient({ channelName, upcomingDays }: Props) {
+export default function ChannelPageClient({ channelName, upcomingDays, countries = [] }: Props) {
   const totalMatches = upcomingDays.reduce((s, d) => s + d.matches.length, 0);
   const initials = channelName.replace(/[^A-Za-z0-9]/g, '').slice(0, 2).toUpperCase() || '📺';
+  const nextDay = upcomingDays[0];
+  const nextFixtures = (nextDay?.matches ?? []).map(m => m.fixture).filter(Boolean).slice(0, 3);
+  const leagues = [...new Set(upcomingDays.flatMap(d => d.matches.map(m => m.league).filter(Boolean)))].slice(0, 5);
 
   return (
     <>
@@ -107,25 +101,42 @@ export default function ChannelPageClient({ channelName, upcomingDays }: Props) 
 
       {/* SEO */}
       <section className="seo-section">
-        <h2><span className="y-bar" />About {channelName} Football Coverage</h2>
+        <h2><span className="y-bar" />{channelName} Live Match Today &amp; TV Guide</h2>
         <p>
-          <strong>{channelName}</strong> is a football broadcasting channel tracked by CricFoot.
-          Find every upcoming match scheduled on {channelName} — including kick-off times, league competitions
-          and fixture information. All times are shown in your local timezone.
+          Looking for the <strong>{channelName} live match today</strong>? This page is the complete{' '}
+          <strong>{channelName} live TV channel guide</strong>
+          {nextFixtures.length > 0 && nextDay ? (
+            <>
+              {' '}— on {fmtDate(dateFromYMD(nextDay.ymd))} the channel shows{' '}
+              <strong>{nextFixtures.join(', ')}</strong>
+              {nextDay.matches.length > nextFixtures.length && ` and ${nextDay.matches.length - nextFixtures.length} more match${nextDay.matches.length - nextFixtures.length !== 1 ? 'es' : ''}`}
+            </>
+          ) : (
+            <> covering every football match scheduled on the channel</>
+          )}
+          . Kick-off times are converted to your local timezone automatically
+          {leagues.length > 0 && <>, with coverage including {leagues.join(', ')}</>}.
         </p>
+        {countries.length > 0 && (
+          <p>
+            {channelName} carries live football on TV in{' '}
+            {countries.slice(0, 6).map((c, i) => (
+              <span key={c}>
+                <Link href={`/country/${toSlug(c)}`} style={{ color: 'var(--navy)', fontWeight: 600 }}>{c}</Link>
+                {i < Math.min(countries.length, 6) - 1 && ', '}
+              </span>
+            ))}
+            {countries.length > 6 && ` and ${countries.length - 6} more countries`} — broadcast rights vary by
+            competition and territory, so check the fixture list above for your region.
+          </p>
+        )}
         <p>
-          CricFoot provides football TV schedules and channel guidance only.{' '}
-          <strong>We do not host, stream, or broadcast any live TV channels or content.</strong>{' '}
-          For actual live streaming, please use your authorised TV service or broadcaster. Browse all{' '}
-          <Link href="/" style={{ color: 'var(--navy)', fontWeight: 600 }}>football on TV today</Link>{' '}
-          to see every channel and competition.
+          To watch {channelName}, use its official TV, cable or streaming provider — most broadcasters also offer
+          an official app for Android and iPhone, and some show selected matches on their official YouTube channel.{' '}
+          <strong>CricFoot is a TV guide only: we do not host, stream, or broadcast any content.</strong>{' '}
+          For everything else on TV, see{' '}
+          <Link href="/" style={{ color: 'var(--navy)', fontWeight: 600 }}>football on TV today</Link>.
         </p>
-        <h3>Find {channelName} Live Football</h3>
-        <div className="tag-cloud">
-          {CHANNEL_KEYWORDS(channelName).map(kw => (
-            <span key={kw} className="tag-pill">{kw}</span>
-          ))}
-        </div>
       </section>
     </>
   );
