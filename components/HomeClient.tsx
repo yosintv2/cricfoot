@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import { Match } from '@/types';
-import { buildChannelMap, isPopular, toSlug, todayYMD, dateFromYMD } from '@/lib/utils';
+import { buildChannelMap, isPopular, toSlug, todayYMD, dateFromYMD, isoFromYMD } from '@/lib/utils';
 import { QUICK_LEAGUES } from '@/config/leagues';
 import LeagueSection from './LeagueSection';
 
@@ -120,19 +120,21 @@ export default function HomeClient({ allDayMatches }: Props) {
           {allDayMatches.map(({ ymd, matches }, idx) => {
             const { day, date, month } = getTabParts(ymd);
             return (
-              <button
+              // Real link so each day's /schedules/ page is crawlable; the
+              // click is intercepted to keep the instant in-page switch.
+              <a
                 key={ymd}
                 id={`dtab-${ymd}`}
+                href={`/schedules/${isoFromYMD(ymd)}/`}
                 className={`date-tab${activeDay === ymd ? ' active' : ''}${idx >= 7 ? ' date-tab-far' : ''}`}
-                onClick={() => { setActiveDay(ymd); setLeagueFilter(''); setQ(''); setOnTvOnly(false); }}
+                onClick={e => { e.preventDefault(); setActiveDay(ymd); setLeagueFilter(''); setQ(''); setOnTvOnly(false); }}
                 aria-pressed={activeDay === ymd}
                 title={`${matches.length} matches`}
-                type="button"
               >
                 <span className="date-tab-day">{day}</span>
                 <span className="date-tab-num">{date}</span>
                 <span className="date-tab-month">{month}</span>
-              </button>
+              </a>
             );
           })}
         </div>

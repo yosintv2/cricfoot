@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next';
 import { fetchMatches } from '@/lib/api';
-import { toSlug, matchSlug, pairSlug, splitFixture, scheduleDays } from '@/lib/utils';
+import { toSlug, matchSlug, pairSlug, splitFixture, scheduleDays, isoFromYMD } from '@/lib/utils';
 
 export const dynamic = 'force-static';
 
@@ -86,8 +86,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
+  const scheduleUrls: MetadataRoute.Sitemap = scheduleDays().map(ymd => ({
+    url: `${SITE_URL}/schedules/${isoFromYMD(ymd)}`,
+    lastModified: now,
+    changeFrequency: 'daily',
+    priority: 0.8,
+  }));
+
   return [
     { url: SITE_URL, lastModified: now, changeFrequency: 'hourly', priority: 1 },
+    ...scheduleUrls,
     { url: `${SITE_URL}/world-cup-2026`, lastModified: now, changeFrequency: 'hourly', priority: 1 },
     { url: `${SITE_URL}/tonight`, lastModified: now, changeFrequency: 'daily', priority: 0.9 },
     { url: `${SITE_URL}/tomorrow`, lastModified: now, changeFrequency: 'daily', priority: 0.9 },
