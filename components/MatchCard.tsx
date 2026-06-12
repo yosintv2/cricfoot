@@ -71,7 +71,12 @@ export default function MatchCard({ match, showLeague, ymd }: Props) {
           )}
         </div>
 
-        {previewChannels.length > 0 ? (
+        {previewChannels.length === 0 ? (
+          <div className="match-row-channels" aria-label="TV channels updating soon">
+            <span className="match-ch-arrow">▶</span>
+            <span className="match-ch-soon">TV Channels updating soon</span>
+          </div>
+        ) : (
           <div className="match-row-channels" aria-label={`Available on ${previewChannels.join(', ')}`}>
             <span className="match-ch-arrow">▶</span>
             {previewChannels.map((ch, i) => (
@@ -89,7 +94,7 @@ export default function MatchCard({ match, showLeague, ymd }: Props) {
             ))}
             {hasMore && <span className="match-ch-more">...</span>}
           </div>
-        ) : null}
+        )}
       </div>
     </article>
   );
