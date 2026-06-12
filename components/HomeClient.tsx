@@ -120,21 +120,21 @@ export default function HomeClient({ allDayMatches }: Props) {
           {allDayMatches.map(({ ymd, matches }, idx) => {
             const { day, date, month } = getTabParts(ymd);
             return (
-              // Real link so each day's /schedules/ page is crawlable; the
-              // click is intercepted to keep the instant in-page switch.
-              <a
+              // Each day navigates to its own /schedules/ URL so the address
+              // bar always reflects the selected date (and stays crawlable).
+              <Link
                 key={ymd}
                 id={`dtab-${ymd}`}
                 href={`/schedules/${isoFromYMD(ymd)}/`}
+                prefetch={false}
                 className={`date-tab${activeDay === ymd ? ' active' : ''}${idx >= 7 ? ' date-tab-far' : ''}`}
-                onClick={e => { e.preventDefault(); setActiveDay(ymd); setLeagueFilter(''); setQ(''); setOnTvOnly(false); }}
-                aria-pressed={activeDay === ymd}
+                aria-current={activeDay === ymd ? 'date' : undefined}
                 title={`${matches.length} matches`}
               >
                 <span className="date-tab-day">{day}</span>
                 <span className="date-tab-num">{date}</span>
                 <span className="date-tab-month">{month}</span>
-              </a>
+              </Link>
             );
           })}
         </div>
