@@ -89,15 +89,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { leagueName } = await getLeagueData(name);
 
   return {
-    title: `${leagueName} TV Schedule – Live Matches & Fixtures | CricFoot`,
-    description: `Full 14-day ${leagueName} TV schedule on CricFoot. Every match, kick-off time, venue and which TV channels are broadcasting ${leagueName} fixtures live worldwide.`,
+    title: `Watch Live ${leagueName} Football on TV – ${leagueName} TV Schedule | CricFoot`,
+    description: `Watch live ${leagueName} football on TV: the full 14-day ${leagueName} TV schedule with every match, kick-off time in your local timezone, venue and the channels broadcasting each fixture worldwide.`,
     openGraph: {
-      title: `${leagueName} TV Schedule | CricFoot`,
+      title: `Watch Live ${leagueName} Football on TV – ${leagueName} TV Schedule`,
       description: `Complete ${leagueName} fixture list with TV channel information for every match.`,
     },
     twitter: {
-      title: `${leagueName} TV Guide – CricFoot`,
-      description: `Find ${leagueName} matches, kick-off times and broadcasting channels.`,
+      title: `Watch Live ${leagueName} Football on TV – CricFoot`,
+      description: `${leagueName} matches, kick-off times and broadcasting channels.`,
     },
     alternates: {
       canonical: `/league/${decodeURIComponent(name)}`,

@@ -73,10 +73,11 @@ export default function LeaguePageClient({ leagueName, upcomingDays, totalMatche
 
       {/* SEO */}
       <section className="seo-section">
-        <h2><span className="y-bar" />{leagueName} TV Guide &amp; Fixtures</h2>
+        <h2><span className="y-bar" />Watch Live {leagueName} Football on TV</h2>
         <p>
-          Find the complete 14-day <strong>{leagueName}</strong> TV schedule on CricFoot. Every fixture,
-          kick-off time, venue and which TV channels are broadcasting each match in your country.
+          Watch live <strong>{leagueName}</strong> football on TV with the complete 14-day schedule on
+          CricFoot. Every fixture, kick-off time, venue and which TV channels are broadcasting each match
+          in your country.
         </p>
         <p>
           CricFoot covers all major football leagues including the <strong>Premier League</strong>,{' '}
