@@ -6,17 +6,17 @@ import DaySchedule from '@/components/DaySchedule';
 import Faq from '@/components/Faq';
 
 export const metadata: Metadata = {
-  title: 'Football on TV Tomorrow – Full Soccer TV Schedule | CricFoot',
+  title: 'Live Football on TV Tomorrow – Full Soccer TV Schedule | CricFoot',
   description:
-    'Football on TV tomorrow: every soccer match with kick-off times in your local timezone and the TV channels broadcasting in your country. Premier League, World Cup, Champions League and hundreds more competitions.',
+    'Live Football on TV Tomorrow: every soccer match with kick-off times in your local timezone and the TV channels broadcasting in your country. Premier League, World Cup, Champions League and hundreds more competitions.',
   keywords:
-    'football on tv tomorrow, soccer on tv tomorrow, football tomorrow, what football is on tomorrow, tomorrow football matches, soccer games tomorrow, football fixtures tomorrow tv',
+    'Live Football on TV Tomorrow, soccer on tv tomorrow, football tomorrow, what football is on tomorrow, tomorrow football matches, soccer games tomorrow, football fixtures tomorrow tv',
   openGraph: {
-    title: 'Football on TV Tomorrow – Full Soccer TV Schedule',
+    title: 'Live Football on TV Tomorrow – Full Soccer TV Schedule',
     description: 'Every football match on TV tomorrow with kick-off times and channels.',
   },
   twitter: {
-    title: 'Football on TV Tomorrow',
+    title: 'Live Football on TV Tomorrow',
     description: 'Tomorrow’s full soccer TV schedule with channels and kick-off times.',
   },
   alternates: { canonical: '/tomorrow' },
@@ -49,7 +49,7 @@ export default async function TomorrowPage() {
     <>
       <header style={{ padding: '16px 0 2px' }}>
         <h1 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text)' }}>
-          ⚽ Football on TV Tomorrow
+          ⚽ Live Football on TV Tomorrow
         </h1>
         <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: 3 }}>
           {dateLabel} — every match, kick-off time and TV channel.
