@@ -6,17 +6,17 @@ import DaySchedule from '@/components/DaySchedule';
 import Faq from '@/components/Faq';
 
 export const metadata: Metadata = {
-  title: 'Football on TV Tonight – What Football Is on TV Tonight? | CricFoot',
+  title: 'Live Football on TV Tonight – What Football Is on TV Tonight? | CricFoot',
   description:
     'What football is on TV tonight? Every soccer match today with kick-off times in your local timezone and the TV channels showing each game in your country.',
   keywords:
-    'football on tv tonight, what football is on tv tonight, soccer on tv tonight, football tonight, what soccer games are on tonight, football match tonight tv channel, games on tv tonight',
+    'Live Football on TV Tonight, what football is on tv tonight, soccer on tv tonight, football tonight, what soccer games are on tonight, football match tonight tv channel, games on tv tonight',
   openGraph: {
-    title: 'Football on TV Tonight',
+    title: 'Live Football on TV Tonight',
     description: 'Every football match on TV tonight with kick-off times and channels.',
   },
   twitter: {
-    title: 'Football on TV Tonight',
+    title: 'Live Football on TV Tonight',
     description: 'Tonight’s soccer TV schedule with channels and kick-off times.',
   },
   alternates: { canonical: '/tonight' },
@@ -49,7 +49,7 @@ export default async function TonightPage() {
     <>
       <header style={{ padding: '16px 0 2px' }}>
         <h1 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text)' }}>
-          ⚽ Football on TV Tonight
+          ⚽ Live Football on TV Tonight
         </h1>
         <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: 3 }}>
           {dateLabel} — all of today&apos;s and tonight&apos;s matches in your local time.
