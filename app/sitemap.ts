@@ -45,64 +45,64 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
   const channelUrls: MetadataRoute.Sitemap = [...channels].map(ch => ({
-    url: `${SITE_URL}/channel/${toSlug(ch)}`,
+    url: `${SITE_URL}/channel/${toSlug(ch)}/`,
     lastModified: now,
     changeFrequency: 'daily',
     priority: 0.7,
   }));
 
   const leagueUrls: MetadataRoute.Sitemap = [...leagues].map(l => ({
-    url: `${SITE_URL}/league/${toSlug(l)}`,
+    url: `${SITE_URL}/league/${toSlug(l)}/`,
     lastModified: now,
     changeFrequency: 'daily',
     priority: 0.8,
   }));
 
   const matchUrls: MetadataRoute.Sitemap = [...matchSlugs].map(slug => ({
-    url: `${SITE_URL}/match/${slug}`,
+    url: `${SITE_URL}/match/${slug}/`,
     lastModified: now,
     changeFrequency: 'daily',
     priority: 0.6,
   }));
 
   const teamUrls: MetadataRoute.Sitemap = [...teamSlugs].map(slug => ({
-    url: `${SITE_URL}/team/${slug}`,
+    url: `${SITE_URL}/team/${slug}/`,
     lastModified: now,
     changeFrequency: 'daily',
     priority: 0.7,
   }));
 
   const fixtureUrls: MetadataRoute.Sitemap = [...fixtureSlugs].map(slug => ({
-    url: `${SITE_URL}/fixtures/${slug}`,
+    url: `${SITE_URL}/fixtures/${slug}/`,
     lastModified: now,
     changeFrequency: 'daily',
     priority: 0.6,
   }));
 
   const countryUrls: MetadataRoute.Sitemap = [...countrySlugs].map(slug => ({
-    url: `${SITE_URL}/country/${slug}`,
+    url: `${SITE_URL}/country/${slug}/`,
     lastModified: now,
     changeFrequency: 'daily',
     priority: 0.7,
   }));
 
   const scheduleUrls: MetadataRoute.Sitemap = scheduleDays().map(ymd => ({
-    url: `${SITE_URL}/schedules/${isoFromYMD(ymd)}`,
+    url: `${SITE_URL}/schedules/${isoFromYMD(ymd)}/`,
     lastModified: now,
     changeFrequency: 'daily',
     priority: 0.8,
   }));
 
   return [
-    { url: SITE_URL, lastModified: now, changeFrequency: 'hourly', priority: 1 },
+    { url: `${SITE_URL}/`, lastModified: now, changeFrequency: 'hourly', priority: 1 },
     ...scheduleUrls,
-    { url: `${SITE_URL}/world-cup-2026`, lastModified: now, changeFrequency: 'hourly', priority: 1 },
-    { url: `${SITE_URL}/tonight`, lastModified: now, changeFrequency: 'daily', priority: 0.9 },
-    { url: `${SITE_URL}/tomorrow`, lastModified: now, changeFrequency: 'daily', priority: 0.9 },
-    { url: `${SITE_URL}/this-weekend`, lastModified: now, changeFrequency: 'daily', priority: 0.9 },
-    { url: `${SITE_URL}/channels`, lastModified: now, changeFrequency: 'daily', priority: 0.9 },
-    { url: `${SITE_URL}/countries`, lastModified: now, changeFrequency: 'daily', priority: 0.8 },
-    { url: `${SITE_URL}/about`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${SITE_URL}/world-cup-2026/`, lastModified: now, changeFrequency: 'hourly', priority: 1 },
+    { url: `${SITE_URL}/tonight/`, lastModified: now, changeFrequency: 'daily', priority: 0.9 },
+    { url: `${SITE_URL}/tomorrow/`, lastModified: now, changeFrequency: 'daily', priority: 0.9 },
+    { url: `${SITE_URL}/this-weekend/`, lastModified: now, changeFrequency: 'daily', priority: 0.9 },
+    { url: `${SITE_URL}/channels/`, lastModified: now, changeFrequency: 'daily', priority: 0.9 },
+    { url: `${SITE_URL}/countries/`, lastModified: now, changeFrequency: 'daily', priority: 0.8 },
+    { url: `${SITE_URL}/about/`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
     ...leagueUrls,
     ...countryUrls,
     ...teamUrls,
