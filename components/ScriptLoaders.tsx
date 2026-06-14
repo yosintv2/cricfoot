@@ -5,6 +5,14 @@ import Script from 'next/script';
 export default function ScriptLoaders() {
   return (
     <>
+      {/* Google Analytics 4 */}
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-S4LDBJ7YNB"
+        strategy="afterInteractive"
+      />
+      <Script id="ga4-init" strategy="afterInteractive">
+        {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-S4LDBJ7YNB');`}
+      </Script>
       {/* Google AdSense */}
       <Script
         async
