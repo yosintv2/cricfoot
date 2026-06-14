@@ -27,15 +27,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const label = ymd ? fmtDate(dateFromYMD(ymd)) : 'Schedule';
 
   return {
-    title: `Football on TV ${label} – Match Schedule & Channels | CricFoot`,
+    title: `Live Football on TV ${label} – Match Schedule & Channels | CricFoot`,
     description: `Every football match on TV on ${label}: kick-off times in your local timezone and the TV channels broadcasting each game in your country, grouped by competition.`,
-    keywords: `football on tv ${label}, soccer on tv ${label}, football matches ${label}, football schedule ${label}, what football is on ${label}`,
+    keywords: `Live Football on TV ${label}, soccer on tv ${label}, football matches ${label}, football schedule ${label}, what football is on ${label}`,
     openGraph: {
-      title: `Football on TV ${label}`,
+      title: `Live Football on TV ${label}`,
       description: `Full soccer TV schedule for ${label} with kick-off times and channels.`,
     },
     twitter: {
-      title: `Football on TV ${label}`,
+      title: `Live Football on TV ${label}`,
       description: `Every match on TV on ${label}.`,
     },
     alternates: { canonical: `/schedules/${decodeURIComponent(date)}` },
@@ -73,7 +73,7 @@ export default async function SchedulePage({ params }: Props) {
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.cricfoot.net/' },
-      { '@type': 'ListItem', position: 2, name: `Football on TV ${label}` },
+      { '@type': 'ListItem', position: 2, name: `Live Football on TV ${label}` },
     ],
   };
 
@@ -98,7 +98,7 @@ export default async function SchedulePage({ params }: Props) {
       />
 
       <header className="page-head">
-        <h1 className="page-title">⚽ Football on TV — {label}</h1>
+        <h1 className="page-title">⚽ Live Football on TV — {label}</h1>
         <p className="page-sub">Every match, kick-off time and TV channel for this day.</p>
       </header>
 
@@ -130,7 +130,7 @@ export default async function SchedulePage({ params }: Props) {
         </p>
         <p>
           See also{' '}
-          <Link href="/" style={{ color: 'var(--navy)', fontWeight: 600 }}>football on TV today</Link>,{' '}
+          <Link href="/" style={{ color: 'var(--navy)', fontWeight: 600 }}>Live Football on TV today</Link>,{' '}
           <Link href="/tomorrow" style={{ color: 'var(--navy)', fontWeight: 600 }}>tomorrow&apos;s schedule</Link> and{' '}
           <Link href="/this-weekend" style={{ color: 'var(--navy)', fontWeight: 600 }}>this weekend&apos;s matches</Link>.
         </p>
