@@ -1,7 +1,7 @@
 import { Match } from '@/types';
 import { toYMD } from '@/lib/utils';
 
-const API_BASE = 'https://livesoccertv.pages.dev/date';
+const API_BASE = 'https://cf.singhs.com.np/date';
 
 export async function fetchMatches(dateOrYMD: Date | string): Promise<Match[]> {
   const ymd = typeof dateOrYMD === 'string' ? dateOrYMD : toYMD(dateOrYMD);
