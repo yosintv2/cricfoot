@@ -6,7 +6,7 @@ const API_BASE = 'https://livesoccertv.pages.dev/date';
 export async function fetchMatches(dateOrYMD: Date | string): Promise<Match[]> {
   const ymd = typeof dateOrYMD === 'string' ? dateOrYMD : toYMD(dateOrYMD);
   try {
-    const res = await fetch(`${API_BASE}/${ymd}.json`, {
+    const res = await fetch(`${API_BASE}/${ymd.slice(0, 4)}/${ymd}.json`, {
       next: { revalidate: 300 },
     });
     if (!res.ok) return [];
