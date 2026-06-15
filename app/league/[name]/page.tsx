@@ -90,7 +90,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: `Watch Live ${leagueName} Football on TV – ${leagueName} TV Schedule | CricFoot`,
-    description: `Watch live ${leagueName} football on TV: the full 14-day ${leagueName} TV schedule with every match, kick-off time in your local timezone, venue and the channels broadcasting each fixture worldwide.`,
+    description: `Watch live ${leagueName} football on TV: the full 30-day ${leagueName} TV schedule with every match, kick-off time in your local timezone, venue and the channels broadcasting each fixture worldwide.`,
     openGraph: {
       title: `Watch Live ${leagueName} Football on TV – ${leagueName} TV Schedule`,
       description: `Complete ${leagueName} fixture list with TV channel information for every match.`,
@@ -145,8 +145,8 @@ export default async function LeaguePage({ params }: Props) {
           {
             q: `How many ${leagueName} matches are scheduled this week?`,
             a: totalMatches > 0
-              ? `There ${totalMatches === 1 ? 'is 1 match' : `are ${totalMatches} matches`} of ${leagueName} scheduled over the 14-day window. The day-by-day fixture list with kick-off times is shown above.`
-              : `There are no ${leagueName} matches listed for the next 14 days. Schedules update daily, so check back soon.`,
+              ? `There ${totalMatches === 1 ? 'is 1 match' : `are ${totalMatches} matches`} of ${leagueName} scheduled over the 30-day window. The day-by-day fixture list with kick-off times is shown above.`
+              : `There are no ${leagueName} matches listed for the next 30 days. Schedules update daily, so check back soon.`,
           },
           {
             q: `Are ${leagueName} kick-off times shown in my local time?`,

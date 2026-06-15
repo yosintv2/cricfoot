@@ -104,7 +104,7 @@ export default async function WorldCupPage() {
     {
       q: 'What World Cup 2026 matches are on TV today?',
       a: totalMatches > 0
-        ? `There ${totalMatches === 1 ? 'is 1 World Cup match' : `are ${totalMatches} World Cup matches`} in the current 14-day schedule above, grouped by day with kick-off times shown in your local timezone. The schedule updates daily throughout the tournament.`
+        ? `There ${totalMatches === 1 ? 'is 1 World Cup match' : `are ${totalMatches} World Cup matches`} in the current 30-day schedule above, grouped by day with kick-off times shown in your local timezone. The schedule updates daily throughout the tournament.`
         : 'The day-by-day World Cup schedule above updates daily throughout the tournament with kick-off times in your local timezone.',
     },
     {
@@ -134,7 +134,7 @@ export default async function WorldCupPage() {
         <div style={{ flex: 1, minWidth: 0 }}>
           <h1 className="league-hero-name">FIFA World Cup 2026 TV Schedule</h1>
           <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.78)', marginTop: 4 }}>
-            USA · Canada · Mexico — June 11 to July 19, 2026 · {totalMatches} match{totalMatches !== 1 ? 'es' : ''} in the next 14 days
+            USA · Canada · Mexico — June 11 to July 19, 2026 · {totalMatches} match{totalMatches !== 1 ? 'es' : ''} in the next 30 days
           </p>
         </div>
         <Link href="/" className="btn-back" style={{ flexShrink: 0 }}>← Back</Link>

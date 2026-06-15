@@ -47,7 +47,7 @@ export default function ChannelPageClient({ channelName, upcomingDays, countries
         <div className="channel-hero-info">
           <h1 className="channel-hero-name">Live Football on {channelName}</h1>
           <p className="channel-hero-meta">
-            {totalMatches} match{totalMatches !== 1 ? 'es' : ''} scheduled · 14-day guide
+            {totalMatches} match{totalMatches !== 1 ? 'es' : ''} scheduled · 30-day guide
           </p>
         </div>
         <Link href="/" className="btn-back">← Back</Link>
@@ -70,7 +70,7 @@ export default function ChannelPageClient({ channelName, upcomingDays, countries
       {upcomingDays.length === 0 ? (
         <div className="state-center">
           <div className="state-icon">📅</div>
-          <div className="state-title">No matches scheduled on {channelName} in the current 14-day window</div>
+          <div className="state-title">No matches scheduled on {channelName} in the current 30-day window</div>
           <div className="state-sub">
             This channel may not have matches listed for today or the coming week. Check back soon — schedules update daily.
           </div>

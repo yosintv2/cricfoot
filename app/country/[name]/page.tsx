@@ -69,7 +69,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: `Live Football on TV in ${countryName} – Soccer TV Schedule & Channels | CricFoot`,
-    description: `Live Football on TV in ${countryName} today and the next 14 days: every match, kick-off time in your local timezone and the ${countryName} TV channels broadcasting each game.`,
+    description: `Live Football on TV in ${countryName} today and the next 30 days: every match, kick-off time in your local timezone and the ${countryName} TV channels broadcasting each game.`,
     keywords: `football on tv ${countryName}, soccer on tv in ${countryName}, ${countryName} football tv guide, ${countryName} soccer tv schedule, what channel is the game on in ${countryName}, live football ${countryName} tv`,
     openGraph: {
       title: `Live Football on TV in ${countryName}`,
@@ -108,13 +108,13 @@ export default async function CountryPage({ params }: Props) {
     {
       q: `What football is on TV in ${countryName} today?`,
       a: totalMatches > 0
-        ? `There ${totalMatches === 1 ? 'is 1 match' : `are ${totalMatches} matches`} broadcast on TV in ${countryName} over the 14-day schedule above. Click any fixture to see which ${countryName} channel is showing it.`
+        ? `There ${totalMatches === 1 ? 'is 1 match' : `are ${totalMatches} matches`} broadcast on TV in ${countryName} over the 30-day schedule above. Click any fixture to see which ${countryName} channel is showing it.`
         : `No matches with ${countryName} TV listings are published for the current window. Schedules update daily, so check back soon.`,
     },
     {
       q: `Which channels show football in ${countryName}?`,
       a: topChannels.length > 0
-        ? `Football in ${countryName} is shown on channels including ${topChannels.slice(0, 6).join(', ')}. Click any channel name to see its full 14-day schedule.`
+        ? `Football in ${countryName} is shown on channels including ${topChannels.slice(0, 6).join(', ')}. Click any channel name to see its full 30-day schedule.`
         : `Channel listings for ${countryName} appear as soon as broadcasters confirm coverage.`,
     },
     {
@@ -136,7 +136,7 @@ export default async function CountryPage({ params }: Props) {
         <div style={{ flex: 1, minWidth: 0 }}>
           <h1 className="league-hero-name">Live Football on TV in {countryName}</h1>
           <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.78)', marginTop: 4 }}>
-            {totalMatches} match{totalMatches !== 1 ? 'es' : ''} · 14-day TV guide
+            {totalMatches} match{totalMatches !== 1 ? 'es' : ''} · 30-day TV guide
           </p>
         </div>
         <Link href="/countries" className="btn-back" style={{ flexShrink: 0 }}>← All countries</Link>

@@ -27,7 +27,7 @@ export default function LeaguePageClient({ leagueName, upcomingDays, totalMatche
         <div style={{ flex: 1, minWidth: 0 }}>
           <h1 className="league-hero-name">{leagueName}</h1>
           <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.78)', marginTop: 4 }}>
-            {totalMatches} match{totalMatches !== 1 ? 'es' : ''} · 14-day guide
+            {totalMatches} match{totalMatches !== 1 ? 'es' : ''} · 30-day guide
           </p>
         </div>
         <Link href="/" className="btn-back" style={{ flexShrink: 0 }}>← Back</Link>
@@ -44,11 +44,11 @@ export default function LeaguePageClient({ leagueName, upcomingDays, totalMatche
         </div>
       )}
 
-      {/* 14-day fixtures */}
+      {/* 30-day fixtures */}
       {upcomingDays.length === 0 ? (
         <div className="state-center">
           <div className="state-icon">📅</div>
-          <div className="state-title">No {leagueName} matches in the current 14-day window</div>
+          <div className="state-title">No {leagueName} matches in the current 30-day window</div>
           <div className="state-sub">Check back soon — schedules update daily.</div>
         </div>
       ) : (
@@ -75,7 +75,7 @@ export default function LeaguePageClient({ leagueName, upcomingDays, totalMatche
       <section className="seo-section">
         <h2><span className="y-bar" />Watch Live {leagueName} Football on TV</h2>
         <p>
-          Watch live <strong>{leagueName}</strong> football on TV with the complete 14-day schedule on
+          Watch live <strong>{leagueName}</strong> football on TV with the complete 30-day schedule on
           CricFoot. Every fixture, kick-off time, venue and which TV channels are broadcasting each match
           in your country.
         </p>

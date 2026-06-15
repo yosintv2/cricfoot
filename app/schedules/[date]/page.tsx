@@ -1,13 +1,13 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { fetchMatches } from '@/lib/api';
-import { dateFromYMD, fmtDate, isoFromYMD, scheduleDays } from '@/lib/utils';
+import { dateFromYMD, fmtDate, isoFromYMD, scheduleDays, allScheduleDays } from '@/lib/utils';
 import DaySchedule from '@/components/DaySchedule';
 import DateTabs from '@/components/DateTabs';
 import Faq from '@/components/Faq';
 
 export async function generateStaticParams() {
-  return scheduleDays().map(ymd => ({ date: isoFromYMD(ymd) }));
+  return allScheduleDays().map(ymd => ({ date: isoFromYMD(ymd) }));
 }
 
 interface Props {
@@ -47,12 +47,12 @@ export default async function SchedulePage({ params }: Props) {
   const ymd = ymdFromParam(date);
   const windowDays = scheduleDays();
 
-  if (!ymd || !windowDays.includes(ymd)) {
+  if (!ymd || !allScheduleDays().includes(ymd)) {
     return (
       <div className="state-center">
         <div className="state-icon">📅</div>
         <div className="state-title">No schedule for this date</div>
-        <div className="state-sub">TV listings cover yesterday, today and the next 12 days.</div>
+        <div className="state-sub">TV listings are available from June 2026 through the next 30 days.</div>
         <Link href="/" className="btn-back" style={{ marginTop: 20, display: 'inline-flex' }}>
           ← View today&apos;s matches
         </Link>

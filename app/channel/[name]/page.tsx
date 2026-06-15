@@ -126,7 +126,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: `Live Football on ${channelName} – ${channelName} Live Match Today | CricFoot`,
-    description: `Live football on ${channelName}: what match is on ${channelName} today, kick-off times in your local timezone and every fixture broadcast live on ${channelName} over the next 14 days.`,
+    description: `Live football on ${channelName}: what match is on ${channelName} today, kick-off times in your local timezone and every fixture broadcast live on ${channelName} over the next 30 days.`,
     keywords: `live football on ${channelName}, ${channelName} live match today, ${channelName} live football today, ${kws.join(', ')}`,
     openGraph: {
       title: `Live Football on ${channelName} – Live Match Today & TV Guide`,
@@ -134,7 +134,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     twitter: {
       title: `Live Football on ${channelName} – CricFoot`,
-      description: `${channelName} live match today and the full 14-day football schedule.`,
+      description: `${channelName} live match today and the full 30-day football schedule.`,
     },
     alternates: {
       canonical: `/channel/${toSlug(channelName)}`,
@@ -189,8 +189,8 @@ export default async function ChannelPage({ params }: Props) {
     {
       q: `Which football matches are on ${channelName} this week?`,
       a: totalMatches > 0
-        ? `${channelName} is broadcasting ${totalMatches} football match${totalMatches !== 1 ? 'es' : ''} over the 14-day schedule${leagues.length ? `, covering ${leagues.join(', ')}` : ''}. The full day-by-day schedule with kick-off times is listed above.`
-        : `${channelName} has no football matches listed for the next 14 days. Schedules update daily, so check back soon.`,
+        ? `${channelName} is broadcasting ${totalMatches} football match${totalMatches !== 1 ? 'es' : ''} over the 30-day schedule${leagues.length ? `, covering ${leagues.join(', ')}` : ''}. The full day-by-day schedule with kick-off times is listed above.`
+        : `${channelName} has no football matches listed for the next 30 days. Schedules update daily, so check back soon.`,
     },
     {
       q: `How can I watch ${channelName} live on TV, Android or iPhone?`,

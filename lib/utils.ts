@@ -38,14 +38,30 @@ export function todayYMD(): string {
   return toYMD(new Date());
 }
 
-// Site-wide schedule window: yesterday + today + next 12 days (14 total).
-// Days the API hasn't published yet just return [] from fetchMatches.
+// Rolling 30-day window: yesterday + today + next 28 days.
+// Used by league/channel/team/home pages for data fetching.
 export function scheduleDays(): string[] {
-  return Array.from({ length: 14 }, (_, i) => {
+  return Array.from({ length: 30 }, (_, i) => {
     const d = new Date();
     d.setDate(d.getDate() + i - 1);
     return toYMD(d);
   });
+}
+
+// All dates from site launch through today+29.
+// Used by sitemap and /schedules/[date] generateStaticParams so every
+// date the R2 API permanently stores is reachable and indexed.
+const LAUNCH_YMD = '20260601';
+export function allScheduleDays(): string[] {
+  const days: string[] = [];
+  const cur = dateFromYMD(LAUNCH_YMD);
+  const end = new Date();
+  end.setDate(end.getDate() + 29);
+  while (cur <= end) {
+    days.push(toYMD(cur));
+    cur.setDate(cur.getDate() + 1);
+  }
+  return days;
 }
 
 export function tomorrowYMD(): string {

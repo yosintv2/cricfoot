@@ -21,7 +21,7 @@ export default function DayFixtureList({ days, subject, showLeague = true, empty
     return (
       <div className="state-center">
         <div className="state-icon">📅</div>
-        <div className="state-title">No {subject} matches in the current 14-day window</div>
+        <div className="state-title">No {subject} matches in the current 30-day window</div>
         <div className="state-sub">{emptySub ?? 'Check back soon — schedules update daily.'}</div>
       </div>
     );

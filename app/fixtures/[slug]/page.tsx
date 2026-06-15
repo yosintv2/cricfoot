@@ -126,7 +126,7 @@ export default async function FixturePage({ params }: Props) {
       q: `When is the next ${title} match?`,
       a: nextMatch
         ? `The next ${title} meeting is on ${nextDate}${nextMatch.league ? ` in the ${nextMatch.league}` : ''}${nextMatch.venue ? ` at ${nextMatch.venue}` : ''}. The kick-off time above is shown in your local timezone.`
-        : `There is no ${title} meeting in the current 14-day TV schedule. This page updates automatically as soon as their next match is announced — bookmark it for every meeting.`,
+        : `There is no ${title} meeting in the current 30-day TV schedule. This page updates automatically as soon as their next match is announced — bookmark it for every meeting.`,
     },
     {
       q: `What TV channel is ${title} on?`,
@@ -176,7 +176,7 @@ export default async function FixturePage({ params }: Props) {
           days={upcomingDays}
           subject={title}
           idPrefix="hday"
-          emptySub={`No ${title} meeting is scheduled in the next 14 days. This page updates automatically when their next match is announced.`}
+          emptySub={`No ${title} meeting is scheduled in the next 30 days. This page updates automatically when their next match is announced.`}
         />
       </div>
 

@@ -29,7 +29,7 @@ const HOME_FAQS = [
   },
   {
     q: 'Is CricFoot a free alternative to LiveSoccerTV?',
-    a: 'Yes. Like LiveSoccerTV, CricFoot is a live soccer TV guide that shows which channels broadcast each match worldwide. CricFoot is completely free, covers a 14-day schedule, and converts every kick-off to your local time automatically.',
+    a: 'Yes. Like LiveSoccerTV, CricFoot is a live soccer TV guide that shows which channels broadcast each match worldwide. CricFoot is completely free, covers a 30-day schedule, and converts every kick-off to your local time automatically.',
   },
   {
     q: 'Are the kick-off times shown in my local time?',
@@ -45,11 +45,11 @@ const HOME_FAQS = [
   },
   {
     q: 'How do I watch a match on a specific channel like Sky Sports or ESPN?',
-    a: 'Use the Channels page or click any channel name next to a match to see that broadcaster’s full 14-day football schedule. To actually watch, use your authorised TV or streaming subscription for that broadcaster.',
+    a: 'Use the Channels page or click any channel name next to a match to see that broadcaster’s full 30-day football schedule. To actually watch, use your authorised TV or streaming subscription for that broadcaster.',
   },
   {
     q: 'How often is the TV schedule updated?',
-    a: 'Match listings and TV channel data are refreshed daily, covering a full 14-day window — yesterday, today and the next 12 days — so the guide always reflects the latest broadcast information.',
+    a: 'Match listings and TV channel data are refreshed daily, covering a full 30-day window — yesterday, today and the next 29 days — so the guide always reflects the latest broadcast information.',
   },
 ];
 

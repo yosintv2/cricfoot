@@ -61,7 +61,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: `${teamName} Next Match on TV – ${teamName} TV Schedule & Channels | CricFoot`,
-    description: `What channel is the ${teamName} game on? Full ${teamName} TV schedule: next match, kick-off times in your local timezone and every broadcasting channel by country for the next 14 days.`,
+    description: `What channel is the ${teamName} game on? Full ${teamName} TV schedule: next match, kick-off times in your local timezone and every broadcasting channel by country for the next 30 days.`,
     keywords: `${teamName} next match, ${teamName} game today, what channel is ${teamName} on, ${teamName} tv schedule, ${teamName} match on tv, watch ${teamName} live, ${teamName} fixtures on tv, ${teamName} live stream channel`,
     openGraph: {
       title: `${teamName} Next Match on TV – TV Schedule & Channels`,
@@ -111,7 +111,7 @@ export default async function TeamPage({ params }: Props) {
       q: `When is the next ${teamName} match on TV?`,
       a: nextMatch
         ? `${teamName}'s next match is ${nextMatch.fixture} on ${nextDate}${nextMatch.league ? ` in the ${nextMatch.league}` : ''}. The kick-off time above is shown in your local timezone.`
-        : `${teamName} has no matches listed in the current 14-day TV schedule. Listings update daily, so check back soon.`,
+        : `${teamName} has no matches listed in the current 30-day TV schedule. Listings update daily, so check back soon.`,
     },
     {
       q: `What channel is the ${teamName} game on?`,
@@ -120,10 +120,10 @@ export default async function TeamPage({ params }: Props) {
         : `Click any ${teamName} fixture above to see the full list of broadcasting TV channels for every country.`,
     },
     {
-      q: `How many ${teamName} matches are on TV in the next 14 days?`,
+      q: `How many ${teamName} matches are on TV in the next 30 days?`,
       a: totalMatches > 0
-        ? `${teamName} has ${totalMatches} match${totalMatches !== 1 ? 'es' : ''} in the 14-day TV schedule${leagues.length ? ` across ${leagues.join(', ')}` : ''}. The full day-by-day list with kick-off times is shown above.`
-        : `${teamName} has no matches in the current 14-day window. Schedules update daily.`,
+        ? `${teamName} has ${totalMatches} match${totalMatches !== 1 ? 'es' : ''} in the 30-day TV schedule${leagues.length ? ` across ${leagues.join(', ')}` : ''}. The full day-by-day list with kick-off times is shown above.`
+        : `${teamName} has no matches in the current 30-day window. Schedules update daily.`,
     },
     {
       q: `Are ${teamName} kick-off times shown in my local time?`,
@@ -144,7 +144,7 @@ export default async function TeamPage({ params }: Props) {
         <div style={{ flex: 1, minWidth: 0 }}>
           <h1 className="league-hero-name">{teamName} – Next Match on TV</h1>
           <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.78)', marginTop: 4 }}>
-            {totalMatches} match{totalMatches !== 1 ? 'es' : ''} · 14-day TV guide
+            {totalMatches} match{totalMatches !== 1 ? 'es' : ''} · 30-day TV guide
           </p>
         </div>
         <Link href="/" className="btn-back" style={{ flexShrink: 0 }}>← Back</Link>

@@ -79,7 +79,7 @@ export default async function CountriesPage() {
         items={[
           {
             q: 'How do I find football on TV in my country?',
-            a: 'Pick your country from the list above. Its page shows every match with confirmed TV coverage in your country over the next 14 days, with kick-off times in your local timezone.',
+            a: 'Pick your country from the list above. Its page shows every match with confirmed TV coverage in your country over the next 30 days, with kick-off times in your local timezone.',
           },
           {
             q: 'Why are channels different in each country?',

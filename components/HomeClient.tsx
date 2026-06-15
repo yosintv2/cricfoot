@@ -87,7 +87,7 @@ export default function HomeClient({ allDayMatches }: Props) {
         </p>
       </header>
 
-      {/* Date tabs — full 14 days on desktop, first 7 on mobile */}
+      {/* Date tabs — full 30 days on desktop, first 7 on mobile */}
       <div className="date-tabs-wrap" aria-label="Select day">
         <div className="date-tabs">
           {allDayMatches.map(({ ymd, matches }, idx) => {

@@ -235,7 +235,7 @@ export default async function MatchPage({ params }: Props) {
           Find every TV channel broadcasting <strong>{match.fixture}</strong>
           {match.league && <> in the <strong>{match.league}</strong></>} on {dateLabel}.
           The table above lists official broadcasters country by country — click any channel to see its full
-          football schedule for the next 14 days.
+          football schedule for the next 30 days.
         </p>
         <p>
           CricFoot provides TV listings and schedules only.{' '}
