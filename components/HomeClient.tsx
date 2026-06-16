@@ -32,9 +32,13 @@ export default function HomeClient({ allDayMatches }: Props) {
   const [onTvOnly, setOnTvOnly] = useState(false);
   const [leagueFilter, setLeagueFilter] = useState('');
 
-  // On mount, snap to the visitor's own "today" (build server may be a day
-  // off in their timezone) and scroll the active tab into view.
+  // On mount, snap to the visitor's own "today" and pick up any ?q= from
+  // the navbar search (which redirects here with the query in the URL).
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const urlQ = params.get('q');
+    if (urlQ) setQ(urlQ);
+
     const clientToday = todayYMD();
     const day = allDayMatches.some(d => d.ymd === clientToday) ? clientToday : activeDay;
     if (day !== activeDay) setActiveDay(day);
