@@ -77,6 +77,40 @@ export default function LeaguePageClient({ leagueName, upcomingDays, totalMatche
         })
       )}
 
+      {/* Country links — only on the global (non-country-filtered) league page */}
+      {!countryName && (() => {
+        const countries = [...new Set(
+          upcomingDays.flatMap(d => d.matches.flatMap(m =>
+            (m.tv_channels ?? []).map(tv => tv.country).filter((c): c is string => Boolean(c))
+          ))
+        )].sort();
+        if (countries.length === 0) return null;
+        return (
+          <section className="seo-section" style={{ marginBottom: 12 }}>
+            <h2 style={{ fontSize: '0.95rem', fontWeight: 700, marginBottom: 10 }}>
+              <span className="y-bar" />Watch {leagueName} by Country
+            </h2>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+              {countries.map(c => (
+                <Link
+                  key={c}
+                  href={`/league/${toSlug(leagueName)}/country/${toSlug(c)}/`}
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: 5,
+                    padding: '5px 12px', borderRadius: 20,
+                    background: 'var(--bg-section)', border: '1px solid var(--border-lt)',
+                    fontSize: '0.8rem', color: 'var(--text)', textDecoration: 'none',
+                    fontWeight: 500,
+                  }}
+                >
+                  {countryFlag(c)} {c}
+                </Link>
+              ))}
+            </div>
+          </section>
+        );
+      })()}
+
       {/* SEO */}
       <section className="seo-section">
         <h2><span className="y-bar" />

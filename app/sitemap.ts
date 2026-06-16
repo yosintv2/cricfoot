@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next';
 import { fetchMatches } from '@/lib/api';
 import { toSlug, matchSlug, pairSlug, splitFixture, scheduleDays, allScheduleDays, isoFromYMD } from '@/lib/utils';
+import { WATCH_PAGES } from '@/config/watch-pages';
 
 export const dynamic = 'force-static';
 
@@ -117,6 +118,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/channels/`, lastModified: now, changeFrequency: 'daily', priority: 0.9 },
     { url: `${SITE_URL}/countries/`, lastModified: now, changeFrequency: 'daily', priority: 0.8 },
     { url: `${SITE_URL}/about/`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${SITE_URL}/privacy/`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
+    ...WATCH_PAGES.map(p => ({
+      url: `${SITE_URL}/watch/${p.slug}/`,
+      lastModified: now,
+      changeFrequency: 'daily' as const,
+      priority: 0.85,
+    })),
     ...leagueUrls,
     ...leagueCountryUrls,
     ...countryUrls,

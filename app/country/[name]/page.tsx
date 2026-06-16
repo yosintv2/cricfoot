@@ -79,7 +79,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: `Live Football on TV in ${countryName}`,
       description: `The full ${countryName} soccer TV schedule.`,
     },
-    alternates: { canonical: `/country/${decodeURIComponent(name)}` },
+    alternates: { canonical: `/country/${decodeURIComponent(name)}/` },
   };
 }
 

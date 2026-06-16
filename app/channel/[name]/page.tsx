@@ -137,7 +137,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: `${channelName} live match today and the full 30-day football schedule.`,
     },
     alternates: {
-      canonical: `/channel/${toSlug(channelName)}`,
+      canonical: `/channel/${toSlug(channelName)}/`,
     },
   };
 }

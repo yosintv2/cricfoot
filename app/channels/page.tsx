@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: 'Football TV Channel Rankings | CricFoot',
     description: 'All football TV channels ranked by match count. Find the best sports broadcaster for live football.',
   },
-  alternates: { canonical: '/channels' },
+  alternates: { canonical: '/channels/' },
 };
 
 export default async function ChannelsPage() {

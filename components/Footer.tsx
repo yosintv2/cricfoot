@@ -37,6 +37,7 @@ export default function Footer() {
               <Link href="/channels" className="footer-link">All Channels</Link>
               <Link href="/countries" className="footer-link">Browse by Country</Link>
               <Link href="/about" className="footer-link">About Us</Link>
+              <Link href="/privacy/" className="footer-link">Privacy Policy</Link>
             </div>
           </div>
 

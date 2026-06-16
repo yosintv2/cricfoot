@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     title: 'World Cup 2026 TV Schedule & Channels',
     description: 'Where to watch every FIFA World Cup 2026 match — full TV guide.',
   },
-  alternates: { canonical: '/world-cup-2026' },
+  alternates: { canonical: '/world-cup-2026/' },
 };
 
 // Key broadcast markets pinned to the top of the by-country table.

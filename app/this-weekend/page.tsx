@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     title: 'Live Football on TV This Weekend',
     description: 'The full weekend soccer TV schedule with channels and kick-off times.',
   },
-  alternates: { canonical: '/this-weekend' },
+  alternates: { canonical: '/this-weekend/' },
 };
 
 export default async function ThisWeekendPage() {

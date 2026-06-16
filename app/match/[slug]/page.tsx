@@ -56,7 +56,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: `${fixture} – TV Channels & Kick-off`,
       description: `Full broadcast list for ${fixture}.`,
     },
-    alternates: { canonical: `/match/${slug}` },
+    alternates: { canonical: `/match/${slug}/` },
   };
 }
 

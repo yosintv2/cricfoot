@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     title: 'Live Football on TV Tomorrow',
     description: 'Tomorrow’s full soccer TV schedule with channels and kick-off times.',
   },
-  alternates: { canonical: '/tomorrow' },
+  alternates: { canonical: '/tomorrow/' },
 };
 
 export default async function TomorrowPage() {

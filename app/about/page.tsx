@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: 'About CricFoot – Free Football TV Guide & Match Schedules',
   description:
     'CricFoot is a free football TV guide providing live match schedules, channel listings and fixture information for Premier League, Champions League, La Liga and all major leagues.',
-  alternates: { canonical: '/about' },
+  alternates: { canonical: '/about/' },
 };
 
 const LEAGUES = [

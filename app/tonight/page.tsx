@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     title: 'Live Football on TV Tonight',
     description: 'Tonight’s soccer TV schedule with channels and kick-off times.',
   },
-  alternates: { canonical: '/tonight' },
+  alternates: { canonical: '/tonight/' },
 };
 
 export default async function TonightPage() {

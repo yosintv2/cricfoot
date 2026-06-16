@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     'Live Football TV guides for every country: see which channels broadcast live soccer in the United States, United Kingdom, Canada, India, Australia and 100+ more countries.',
   keywords:
     'football tv by country, soccer tv schedule by country, football channels by country, where to watch football in my country, soccer broadcast rights by country',
-  alternates: { canonical: '/countries' },
+  alternates: { canonical: '/countries/' },
 };
 
 export default async function CountriesPage() {

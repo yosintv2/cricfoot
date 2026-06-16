@@ -100,7 +100,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: `${leagueName} matches, kick-off times and broadcasting channels.`,
     },
     alternates: {
-      canonical: `/league/${decodeURIComponent(name)}`,
+      canonical: `/league/${decodeURIComponent(name)}/`,
     },
   };
 }

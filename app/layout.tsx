@@ -5,6 +5,7 @@ import Footer from '@/components/Footer';
 import ScriptLoaders from '@/components/ScriptLoaders';
 import AdUnit from '@/components/AdUnit';
 import SuperCounter from '@/components/SuperCounter';
+import CookieBanner from '@/components/CookieBanner';
 
 export const metadata: Metadata = {
   title: 'Live Football Match Today – Live Football on TV | CricFoot',
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
     description: 'Every live football match today with kick-off times and TV channels worldwide.',
   },
   robots: { index: true, follow: true },
-  alternates: { canonical: 'https://www.cricfoot.net' },
+  alternates: { canonical: 'https://www.cricfoot.net/' },
   manifest: '/site.webmanifest',
   applicationName: 'CricFoot',
   category: 'sports',
@@ -89,6 +90,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <AdUnit />
         </div>
         <Footer />
+        <CookieBanner />
         <ScriptLoaders />
       </body>
     </html>

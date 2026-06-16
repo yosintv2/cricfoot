@@ -5,13 +5,16 @@ import Script from 'next/script';
 export default function ScriptLoaders() {
   return (
     <>
-      {/* Google Analytics 4 */}
+      {/* Google Analytics 4 — consent mode default: denied until user accepts */}
+      <Script id="ga4-consent-default" strategy="afterInteractive">
+        {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied'});`}
+      </Script>
       <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-S4LDBJ7YNB"
         strategy="afterInteractive"
       />
       <Script id="ga4-init" strategy="afterInteractive">
-        {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-S4LDBJ7YNB');`}
+        {`gtag('js',new Date());gtag('config','G-S4LDBJ7YNB');if(localStorage.getItem('cookie-consent')==='accepted'){gtag('consent','update',{analytics_storage:'granted',ad_storage:'granted'});}`}
       </Script>
       {/* Google AdSense */}
       <Script
