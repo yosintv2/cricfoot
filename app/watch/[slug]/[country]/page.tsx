@@ -143,22 +143,22 @@ export default async function WatchLeagueCountryPage({ params }: Props) {
           <h2 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: 14 }}>
             <span className="y-bar" />{leagueName} TV Channels in {countryName}
           </h2>
-          <div className="bc-card" style={{ display: 'block' }}>
-            <div className="bc-card-header" style={{ marginBottom: 10 }}>
-              <span className="bc-card-country">
-                <span className="bc-card-flag">{flag}</span>
-                {countryName}
-                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 400 }}>
-                  · {channels.length} channel{channels.length !== 1 ? 's' : ''}
+          <div className="bc-list" style={{ borderRadius: 10 }}>
+            <div className="bc-row">
+              <div className="bc-row-country">
+                <span className="bc-row-flag">{flag}</span>
+                <span className="bc-row-name">{countryName}</span>
+                <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 400, marginLeft: 2 }}>
+                  {channels.length} ch
                 </span>
-              </span>
-            </div>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7 }}>
-              {channels.map(ch => (
-                <Link key={ch} href={`/channel/${toSlug(ch)}/`} className="bc-channel-pill">
-                  📺 {ch}
-                </Link>
-              ))}
+              </div>
+              <div className="bc-row-channels">
+                {channels.map(ch => (
+                  <Link key={ch} href={`/channel/${toSlug(ch)}/`} className="bc-channel-pill">
+                    {ch}
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
           <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: 8 }}>

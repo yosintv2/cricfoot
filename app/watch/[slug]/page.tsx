@@ -113,35 +113,38 @@ export default async function WatchLeaguePage({ params }: Props) {
         </p>
       </header>
 
-      {/* Broadcaster cards — mobile-first grid */}
+      {/* Broadcaster list */}
       {broadcasters.length > 0 && (
-        <section className="seo-section" style={{ marginBottom: 24 }}>
-          <h2 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: 14 }}>
-            <span className="y-bar" />{leagueName} TV Channels by Country
-          </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 10 }}>
-            {broadcasters.map(b => (
-              <div key={b.country} className="bc-card">
-                <div className="bc-card-header">
-                  <span className="bc-card-country">
-                    <span className="bc-card-flag">{countryFlag(b.country)}</span>
-                    {b.country}
-                  </span>
-                  <Link href={`/watch/${decodeURIComponent(slug)}/${toSlug(b.country)}/`} className="bc-card-schedule">
-                    Schedule →
-                  </Link>
+        <section className="seo-section" style={{ marginBottom: 24, padding: 0 }}>
+          <div className="bc-list-head">
+            <span className="y-bar" />
+            <span>{leagueName} TV Channels by Country</span>
+            <span className="bc-list-count">{broadcasters.length} countr{broadcasters.length !== 1 ? 'ies' : 'y'}</span>
+          </div>
+          <div className="bc-list">
+            {broadcasters.map((b, i) => (
+              <div key={b.country} className={`bc-row${i % 2 === 1 ? ' bc-row-alt' : ''}`}>
+                {/* Country name — fixed left column */}
+                <div className="bc-row-country">
+                  <span className="bc-row-flag">{countryFlag(b.country)}</span>
+                  <span className="bc-row-name">{b.country}</span>
                 </div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
+                {/* Channels — grows to fill space */}
+                <div className="bc-row-channels">
                   {b.channels.map(ch => (
                     <Link key={ch} href={`/channel/${toSlug(ch)}/`} className="bc-channel-pill">
-                      📺 {ch}
+                      {ch}
                     </Link>
                   ))}
                 </div>
+                {/* Schedule link — fixed right */}
+                <Link href={`/watch/${decodeURIComponent(slug)}/${toSlug(b.country)}/`} className="bc-row-schedule">
+                  Schedule →
+                </Link>
               </div>
             ))}
           </div>
-          <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: 10 }}>
+          <p className="bc-disclaimer">
             Broadcast rights vary by match and territory — check each fixture for exact channels.
             CricFoot is a TV guide only and does not stream or broadcast any content.
           </p>

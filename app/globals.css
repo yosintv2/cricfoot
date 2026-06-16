@@ -755,65 +755,125 @@ footer { background: var(--navy-dark); color: rgba(255,255,255,0.75); margin-top
   .section-heading { font-size: 0.95rem; }
 }
 
-/* ── Broadcaster cards (watch pages) ────────────────────────── */
-.bc-card {
-  background: #fff;
+/* ── Broadcaster list (watch/[slug]/) ────────────────────────── */
+.bc-list-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  padding: 0 0 12px;
+}
+.bc-list-count {
+  margin-left: auto;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+.bc-list {
   border: 1px solid var(--border-lt);
   border-radius: 10px;
-  padding: 12px 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-  transition: border-color 0.15s, box-shadow 0.15s;
+  overflow: hidden;
 }
-.bc-card:hover {
-  border-color: var(--navy-mid);
-  box-shadow: 0 2px 8px rgba(26,58,107,0.12);
+.bc-row {
+  display: grid;
+  grid-template-columns: 160px 1fr auto;
+  align-items: center;
+  gap: 0;
+  padding: 11px 14px;
+  background: #fff;
+  border-bottom: 1px solid var(--border-lt);
+  transition: background 0.12s;
 }
-.bc-card-header {
+.bc-row:last-child { border-bottom: none; }
+.bc-row-alt { background: var(--bg-alt); }
+.bc-row:hover { background: #eef1f8; }
+.bc-row-country {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-}
-.bc-card-country {
-  font-weight: 700;
-  font-size: 0.9rem;
-  color: var(--navy);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.bc-card-flag { font-size: 1.1rem; }
-.bc-card-schedule {
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: var(--navy);
-  background: var(--bg-section);
-  border-radius: 20px;
-  padding: 3px 9px;
-  white-space: nowrap;
+  gap: 7px;
+  padding-right: 12px;
   flex-shrink: 0;
-  transition: background 0.15s;
 }
-.bc-card-schedule:hover { background: var(--border); }
+.bc-row-flag { font-size: 1.1rem; line-height: 1; }
+.bc-row-name {
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: var(--navy);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.bc-row-channels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 2px 12px 2px 0;
+  min-width: 0;
+}
 .bc-channel-pill {
   font-size: 0.75rem;
   font-weight: 500;
-  color: var(--navy);
-  background: var(--bg-alt);
+  color: var(--navy-mid);
+  background: var(--bg-section);
   border: 1px solid var(--border-lt);
-  border-radius: 5px;
-  padding: 3px 8px;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  transition: background 0.15s, border-color 0.15s;
+  border-radius: 4px;
+  padding: 2px 8px;
+  white-space: nowrap;
+  transition: background 0.12s, color 0.12s;
 }
 .bc-channel-pill:hover {
+  background: var(--navy);
+  color: #fff;
+  border-color: var(--navy);
+}
+.bc-row-schedule {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--navy);
   background: var(--bg-section);
-  border-color: var(--navy-mid);
+  border: 1px solid var(--border-lt);
+  border-radius: 20px;
+  padding: 4px 11px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.12s, color 0.12s;
+}
+.bc-row-schedule:hover {
+  background: var(--navy);
+  color: #fff;
+  border-color: var(--navy);
+}
+.bc-disclaimer {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 8px;
+  padding: 0;
+}
+
+/* Mobile: stack country+schedule on line 1, channels on line 2 */
+@media (max-width: 600px) {
+  .bc-row {
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    gap: 7px 0;
+    padding: 10px 12px;
+  }
+  .bc-row-country {
+    grid-column: 1;
+    grid-row: 1;
+    padding-right: 8px;
+  }
+  .bc-row-schedule {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .bc-row-channels {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    padding: 0;
+  }
 }
 
 /* Watch index league cards */
