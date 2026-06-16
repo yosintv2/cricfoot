@@ -33,11 +33,11 @@ export const WORLD_CUP_ID = 16;
 
 export const QUICK_LEAGUES: QuickLeague[] = [
   { label: 'World Cup',   flag: '🏆', id: WORLD_CUP_ID, href: '/world-cup-2026' },
-  { label: 'Champions L.', flag: '⭐', name: 'UEFA Champions League' },
+  { label: 'Champions L.', flag: '⭐', id: 7 },
   { label: 'Friendly',    flag: '🤝', id: 851 },
-  { label: 'EPL',         flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', name: 'Premier League' },
-  { label: 'La Liga',     flag: '🇪🇸', name: 'La Liga' },
-  { label: 'Serie A',     flag: '🇮🇹', name: 'Serie A' },
-  { label: 'Bundesliga',  flag: '🇩🇪', name: 'Bundesliga' },
-  { label: 'Ligue 1',     flag: '🇫🇷', name: 'Ligue 1' },
+  { label: 'EPL',         flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', id: 17 },
+  { label: 'La Liga',     flag: '🇪🇸', id: 8 },
+  { label: 'Serie A',     flag: '🇮🇹', id: 23 },
+  { label: 'Bundesliga',  flag: '🇩🇪', id: 35 },
+  { label: 'Ligue 1',     flag: '🇫🇷', id: 34 },
 ];
