@@ -24,6 +24,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const teamSlugs = new Set<string>();
   const fixtureSlugs = new Set<string>();
   const countrySlugs = new Set<string>();
+  const leagueCountryCombos = new Set<string>();
 
   dayMatches.forEach(({ ymd, matches }) =>
     matches.forEach(m => {
@@ -36,7 +37,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         fixtureSlugs.add(pairSlug(teams[0], teams[1]));
       }
       (m.tv_channels ?? []).forEach(tv => {
-        if (tv.country && toSlug(tv.country)) countrySlugs.add(toSlug(tv.country));
+        if (tv.country && toSlug(tv.country)) {
+          countrySlugs.add(toSlug(tv.country));
+          if (m.league) leagueCountryCombos.add(`${toSlug(m.league)}|${toSlug(tv.country)}`);
+        }
         (tv.channels ?? []).forEach(ch => channels.add(ch));
       });
     })
@@ -86,6 +90,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
+  const leagueCountryUrls: MetadataRoute.Sitemap = [...leagueCountryCombos].map(combo => {
+    const [league, country] = combo.split('|');
+    return {
+      url: `${SITE_URL}/league/${league}/country/${country}/`,
+      lastModified: now,
+      changeFrequency: 'daily' as const,
+      priority: 0.75,
+    };
+  });
+
   const scheduleUrls: MetadataRoute.Sitemap = allScheduleDays().map(ymd => ({
     url: `${SITE_URL}/schedules/${isoFromYMD(ymd)}/`,
     lastModified: now,
@@ -104,6 +118,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/countries/`, lastModified: now, changeFrequency: 'daily', priority: 0.8 },
     { url: `${SITE_URL}/about/`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
     ...leagueUrls,
+    ...leagueCountryUrls,
     ...countryUrls,
     ...teamUrls,
     ...channelUrls,

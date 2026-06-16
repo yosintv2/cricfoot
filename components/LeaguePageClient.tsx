@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { Match } from '@/types';
-import { dateFromYMD, fmtDate, getLeagueFlag } from '@/lib/utils';
+import { countryFlag, dateFromYMD, fmtDate, getLeagueFlag, toSlug } from '@/lib/utils';
 import MatchCard from './MatchCard';
 import DayLabel from './DayLabel';
 
@@ -12,25 +12,31 @@ interface Props {
   leagueName: string;
   upcomingDays: DayData[];
   totalMatches: number;
+  countryName?: string;
 }
 
 function shortLabel(ymd: string): string {
   return dateFromYMD(ymd).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 }
 
-export default function LeaguePageClient({ leagueName, upcomingDays, totalMatches }: Props) {
+export default function LeaguePageClient({ leagueName, upcomingDays, totalMatches, countryName }: Props) {
+  const backHref = countryName ? `/league/${toSlug(leagueName)}/` : '/';
+  const backLabel = countryName ? `← ${leagueName}` : '← Back';
+  const heroTitle = countryName ? `${leagueName} on TV in ${countryName}` : leagueName;
+  const heroIcon = countryName ? countryFlag(countryName) : getLeagueFlag(leagueName);
+
   return (
     <>
       {/* League hero */}
       <header className="league-hero">
-        <div className="league-hero-icon" aria-hidden="true">{getLeagueFlag(leagueName)}</div>
+        <div className="league-hero-icon" aria-hidden="true">{heroIcon}</div>
         <div style={{ flex: 1, minWidth: 0 }}>
-          <h1 className="league-hero-name">{leagueName}</h1>
+          <h1 className="league-hero-name">{heroTitle}</h1>
           <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.78)', marginTop: 4 }}>
             {totalMatches} match{totalMatches !== 1 ? 'es' : ''} · 30-day guide
           </p>
         </div>
-        <Link href="/" className="btn-back" style={{ flexShrink: 0 }}>← Back</Link>
+        <Link href={backHref} className="btn-back" style={{ flexShrink: 0 }}>{backLabel}</Link>
       </header>
 
       {/* Day tabs */}
@@ -73,11 +79,29 @@ export default function LeaguePageClient({ leagueName, upcomingDays, totalMatche
 
       {/* SEO */}
       <section className="seo-section">
-        <h2><span className="y-bar" />Watch Live {leagueName} Football on TV</h2>
+        <h2><span className="y-bar" />
+          {countryName
+            ? `Watch ${leagueName} on TV in ${countryName}`
+            : `Watch Live ${leagueName} Football on TV`}
+        </h2>
         <p>
-          Watch live <strong>{leagueName}</strong> football on TV with the complete 30-day schedule on
-          CricFoot. Every fixture, kick-off time, venue and which TV channels are broadcasting each match
-          in your country.
+          {countryName ? (
+            <>
+              Find every <strong>{leagueName}</strong> match on TV in <strong>{countryName}</strong> with
+              the complete 30-day schedule on CricFoot. Kick-off times are shown in your local timezone
+              and each fixture lists the {countryName} broadcaster carrying the game.{' '}
+              <Link href={`/league/${toSlug(leagueName)}/`} style={{ color: 'var(--navy)', fontWeight: 600 }}>
+                View the worldwide {leagueName} schedule
+              </Link>{' '}
+              for coverage in all other countries.
+            </>
+          ) : (
+            <>
+              Watch live <strong>{leagueName}</strong> football on TV with the complete 30-day schedule on
+              CricFoot. Every fixture, kick-off time, venue and which TV channels are broadcasting each match
+              in your country.
+            </>
+          )}
         </p>
         <p>
           CricFoot covers all major football leagues including the <strong>Premier League</strong>,{' '}
