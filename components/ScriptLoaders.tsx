@@ -16,15 +16,13 @@ export default function ScriptLoaders() {
       <Script id="ga4-init" strategy="afterInteractive">
         {`gtag('js',new Date());gtag('config','G-S4LDBJ7YNB');if(localStorage.getItem('cookie-consent')==='accepted'){gtag('consent','update',{analytics_storage:'granted',ad_storage:'granted'});}`}
       </Script>
-      {/* Google AdSense */}
+      {/* Google AdSense — Auto ads handles all placements */}
       <Script
         async
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5525538810839147"
         crossOrigin="anonymous"
         strategy="afterInteractive"
       />
-      {/* Google Ads Manager */}
-      <Script src="/google-ads.js" strategy="lazyOnload" />
     </>
   );
 }

@@ -3,7 +3,6 @@ import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ScriptLoaders from '@/components/ScriptLoaders';
-import AdUnit from '@/components/AdUnit';
 import SuperCounter from '@/components/SuperCounter';
 import CookieBanner from '@/components/CookieBanner';
 
@@ -87,7 +86,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Navbar />
         <div className="container">
           {children}
-          <AdUnit />
         </div>
         <Footer />
         <CookieBanner />
