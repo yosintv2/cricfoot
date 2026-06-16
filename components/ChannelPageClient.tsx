@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { Match } from '@/types';
 import { dateFromYMD, fmtDate, toSlug } from '@/lib/utils';
+import { useLang } from '@/contexts/LangContext';
 import LeagueSection from './LeagueSection';
 import DayLabel from './DayLabel';
 
@@ -33,6 +34,7 @@ function groupByLeague(matches: Match[]): Record<string, Match[]> {
 }
 
 export default function ChannelPageClient({ channelName, upcomingDays, countries = [] }: Props) {
+  const { t } = useLang();
   const totalMatches = upcomingDays.reduce((s, d) => s + d.matches.length, 0);
   const initials = channelName.replace(/[^A-Za-z0-9]/g, '').slice(0, 2).toUpperCase() || '📺';
   const nextDay = upcomingDays[0];
@@ -45,12 +47,12 @@ export default function ChannelPageClient({ channelName, upcomingDays, countries
       <header className="channel-hero">
         <div className="channel-hero-icon" aria-hidden="true">{initials}</div>
         <div className="channel-hero-info">
-          <h1 className="channel-hero-name">Live Football on {channelName}</h1>
+          <h1 className="channel-hero-name">{t ? t.channelH1(channelName) : `Live Football on ${channelName}`}</h1>
           <p className="channel-hero-meta">
-            {totalMatches} match{totalMatches !== 1 ? 'es' : ''} scheduled · 30-day guide
+            {t ? t.channelMatchCount(totalMatches) : `${totalMatches} match${totalMatches !== 1 ? 'es' : ''} scheduled · 30-day guide`}
           </p>
         </div>
-        <Link href="/" className="btn-back">← Back</Link>
+        <Link href="/" className="btn-back">{t?.back ?? '← Back'}</Link>
       </header>
 
       {/* Day tabs */}
@@ -70,12 +72,12 @@ export default function ChannelPageClient({ channelName, upcomingDays, countries
       {upcomingDays.length === 0 ? (
         <div className="state-center">
           <div className="state-icon">📅</div>
-          <div className="state-title">No matches scheduled on {channelName} in the current 30-day window</div>
+          <div className="state-title">{t ? t.channelNoMatches(channelName) : `No matches scheduled on ${channelName} in the current 30-day window`}</div>
           <div className="state-sub">
-            This channel may not have matches listed for today or the coming week. Check back soon — schedules update daily.
+            {t?.leagueCheckBack ?? 'Check back soon — schedules update daily.'}
           </div>
           <Link href="/" className="btn-back" style={{ marginTop: 20, display: 'inline-flex' }}>
-            ← View today&apos;s matches
+            {t?.channelViewToday ?? "← View today's matches"}
           </Link>
         </div>
       ) : (
@@ -89,7 +91,7 @@ export default function ChannelPageClient({ channelName, upcomingDays, countries
                   <div className="day-section-label">📅 <DayLabel ymd={ymd} /></div>
                   <div className="day-section-date">{full}</div>
                 </div>
-                <span className="day-section-count">{matches.length} match{matches.length !== 1 ? 'es' : ''}</span>
+                <span className="day-section-count">{t ? t.matchCount(matches.length) : `${matches.length} match${matches.length !== 1 ? 'es' : ''}`}</span>
               </div>
               {Object.entries(grouped).map(([league, lmatches]) => (
                 <LeagueSection key={league} league={league} matches={lmatches} showLeague ymd={ymd} />

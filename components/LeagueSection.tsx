@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Match } from '@/types';
 import { toSlug, getLeagueFlag } from '@/lib/utils';
+import { useLang } from '@/contexts/LangContext';
 import MatchCard from './MatchCard';
 
 interface Props {
@@ -15,6 +16,7 @@ interface Props {
 }
 
 export default function LeagueSection({ league, matches, showLeague, defaultOpen = true, ymd }: Props) {
+  const { t } = useLang();
   const [open, setOpen] = useState(defaultOpen);
 
   return (
@@ -39,7 +41,7 @@ export default function LeagueSection({ league, matches, showLeague, defaultOpen
           onClick={e => e.stopPropagation()}
           aria-label={`View all ${league} matches`}
         >
-          View all
+          {t?.viewAll ?? 'View all'}
         </Link>
         <span className={`league-block-arrow${open ? ' open' : ''}`} aria-hidden="true">▲</span>
       </div>

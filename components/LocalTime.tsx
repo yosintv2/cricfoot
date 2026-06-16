@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { fmtKick } from '@/lib/utils';
+import { useLang } from '@/contexts/LangContext';
 
 // Deterministic GMT rendering (fixed locale + timezone) so server HTML and
 // the client's first render are identical — a clean hydration. The effect
@@ -37,6 +38,7 @@ export function LocalDate({ unix, fallback }: { unix?: number | null; fallback?:
 // LIVE while the match is underway (kickoff → +2h), FT once it's over.
 // Computed client-side only — prerendered HTML can't know "now".
 export function MatchStatus({ unix }: { unix?: number | null }) {
+  const { t } = useLang();
   const [status, setStatus] = useState<'live' | 'over' | null>(null);
   useEffect(() => {
     if (!unix) return;
@@ -48,13 +50,13 @@ export function MatchStatus({ unix }: { unix?: number | null }) {
       else setStatus(null);
     };
     update();
-    const t = setInterval(update, 60_000);
-    return () => clearInterval(t);
+    const timer = setInterval(update, 60_000);
+    return () => clearInterval(timer);
   }, [unix]);
   if (!status) return null;
   return (
     <span className={`match-status ${status}`}>
-      {status === 'live' ? 'LIVE' : 'FT'}
+      {status === 'live' ? (t?.live ?? 'LIVE') : (t?.ft ?? 'FT')}
     </span>
   );
 }

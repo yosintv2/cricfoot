@@ -1,5 +1,8 @@
+'use client';
+
 import Link from 'next/link';
 import { toSlug } from '@/lib/utils';
+import { useLang } from '@/contexts/LangContext';
 import Logo from './Logo';
 
 const TOP_LEAGUES = [
@@ -12,6 +15,9 @@ const TOP_LEAGUES = [
 ];
 
 export default function Footer() {
+  const { t } = useLang();
+  const year = new Date().getFullYear();
+
   return (
     <footer>
       <div className="footer-inner">
@@ -22,15 +28,15 @@ export default function Footer() {
               <span className="footer-brand-name">CricFoot</span>
             </div>
             <p className="footer-desc">
-              Your ultimate TV guide for live football and soccer matches worldwide. Find comprehensive schedules, match fixtures, and channel listings for all major leagues.
+              {t?.footerDescription ?? 'Your ultimate TV guide for live football and soccer matches worldwide. Find comprehensive schedules, match fixtures, and channel listings for all major leagues.'}
             </p>
             <p className="footer-disclaimer">
-              We provide TV listings and schedules only. We do not stream or broadcast any content.
+              {t?.footerDisclaimer ?? 'We provide TV listings and schedules only. We do not stream or broadcast any content.'}
             </p>
           </div>
 
           <div>
-            <div className="footer-col-title">Quick Links</div>
+            <div className="footer-col-title">{t?.footerQuickLinks ?? 'Quick Links'}</div>
             <div className="footer-links">
               <Link href="/" className="footer-link">Home / Today&apos;s Matches</Link>
               <Link href="/world-cup-2026" className="footer-link">World Cup 2026 TV Guide</Link>
@@ -42,7 +48,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <div className="footer-col-title">Top Leagues</div>
+            <div className="footer-col-title">{t?.footerTopLeagues ?? 'Top Leagues'}</div>
             <div className="footer-links">
               {TOP_LEAGUES.map(l => (
                 <Link key={l} href={`/league/${toSlug(l)}`} className="footer-link">
@@ -53,7 +59,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <div className="footer-col-title">Popular Searches</div>
+            <div className="footer-col-title">{t?.footerPopularSearches ?? 'Popular Searches'}</div>
             <div className="footer-links">
               <Link href="/" className="footer-link">Live Football Match Today</Link>
               <Link href="/" className="footer-link">Live Football on TV</Link>
@@ -69,11 +75,10 @@ export default function Footer() {
       </div>
       <div className="footer-inner" style={{ paddingTop: 0, paddingBottom: 16 }}>
         <div className="footer-bottom">
-          <span>© {new Date().getFullYear()} CricFoot. TV listings &amp; schedules only.</span>
+          <span>{t?.footerCopyright ?? `© ${year} CricFoot. TV listings & schedules only.`}</span>
           <span>All kick-off times shown in your local timezone.</span>
         </div>
       </div>
     </footer>
   );
 }
-

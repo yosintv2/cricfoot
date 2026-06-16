@@ -5,6 +5,7 @@ import Footer from '@/components/Footer';
 import ScriptLoaders from '@/components/ScriptLoaders';
 import SuperCounter from '@/components/SuperCounter';
 import CookieBanner from '@/components/CookieBanner';
+import { LangProvider } from '@/contexts/LangContext';
 
 export const metadata: Metadata = {
   title: 'Live Football Match Today – Live Football on TV | CricFoot',
@@ -81,14 +82,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
-        {/* SuperCounters online tracker — renders inside this in-body container */}
-        <SuperCounter />
-        <Navbar />
-        <div className="container">
-          {children}
-        </div>
-        <Footer />
-        <CookieBanner />
+        <LangProvider>
+          {/* SuperCounters online tracker — renders inside this in-body container */}
+          <SuperCounter />
+          <Navbar />
+          <div className="container">
+            {children}
+          </div>
+          <Footer />
+          <CookieBanner />
+        </LangProvider>
         <ScriptLoaders />
       </body>
     </html>
