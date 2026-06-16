@@ -144,6 +144,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.8,
       };
     }),
+    // Spanish (es) pages
+    { url: `${SITE_URL}/es/`, lastModified: now, changeFrequency: 'hourly' as const, priority: 0.95 },
+    { url: `${SITE_URL}/es/ver/`, lastModified: now, changeFrequency: 'hourly' as const, priority: 0.9 },
+    ...[...watchLeagueSlugs].map(slug => ({
+      url: `${SITE_URL}/es/ver/${slug}/`,
+      lastModified: now,
+      changeFrequency: 'daily' as const,
+      priority: 0.8,
+    })),
+    ...[...watchLeagueCountryCombos].map(combo => {
+      const [league, country] = combo.split('|');
+      return {
+        url: `${SITE_URL}/es/ver/${league}/${country}/`,
+        lastModified: now,
+        changeFrequency: 'daily' as const,
+        priority: 0.75,
+      };
+    }),
     ...leagueUrls,
     ...leagueCountryUrls,
     ...countryUrls,

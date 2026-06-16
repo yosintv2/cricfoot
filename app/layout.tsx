@@ -28,7 +28,14 @@ export const metadata: Metadata = {
     description: 'Every live football match today with kick-off times and TV channels worldwide.',
   },
   robots: { index: true, follow: true },
-  alternates: { canonical: 'https://www.cricfoot.net/' },
+  alternates: {
+    canonical: 'https://www.cricfoot.net/',
+    languages: {
+      'en': 'https://www.cricfoot.net/',
+      'es': 'https://www.cricfoot.net/es/',
+      'x-default': 'https://www.cricfoot.net/',
+    },
+  },
   manifest: '/site.webmanifest',
   applicationName: 'CricFoot',
   category: 'sports',
