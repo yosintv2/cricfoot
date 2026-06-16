@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { Match } from '@/types';
 import { countryFlag, dateFromYMD, fmtDate, getLeagueFlag, toSlug } from '@/lib/utils';
-import { useLang } from '@/contexts/LangContext';
 import MatchCard from './MatchCard';
 import DayLabel from './DayLabel';
 
@@ -21,9 +20,8 @@ function shortLabel(ymd: string): string {
 }
 
 export default function LeaguePageClient({ leagueName, upcomingDays, totalMatches, countryName }: Props) {
-  const { t } = useLang();
   const backHref = countryName ? `/league/${toSlug(leagueName)}/` : '/';
-  const backLabel = countryName ? `← ${leagueName}` : (t?.back ?? '← Back');
+  const backLabel = countryName ? `← ${leagueName}` : '← Back';
   const heroTitle = countryName ? `${leagueName} on TV in ${countryName}` : leagueName;
   const heroIcon = countryName ? countryFlag(countryName) : getLeagueFlag(leagueName);
 
@@ -35,7 +33,7 @@ export default function LeaguePageClient({ leagueName, upcomingDays, totalMatche
         <div style={{ flex: 1, minWidth: 0 }}>
           <h1 className="league-hero-name">{heroTitle}</h1>
           <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.78)', marginTop: 4 }}>
-            {t ? t.leagueMatchCount(totalMatches) : `${totalMatches} match${totalMatches !== 1 ? 'es' : ''} · 30-day guide`}
+            {totalMatches} match{totalMatches !== 1 ? 'es' : ''} · 30-day guide
           </p>
         </div>
         <Link href={backHref} className="btn-back" style={{ flexShrink: 0 }}>{backLabel}</Link>
@@ -56,8 +54,8 @@ export default function LeaguePageClient({ leagueName, upcomingDays, totalMatche
       {upcomingDays.length === 0 ? (
         <div className="state-center">
           <div className="state-icon">📅</div>
-          <div className="state-title">{t ? t.leagueNoMatches(leagueName) : `No ${leagueName} matches in the current 30-day window`}</div>
-          <div className="state-sub">{t?.leagueCheckBack ?? 'Check back soon — schedules update daily.'}</div>
+          <div className="state-title">No {leagueName} matches in the current 30-day window</div>
+          <div className="state-sub">Check back soon — schedules update daily.</div>
         </div>
       ) : (
         upcomingDays.map(({ ymd, matches }) => {
@@ -90,7 +88,7 @@ export default function LeaguePageClient({ leagueName, upcomingDays, totalMatche
         return (
           <section className="seo-section" style={{ marginBottom: 12 }}>
             <h2 style={{ fontSize: '0.95rem', fontWeight: 700, marginBottom: 10 }}>
-              <span className="y-bar" />{t ? t.leagueWatchByCountry(leagueName) : `Watch ${leagueName} by Country`}
+              <span className="y-bar" />Watch {leagueName} by Country
             </h2>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
               {countries.map(c => (
@@ -118,7 +116,7 @@ export default function LeaguePageClient({ leagueName, upcomingDays, totalMatche
         <h2><span className="y-bar" />
           {countryName
             ? `Watch ${leagueName} on TV in ${countryName}`
-            : (t ? t.leagueWatchLive(leagueName) : `Watch Live ${leagueName} Football on TV`)}
+            : `Watch Live ${leagueName} Football on TV`}
         </h2>
         <p>
           {countryName ? (

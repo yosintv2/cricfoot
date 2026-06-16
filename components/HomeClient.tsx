@@ -4,7 +4,6 @@ import { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import { Match } from '@/types';
 import { buildChannelMap, groupByLeaguePinned, isPopular, toSlug, todayYMD, dateFromYMD, isoFromYMD } from '@/lib/utils';
-import { useLang } from '@/contexts/LangContext';
 import LeagueSection from './LeagueSection';
 
 const POPULAR_LEAGUES = [
@@ -27,7 +26,6 @@ function getTabParts(ymd: string) {
 }
 
 export default function HomeClient({ allDayMatches }: Props) {
-  const { t } = useLang();
   const todayYmd = todayYMD();
   const [activeDay, setActiveDay] = useState(todayYmd);
   const [q, setQ] = useState('');
@@ -83,9 +81,9 @@ export default function HomeClient({ allDayMatches }: Props) {
     <>
       {/* Page heading */}
       <header className="page-head">
-        <h1 className="page-title">{t?.h1 ?? '⚽ Live Football Match Today'}</h1>
+        <h1 className="page-title">⚽ Live Football Match Today</h1>
         <p className="page-sub">
-          {t?.sub ?? 'Live football on TV — every match today and the next two weeks, with kick-off times and channels, free.'}
+          Live football on TV — every match today and the next two weeks, with kick-off times and channels, free.
         </p>
       </header>
 
@@ -125,7 +123,7 @@ export default function HomeClient({ allDayMatches }: Props) {
             onChange={e => setOnTvOnly(e.target.checked)}
             aria-label="Show only matches on TV"
           />
-          {t?.filterOnTV ?? 'On TV'}
+          On TV
         </label>
 
         <div className="filter-divider" />
@@ -136,7 +134,7 @@ export default function HomeClient({ allDayMatches }: Props) {
           onChange={e => setLeagueFilter(e.target.value)}
           aria-label="Filter by league"
         >
-          <option value="">{t?.filterAllLeagues ?? 'League'}</option>
+          <option value="">League</option>
           {allLeagues.map(l => <option key={l} value={l}>{l}</option>)}
         </select>
 
@@ -145,7 +143,7 @@ export default function HomeClient({ allDayMatches }: Props) {
         <input
           className="filter-search"
           type="search"
-          placeholder={t?.filterSearchPlaceholder ?? 'Search teams, leagues, channels…'}
+          placeholder="Search teams, leagues, channels…"
           value={q}
           onChange={e => setQ(e.target.value)}
           aria-label="Search matches"
@@ -154,15 +152,15 @@ export default function HomeClient({ allDayMatches }: Props) {
 
       {/* Match count */}
       <p className="tz-note" style={{ padding: '7px 0 10px', borderBottom: '1px solid var(--border-lt)', marginBottom: 10 }}>
-        {t ? t.matchCount(filteredMatches.length) : `${filteredMatches.length} match${filteredMatches.length !== 1 ? 'es' : ''}`}
+        {filteredMatches.length} match{filteredMatches.length !== 1 ? 'es' : ''}
       </p>
 
       {/* League sections */}
       {Object.keys(groupedMatches).length === 0 ? (
         <div className="state-center">
           <div className="state-icon">📅</div>
-          <div className="state-title">{t?.noMatchesFound ?? 'No matches found'}</div>
-          <div className="state-sub">{t?.tryDifferentSearch ?? 'Try different search terms or clear your filters.'}</div>
+          <div className="state-title">No matches found</div>
+          <div className="state-sub">Try different search terms or clear your filters.</div>
         </div>
       ) : (
         <div>
@@ -177,7 +175,7 @@ export default function HomeClient({ allDayMatches }: Props) {
         <section className="channels-section" aria-label="All broadcasting channels" style={{ marginTop: 28 }}>
           <h2 className="section-heading">
             <div className="accent-bar" />
-            📺 {t?.allChannelsHeading ?? 'All Channels'}
+            📺 All Channels
             <span className="count-badge">{allChannels.length}</span>
           </h2>
           <div className="channel-grid">
@@ -195,7 +193,7 @@ export default function HomeClient({ allDayMatches }: Props) {
                     {initials}
                   </div>
                   <div className="channel-card-name">{ch}</div>
-                  <div className="channel-match-count">{t ? t.matchCount(info.matches.length) : `${info.matches.length} match${info.matches.length !== 1 ? 'es' : ''}`}</div>
+                  <div className="channel-match-count">{info.matches.length} match{info.matches.length !== 1 ? 'es' : ''}</div>
                 </Link>
               );
             })}

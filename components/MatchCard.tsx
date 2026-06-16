@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Match } from '@/types';
 import { toSlug, toYMD, todayYMD, matchSlug } from '@/lib/utils';
-import { useLang } from '@/contexts/LangContext';
 import LocalTime, { MatchStatus } from './LocalTime';
 
 interface Props {
@@ -15,7 +14,6 @@ interface Props {
 
 export default function MatchCard({ match, showLeague, ymd }: Props) {
   const router = useRouter();
-  const { t } = useLang();
   const tvChs = match.tv_channels ?? [];
   const totalCh = tvChs.reduce((a, tv) => a + (tv.channels ?? []).length, 0);
   const kickoffISO = match.kickoff ? new Date(match.kickoff * 1000).toISOString() : '';
@@ -61,7 +59,7 @@ export default function MatchCard({ match, showLeague, ymd }: Props) {
         <MatchStatus unix={match.kickoff} />
 
         <div className="match-row-fixture" itemProp="name">
-          {match.fixture || (t?.tba ?? 'TBA')}
+          {match.fixture || 'TBA'}
           {showLeague && match.league && (
             <Link
               href={`/league/${toSlug(match.league)}`}
@@ -76,7 +74,7 @@ export default function MatchCard({ match, showLeague, ymd }: Props) {
         {previewChannels.length === 0 ? (
           <div className="match-row-channels" aria-label="TV channels updating soon">
             <span className="match-ch-arrow">▶</span>
-            <span className="match-ch-soon">{t?.tvChannelsUpdatingSoon ?? 'TV Channels updating soon'}</span>
+            <span className="match-ch-soon">TV Channels updating soon</span>
           </div>
         ) : (
           <div className="match-row-channels" aria-label={`Available on ${previewChannels.join(', ')}`}>

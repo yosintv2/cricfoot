@@ -2,10 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useLang } from '@/contexts/LangContext';
 
 export default function CookieBanner() {
-  const { t } = useLang();
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -29,15 +27,15 @@ export default function CookieBanner() {
   return (
     <div className="cookie-banner" role="dialog" aria-label="Cookie consent">
       <p className="cookie-banner-text">
-        {t?.cookieText ?? 'We use cookies for analytics and personalised ads.'}{' '}
+        We use cookies for analytics and personalised ads.{' '}
         <Link href="/privacy/" className="cookie-banner-link">Privacy Policy</Link>
       </p>
       <div className="cookie-banner-actions">
         <button className="cookie-btn-accept" onClick={() => updateConsent(true)}>
-          {t?.cookieAccept ?? 'Accept All'}
+          Accept All
         </button>
         <button className="cookie-btn-decline" onClick={() => updateConsent(false)}>
-          {t?.cookieDecline ?? 'Decline'}
+          Decline
         </button>
       </div>
     </div>

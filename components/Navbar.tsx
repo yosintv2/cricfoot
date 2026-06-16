@@ -1,45 +1,32 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { toSlug } from '@/lib/utils';
 import { QUICK_LEAGUES } from '@/config/leagues';
-import { LANG_CONFIG, SUPPORTED_LANGS, Lang } from '@/config/translations';
-import { useLang } from '@/contexts/LangContext';
 import Logo from './Logo';
 
+// Pretty URL from the config label: "World Cup" → /league/world-cup/.
+// The league page maps the label slug back to the entry's id or name.
+// Entries with an explicit href (e.g. the World Cup hub) use it directly.
 function quickLeagueHref(l: { label: string; href?: string }): string {
   return l.href ?? `/league/${toSlug(l.label)}`;
 }
 
+const NAV_LINKS = [
+  { href: '/', label: 'Matches' },
+  { href: '/world-cup-2026', label: 'World Cup 2026' },
+  { href: '/channels', label: 'Channels' },
+  { href: '/countries', label: 'Countries' },
+  { href: '/about', label: 'About' },
+];
+
 export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
-  const { lang, t, setLang } = useLang();
   const [open, setOpen] = useState(false);
-  const [langOpen, setLangOpen] = useState(false);
   const [q, setQ] = useState('');
-  const langRef = useRef<HTMLDivElement>(null);
-
-  // Close language dropdown on outside click
-  useEffect(() => {
-    function handleClick(e: MouseEvent) {
-      if (langRef.current && !langRef.current.contains(e.target as Node)) {
-        setLangOpen(false);
-      }
-    }
-    if (langOpen) document.addEventListener('mousedown', handleClick);
-    return () => document.removeEventListener('mousedown', handleClick);
-  }, [langOpen]);
-
-  const navLinks = [
-    { href: '/', label: t?.navMatches ?? 'Matches' },
-    { href: '/world-cup-2026', label: t?.navWorldCup ?? 'World Cup 2026' },
-    { href: '/channels', label: t?.navChannels ?? 'Channels' },
-    { href: '/countries', label: t?.navCountries ?? 'Countries' },
-    { href: '/about', label: t?.navAbout ?? 'About' },
-  ];
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault();
@@ -48,9 +35,6 @@ export default function Navbar() {
       setOpen(false);
     }
   }
-
-  const currentFlag = lang ? LANG_CONFIG[lang].flag : '🌐';
-  const currentCode = lang ? lang.toUpperCase() : 'EN';
 
   return (
     <nav className="navbar" role="navigation" aria-label="Main navigation">
@@ -68,7 +52,7 @@ export default function Navbar() {
             <input
               className="nav-search"
               type="search"
-              placeholder={t?.navSearchPlaceholder ?? 'Search for league, team, channel...'}
+              placeholder="Search for league, team, channel..."
               aria-label="Search leagues, teams and channels"
               value={q}
               onChange={e => setQ(e.target.value)}
@@ -76,45 +60,12 @@ export default function Navbar() {
           </form>
 
           <div className="nav-top-actions">
-            {/* Language picker */}
-            <div className="nav-lang-wrap" ref={langRef}>
-              <button
-                className="nav-lang-btn"
-                onClick={() => setLangOpen(o => !o)}
-                aria-label="Select language"
-                aria-expanded={langOpen}
-                type="button"
-              >
-                <span>{currentFlag}</span>
-                <span className="nav-lang-code">{currentCode}</span>
-                <span className="nav-lang-caret" aria-hidden="true">▾</span>
-              </button>
-              {langOpen && (
-                <div className="nav-lang-menu" role="listbox" aria-label="Select language">
-                  <button
-                    className={`nav-lang-option${!lang ? ' active' : ''}`}
-                    onClick={() => { setLang(null); setLangOpen(false); }}
-                    role="option"
-                    aria-selected={!lang}
-                    type="button"
-                  >
-                    🇬🇧 English
-                  </button>
-                  {SUPPORTED_LANGS.map(l => (
-                    <button
-                      key={l}
-                      className={`nav-lang-option${lang === l ? ' active' : ''}`}
-                      onClick={() => { setLang(l as Lang); setLangOpen(false); }}
-                      role="option"
-                      aria-selected={lang === l}
-                      type="button"
-                    >
-                      {LANG_CONFIG[l].flag} {LANG_CONFIG[l].nativeName}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
+            <button className="nav-gear" aria-label="Settings" title="Settings" type="button">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+              </svg>
+            </button>
 
             <a href="https://apps.apple.com" className="nav-app-btn" target="_blank" rel="noopener noreferrer" aria-label="Download on App Store">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -122,7 +73,7 @@ export default function Navbar() {
               </svg>
               <div>
                 <span className="nav-app-sub">Download on the</span>
-                <span className="nav-app-main">{t?.appStoreLabel ?? 'App Store'}</span>
+                <span className="nav-app-main">App Store</span>
               </div>
             </a>
 
@@ -132,7 +83,7 @@ export default function Navbar() {
               </svg>
               <div>
                 <span className="nav-app-sub">GET IT ON</span>
-                <span className="nav-app-main">{t?.googlePlayLabel ?? 'Google Play'}</span>
+                <span className="nav-app-main">Google Play</span>
               </div>
             </a>
 
@@ -152,7 +103,7 @@ export default function Navbar() {
       {/* ── Row 2: Dark-navy nav links ── */}
       <div className="nav-main">
         <div className="nav-main-inner">
-          {navLinks.map(({ href, label }) => (
+          {NAV_LINKS.map(({ href, label }) => (
             <Link
               key={href}
               href={href}
@@ -179,7 +130,7 @@ export default function Navbar() {
       {/* ── Mobile menu ── */}
       {open && (
         <div className="nav-mobile-menu" role="menu">
-          {navLinks.map(({ href, label }) => (
+          {NAV_LINKS.map(({ href, label }) => (
             <Link
               key={href}
               href={href}
@@ -190,37 +141,12 @@ export default function Navbar() {
               {label}
             </Link>
           ))}
-
-          {/* Language selector in mobile menu */}
-          <div className="nav-mobile-lang" role="group" aria-label="Select language">
-            <div className="nav-mobile-lang-label">Language</div>
-            <div className="nav-mobile-lang-options">
-              <button
-                className={`nav-mobile-lang-opt${!lang ? ' active' : ''}`}
-                onClick={() => { setLang(null); setOpen(false); }}
-                type="button"
-              >
-                🇬🇧 EN
-              </button>
-              {SUPPORTED_LANGS.map(l => (
-                <button
-                  key={l}
-                  className={`nav-mobile-lang-opt${lang === l ? ' active' : ''}`}
-                  onClick={() => { setLang(l as Lang); setOpen(false); }}
-                  type="button"
-                >
-                  {LANG_CONFIG[l].flag} {l.toUpperCase()}
-                </button>
-              ))}
-            </div>
-          </div>
-
           <div style={{ padding: '10px 16px 14px', borderTop: '1px solid var(--border-lt)' }}>
             <form onSubmit={handleSearch}>
               <input
                 style={{ width: '100%', border: '1px solid var(--border)', borderRadius: 8, padding: '8px 12px', fontSize: '0.875rem', fontFamily: 'inherit', color: 'var(--text)' }}
                 type="search"
-                placeholder={t?.navSearchPlaceholder ?? 'Search leagues, teams, channels...'}
+                placeholder="Search leagues, teams, channels..."
                 value={q}
                 onChange={e => setQ(e.target.value)}
                 aria-label="Search"
