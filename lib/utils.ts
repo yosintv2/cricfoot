@@ -51,7 +51,7 @@ export function scheduleDays(): string[] {
 // All dates from site launch through today+29.
 // Used by sitemap and /schedules/[date] generateStaticParams so every
 // date the R2 API permanently stores is reachable and indexed.
-const LAUNCH_YMD = '20260601';
+const LAUNCH_YMD = '20260101';
 export function allScheduleDays(): string[] {
   const days: string[] = [];
   const cur = dateFromYMD(LAUNCH_YMD);
