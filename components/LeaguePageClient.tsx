@@ -13,13 +13,14 @@ interface Props {
   upcomingDays: DayData[];
   totalMatches: number;
   countryName?: string;
+  isPastFallback?: boolean;
 }
 
 function shortLabel(ymd: string): string {
   return dateFromYMD(ymd).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 }
 
-export default function LeaguePageClient({ leagueName, upcomingDays, totalMatches, countryName }: Props) {
+export default function LeaguePageClient({ leagueName, upcomingDays, totalMatches, countryName, isPastFallback }: Props) {
   const backHref = countryName ? `/league/${toSlug(leagueName)}/` : '/';
   const backLabel = countryName ? `← ${leagueName}` : '← Back';
   const heroTitle = countryName ? `${leagueName} on TV in ${countryName}` : leagueName;
@@ -33,11 +34,18 @@ export default function LeaguePageClient({ leagueName, upcomingDays, totalMatche
         <div style={{ flex: 1, minWidth: 0 }}>
           <h1 className="league-hero-name">{heroTitle}</h1>
           <p style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.78)', marginTop: 4 }}>
-            {totalMatches} match{totalMatches !== 1 ? 'es' : ''} · 30-day guide
+            {totalMatches} match{totalMatches !== 1 ? 'es' : ''} · {isPastFallback ? 'Recent results' : '30-day guide'}
           </p>
         </div>
         <Link href={backHref} className="btn-back" style={{ flexShrink: 0 }}>{backLabel}</Link>
       </header>
+
+      {/* Past-fallback notice */}
+      {isPastFallback && (
+        <p style={{ fontSize: '0.82rem', color: 'var(--text-muted, #888)', padding: '8px 0 4px', borderBottom: '1px solid var(--border-lt)', marginBottom: 8 }}>
+          No upcoming fixtures in the next 30 days — showing recent results.
+        </p>
+      )}
 
       {/* Day tabs */}
       {upcomingDays.length > 1 && (
@@ -54,7 +62,7 @@ export default function LeaguePageClient({ leagueName, upcomingDays, totalMatche
       {upcomingDays.length === 0 ? (
         <div className="state-center">
           <div className="state-icon">📅</div>
-          <div className="state-title">No {leagueName} matches in the current 30-day window</div>
+          <div className="state-title">No {leagueName} matches{countryName ? ` in ${countryName}` : ''} found</div>
           <div className="state-sub">Check back soon — schedules update daily.</div>
         </div>
       ) : (

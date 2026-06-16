@@ -48,6 +48,17 @@ export function scheduleDays(): string[] {
   });
 }
 
+// Returns the last `count` days starting from 2 days ago (scheduleDays already
+// covers yesterday). Used as a historical fallback when a league has no upcoming
+// matches in the standard 30-day window.
+export function pastScheduleDays(count: number): string[] {
+  return Array.from({ length: count }, (_, i) => {
+    const d = new Date();
+    d.setDate(d.getDate() - (i + 2));
+    return toYMD(d);
+  }).reverse();
+}
+
 // All dates from site launch through today+29.
 // Used by sitemap and /schedules/[date] generateStaticParams so every
 // date the R2 API permanently stores is reachable and indexed.

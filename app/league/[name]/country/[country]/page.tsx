@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { fetchMatches } from '@/lib/api';
-import { fromSlug, toSlug, scheduleDays, countryFlag } from '@/lib/utils';
+import { fromSlug, toSlug, scheduleDays, pastScheduleDays, todayYMD, countryFlag } from '@/lib/utils';
 import { QUICK_LEAGUES } from '@/config/leagues';
 import LeaguePageClient from '@/components/LeaguePageClient';
 import Faq from '@/components/Faq';
@@ -32,6 +32,7 @@ export async function generateStaticParams() {
 async function getData(nameParam: string, countryParam: string) {
   const leagueSlug = decodeURIComponent(nameParam);
   const countrySlug = decodeURIComponent(countryParam);
+  const today = todayYMD();
 
   const dayData = await Promise.all(
     scheduleDays().map(async (ymd) => ({ ymd, matches: await fetchMatches(ymd) }))
@@ -66,20 +67,35 @@ async function getData(nameParam: string, countryParam: string) {
   leagueName = leagueName ?? (cfg?.label ?? fromSlug(leagueSlug));
   countryName = countryName ?? fromSlug(countrySlug);
 
+  const matchFilter = (m: { league?: string | null; league_id?: number; tv_channels?: { country?: string | null; channels?: string[] }[] }) => {
+    const leagueMatch = cfg?.id != null
+      ? m.league_id === cfg.id
+      : m.league != null && toSlug(m.league) === leagueSlug;
+    if (!leagueMatch) return false;
+    return (m.tv_channels ?? []).some(tv => tv.country && toSlug(tv.country) === countrySlug);
+  };
+
+  // Prefer upcoming (today+) matches
   const upcomingDays = dayData
-    .map(({ ymd, matches }) => ({
-      ymd,
-      matches: matches.filter(m => {
-        const leagueMatch = cfg?.id != null
-          ? m.league_id === cfg.id
-          : m.league != null && toSlug(m.league) === leagueSlug;
-        if (!leagueMatch) return false;
-        return (m.tv_channels ?? []).some(tv => tv.country && toSlug(tv.country) === countrySlug);
-      }),
-    }))
+    .filter(({ ymd }) => ymd >= today)
+    .map(({ ymd, matches }) => ({ ymd, matches: matches.filter(matchFilter) }))
     .filter(d => d.matches.length > 0);
 
-  return { leagueName, countryName, upcomingDays };
+  if (upcomingDays.length > 0) {
+    return { leagueName, countryName, upcomingDays, isPastFallback: false };
+  }
+
+  // No upcoming fixtures — fall back to recent past results
+  const pastData = await Promise.all(
+    pastScheduleDays(30).map(async (ymd) => ({ ymd, matches: await fetchMatches(ymd) }))
+  );
+  const recentDays = [...dayData.filter(({ ymd }) => ymd < today), ...pastData]
+    .sort((a, b) => b.ymd.localeCompare(a.ymd))
+    .map(({ ymd, matches }) => ({ ymd, matches: matches.filter(matchFilter) }))
+    .filter(d => d.matches.length > 0)
+    .slice(0, 10);
+
+  return { leagueName, countryName, upcomingDays: recentDays, isPastFallback: recentDays.length > 0 };
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -107,7 +123,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function LeagueCountryPage({ params }: Props) {
   const { name, country } = await params;
-  const { leagueName, countryName, upcomingDays } = await getData(name, country);
+  const { leagueName, countryName, upcomingDays, isPastFallback } = await getData(name, country);
   const totalMatches = upcomingDays.reduce((s, d) => s + d.matches.length, 0);
 
   const jsonLd = {
@@ -131,15 +147,18 @@ export default async function LeagueCountryPage({ params }: Props) {
         upcomingDays={upcomingDays}
         totalMatches={totalMatches}
         countryName={countryName}
+        isPastFallback={isPastFallback}
       />
       <Faq
         title={`${leagueName} in ${countryName} — FAQs`}
         items={[
           {
             q: `What channel is ${leagueName} on in ${countryName}?`,
-            a: totalMatches > 0
-              ? `Click any fixture above to see the full list of ${countryName} broadcasters carrying that ${leagueName} match. Every listed channel holds official rights for ${countryName}.`
-              : `There are no ${leagueName} matches with confirmed ${countryName} TV coverage in the next 30 days. Schedules update daily — check back soon.`,
+            a: isPastFallback
+              ? `There are no upcoming ${leagueName} matches with ${countryName} TV coverage in the next 30 days — recent results are shown above. Schedules update daily, check back soon.`
+              : totalMatches > 0
+                ? `Click any fixture above to see the full list of ${countryName} broadcasters carrying that ${leagueName} match. Every listed channel holds official rights for ${countryName}.`
+                : `There are no ${leagueName} matches with confirmed ${countryName} TV coverage in the next 30 days. Schedules update daily — check back soon.`,
           },
           {
             q: `How can I watch ${leagueName} live in ${countryName}?`,
