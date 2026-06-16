@@ -1,7 +1,8 @@
 import { MetadataRoute } from 'next';
 import { fetchMatches } from '@/lib/api';
 import { toSlug, matchSlug, pairSlug, splitFixture, scheduleDays, allScheduleDays, isoFromYMD } from '@/lib/utils';
-import { WATCH_PAGES } from '@/config/watch-pages';
+import { QUICK_LEAGUES } from '@/config/leagues';
+
 
 export const dynamic = 'force-static';
 
@@ -26,6 +27,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const fixtureSlugs = new Set<string>();
   const countrySlugs = new Set<string>();
   const leagueCountryCombos = new Set<string>();
+  const watchLeagueSlugs = new Set<string>();
+  const watchLeagueCountryCombos = new Set<string>();
 
   dayMatches.forEach(({ ymd, matches }) =>
     matches.forEach(m => {
@@ -37,10 +40,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         teamSlugs.add(toSlug(teams[1]));
         fixtureSlugs.add(pairSlug(teams[0], teams[1]));
       }
+      // Determine the watch slug (QUICK_LEAGUES label slug takes priority over raw league slug)
+      const cfg = m.league ? QUICK_LEAGUES.find(l => l.id != null && l.id === m.league_id) : null;
+      const watchSlug = cfg ? toSlug(cfg.label) : (m.league ? toSlug(m.league) : null);
+      if (watchSlug) watchLeagueSlugs.add(watchSlug);
+
       (m.tv_channels ?? []).forEach(tv => {
         if (tv.country && toSlug(tv.country)) {
           countrySlugs.add(toSlug(tv.country));
           if (m.league) leagueCountryCombos.add(`${toSlug(m.league)}|${toSlug(tv.country)}`);
+          if (watchSlug) watchLeagueCountryCombos.add(`${watchSlug}|${toSlug(tv.country)}`);
         }
         (tv.channels ?? []).forEach(ch => channels.add(ch));
       });
@@ -119,12 +128,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/countries/`, lastModified: now, changeFrequency: 'daily', priority: 0.8 },
     { url: `${SITE_URL}/about/`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
     { url: `${SITE_URL}/privacy/`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
-    ...WATCH_PAGES.map(p => ({
-      url: `${SITE_URL}/watch/${p.slug}/`,
+    ...[...watchLeagueSlugs].map(slug => ({
+      url: `${SITE_URL}/watch/${slug}/`,
       lastModified: now,
       changeFrequency: 'daily' as const,
       priority: 0.85,
     })),
+    ...[...watchLeagueCountryCombos].map(combo => {
+      const [league, country] = combo.split('|');
+      return {
+        url: `${SITE_URL}/watch/${league}/${country}/`,
+        lastModified: now,
+        changeFrequency: 'daily' as const,
+        priority: 0.8,
+      };
+    }),
     ...leagueUrls,
     ...leagueCountryUrls,
     ...countryUrls,
