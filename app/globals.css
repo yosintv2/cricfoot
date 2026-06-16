@@ -755,6 +755,105 @@ footer { background: var(--navy-dark); color: rgba(255,255,255,0.75); margin-top
   .section-heading { font-size: 0.95rem; }
 }
 
+/* ── Broadcaster cards (watch pages) ────────────────────────── */
+.bc-card {
+  background: #fff;
+  border: 1px solid var(--border-lt);
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.bc-card:hover {
+  border-color: var(--navy-mid);
+  box-shadow: 0 2px 8px rgba(26,58,107,0.12);
+}
+.bc-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.bc-card-country {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.bc-card-flag { font-size: 1.1rem; }
+.bc-card-schedule {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--navy);
+  background: var(--bg-section);
+  border-radius: 20px;
+  padding: 3px 9px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.bc-card-schedule:hover { background: var(--border); }
+.bc-channel-pill {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--navy);
+  background: var(--bg-alt);
+  border: 1px solid var(--border-lt);
+  border-radius: 5px;
+  padding: 3px 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: background 0.15s, border-color 0.15s;
+}
+.bc-channel-pill:hover {
+  background: var(--bg-section);
+  border-color: var(--navy-mid);
+}
+
+/* Watch index league cards */
+.watch-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 16px;
+  background: #fff;
+  border: 1px solid var(--border-lt);
+  border-radius: 10px;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.1s;
+}
+.watch-card:hover {
+  border-color: var(--navy-mid);
+  box-shadow: 0 3px 10px rgba(26,58,107,0.12);
+  transform: translateY(-1px);
+}
+.watch-card-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--navy);
+}
+.watch-card-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+.watch-card-channels {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* ── Cookie Banner ───────────────────────────────────────────── */
 .cookie-banner {
   position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;

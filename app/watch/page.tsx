@@ -129,43 +129,19 @@ export default async function WatchIndexPage() {
           <div className="state-sub">Check back soon — schedules update every hour.</div>
         </div>
       ) : (
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-          gap: 12,
-          marginBottom: 32,
-        }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 10, marginBottom: 32 }}>
           {leagues.map(league => (
-            <Link
-              key={league.slug}
-              href={`/watch/${league.slug}/`}
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 8,
-                padding: '14px 16px',
-                background: 'var(--bg-section)',
-                border: '1px solid var(--border-lt)',
-                borderRadius: 8,
-                textDecoration: 'none',
-                color: 'inherit',
-                transition: 'border-color 0.15s',
-              }}
-            >
+            <Link key={league.slug} href={`/watch/${league.slug}/`} className="watch-card">
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <span style={{ fontSize: '1.3rem' }}>{league.flag}</span>
-                <span style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--navy)' }}>
-                  {league.label}
-                </span>
+                <span className="watch-card-name">{league.label}</span>
               </div>
-              <div style={{ display: 'flex', gap: 12, fontSize: '0.78rem', color: 'var(--text-muted)' }}>
+              <div className="watch-card-meta">
                 <span>🌍 {league.countryCount} countr{league.countryCount !== 1 ? 'ies' : 'y'}</span>
                 <span>📅 {league.matchCount} match{league.matchCount !== 1 ? 'es' : ''}</span>
               </div>
               {league.topChannels.length > 0 && (
-                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                  📺 {league.topChannels.join(' · ')}
-                </div>
+                <div className="watch-card-channels">📺 {league.topChannels.join(' · ')}</div>
               )}
             </Link>
           ))}

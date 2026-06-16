@@ -113,49 +113,35 @@ export default async function WatchLeaguePage({ params }: Props) {
         </p>
       </header>
 
-      {/* Broadcaster table — all countries from live API */}
+      {/* Broadcaster cards — mobile-first grid */}
       {broadcasters.length > 0 && (
-        <section className="seo-section" style={{ marginBottom: 20 }}>
-          <h2 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: 12 }}>
+        <section className="seo-section" style={{ marginBottom: 24 }}>
+          <h2 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: 14 }}>
             <span className="y-bar" />{leagueName} TV Channels by Country
           </h2>
-          <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.875rem' }}>
-              <thead>
-                <tr style={{ background: 'var(--bg-section)' }}>
-                  <th style={{ padding: '8px 12px', textAlign: 'left', borderBottom: '1px solid var(--border)', fontWeight: 600, whiteSpace: 'nowrap' }}>Country</th>
-                  <th style={{ padding: '8px 12px', textAlign: 'left', borderBottom: '1px solid var(--border)', fontWeight: 600 }}>TV Channels / Streaming</th>
-                  <th style={{ padding: '8px 12px', textAlign: 'left', borderBottom: '1px solid var(--border)', fontWeight: 600, whiteSpace: 'nowrap' }}>Full Schedule</th>
-                </tr>
-              </thead>
-              <tbody>
-                {broadcasters.map(b => (
-                  <tr key={b.country} style={{ borderBottom: '1px solid var(--border-lt)' }}>
-                    <td style={{ padding: '9px 12px', fontWeight: 500, whiteSpace: 'nowrap' }}>
-                      {countryFlag(b.country)} {b.country}
-                    </td>
-                    <td style={{ padding: '9px 12px', color: 'var(--text-muted)' }}>
-                      {b.channels.map((ch, i) => (
-                        <span key={ch}>
-                          <Link href={`/channel/${toSlug(ch)}/`} style={{ color: 'var(--navy)', fontWeight: 500 }}>{ch}</Link>
-                          {i < b.channels.length - 1 && ', '}
-                        </span>
-                      ))}
-                    </td>
-                    <td style={{ padding: '9px 12px' }}>
-                      <Link
-                        href={`/watch/${decodeURIComponent(slug)}/${toSlug(b.country)}/`}
-                        style={{ color: 'var(--navy)', fontSize: '0.8rem', fontWeight: 500 }}
-                      >
-                        {b.country} schedule →
-                      </Link>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 10 }}>
+            {broadcasters.map(b => (
+              <div key={b.country} className="bc-card">
+                <div className="bc-card-header">
+                  <span className="bc-card-country">
+                    <span className="bc-card-flag">{countryFlag(b.country)}</span>
+                    {b.country}
+                  </span>
+                  <Link href={`/watch/${decodeURIComponent(slug)}/${toSlug(b.country)}/`} className="bc-card-schedule">
+                    Schedule →
+                  </Link>
+                </div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
+                  {b.channels.map(ch => (
+                    <Link key={ch} href={`/channel/${toSlug(ch)}/`} className="bc-channel-pill">
+                      📺 {ch}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
-          <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: 10 }}>
+          <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: 10 }}>
             Broadcast rights vary by match and territory — check each fixture for exact channels.
             CricFoot is a TV guide only and does not stream or broadcast any content.
           </p>

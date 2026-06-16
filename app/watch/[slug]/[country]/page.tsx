@@ -137,30 +137,31 @@ export default async function WatchLeagueCountryPage({ params }: Props) {
         </p>
       </header>
 
-      {/* Country channel list */}
+      {/* Country channel cards */}
       {channels.length > 0 && (
-        <section className="seo-section" style={{ marginBottom: 20 }}>
-          <h2 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: 12 }}>
+        <section className="seo-section" style={{ marginBottom: 24 }}>
+          <h2 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: 14 }}>
             <span className="y-bar" />{leagueName} TV Channels in {countryName}
           </h2>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 12 }}>
-            {channels.map(ch => (
-              <Link
-                key={ch}
-                href={`/channel/${toSlug(ch)}/`}
-                style={{
-                  display: 'inline-flex', alignItems: 'center', gap: 5,
-                  padding: '6px 14px', borderRadius: 20,
-                  background: 'var(--bg-section)', border: '1px solid var(--border-lt)',
-                  fontSize: '0.84rem', color: 'var(--navy)', fontWeight: 600,
-                  textDecoration: 'none',
-                }}
-              >
-                📺 {ch}
-              </Link>
-            ))}
+          <div className="bc-card" style={{ display: 'block' }}>
+            <div className="bc-card-header" style={{ marginBottom: 10 }}>
+              <span className="bc-card-country">
+                <span className="bc-card-flag">{flag}</span>
+                {countryName}
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 400 }}>
+                  · {channels.length} channel{channels.length !== 1 ? 's' : ''}
+                </span>
+              </span>
+            </div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7 }}>
+              {channels.map(ch => (
+                <Link key={ch} href={`/channel/${toSlug(ch)}/`} className="bc-channel-pill">
+                  📺 {ch}
+                </Link>
+              ))}
+            </div>
           </div>
-          <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
+          <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: 8 }}>
             Broadcast rights vary by match — click any fixture below for the exact channel.
             CricFoot is a TV guide only and does not stream or broadcast any content.
           </p>
