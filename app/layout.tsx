@@ -3,7 +3,6 @@ import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ScriptLoaders from '@/components/ScriptLoaders';
-import SuperCounter from '@/components/SuperCounter';
 import CookieBanner from '@/components/CookieBanner';
 
 export const metadata: Metadata = {
@@ -81,8 +80,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
-        {/* SuperCounters online tracker — renders inside this in-body container */}
-        <SuperCounter />
         <Navbar />
         <div className="container">
           {children}

@@ -23,6 +23,11 @@ export default function ScriptLoaders() {
         crossOrigin="anonymous"
         strategy="afterInteractive"
       />
+      {/* Whos.amung.us analytics */}
+      <Script id="_waumbx" strategy="afterInteractive">
+        {`var _wau = _wau || []; _wau.push(["dynamic", "creaxi049d", "mbx", "c4302bffffff", "small"]);`}
+      </Script>
+      <Script async src="https://waust.at/d.js" strategy="afterInteractive" />
     </>
   );
 }
