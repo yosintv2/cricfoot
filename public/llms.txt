@@ -2,40 +2,112 @@
 
 > Free worldwide football TV guide — every live match, kick-off time in your local timezone, and the TV channels broadcasting each fixture, updated hourly.
 
-CricFoot (cricfoot.net) is a free, ad-supported football television schedule. It covers hundreds of competitions worldwide and shows users exactly which channel to watch on, country by country. Kick-off times are automatically converted to the visitor's local timezone. The site is rebuilt hourly via GitHub Actions and served as a static export.
+CricFoot (cricfoot.net) is a free, ad-supported football television schedule guide. It aggregates TV schedules, channel listings, and match fixtures across hundreds of broadcasters globally so users always know which channel to watch for any game. It is a free alternative to LiveSoccerTV. Kick-off times are automatically converted to the visitor's local timezone. The site is rebuilt hourly via GitHub Actions and served as a fully static site — no server-side rendering.
 
-## Key pages
+CricFoot does not stream, host, or broadcast any live or recorded content. All information is provided for informational and TV-guide purposes only.
 
-- [Home / Today's Matches](https://www.cricfoot.net/): Full live football match list for today and the next 30 days, grouped by league with kick-off times and TV channels.
-- [World Cup 2026](https://www.cricfoot.net/world-cup-2026): FIFA World Cup 2026 fixture hub — schedule, groups, and TV coverage.
-- [All Channels](https://www.cricfoot.net/channels): Every TV channel carrying live football, with match counts and country coverage.
-- [Countries](https://www.cricfoot.net/countries): Browse TV coverage by country — see which channels broadcast football in your region.
-- [About](https://www.cricfoot.net/about): What CricFoot is, how it works, and data sourcing.
+## All Pages
 
-## Top league pages
+- [Home – Live Football Match Today](https://www.cricfoot.net/): Full match list for today and the next 30 days grouped by league, with kick-off times and TV channels. Includes date-tab navigation, league/channel filters, and search.
+- [World Cup 2026 TV Schedule](https://www.cricfoot.net/world-cup-2026/): FIFA World Cup 2026 hub — every fixture, kick-off times, TV channels by country. Tournament runs June 11 – July 19, 2026, hosted across USA, Canada, Mexico. First 48-team World Cup with 104 matches. Final at MetLife Stadium, New Jersey.
+- [All TV Channels](https://www.cricfoot.net/channels/): Every TV channel carrying live football worldwide, sorted by match count.
+- [Browse by Country](https://www.cricfoot.net/countries/): Find which channels broadcast football in your country.
+- [Where to Watch Football on TV](https://www.cricfoot.net/watch/): Index of all football leagues with country-by-country broadcaster listings.
+- [Football Tonight](https://www.cricfoot.net/tonight/): All matches on TV tonight.
+- [Football Tomorrow](https://www.cricfoot.net/tomorrow/): All matches on TV tomorrow.
+- [Football This Weekend](https://www.cricfoot.net/this-weekend/): Weekend fixture list (Saturday + Sunday).
+- [Daily Schedule](https://www.cricfoot.net/schedules/2026-06-18/): Full match list for any date — URL format: /schedules/YYYY-MM-DD/. Available from 2026-01-01.
+- [About CricFoot](https://www.cricfoot.net/about/): What CricFoot is, features, leagues covered, and disclaimer.
+- [Privacy Policy](https://www.cricfoot.net/privacy/): Data collection, cookies (Google Analytics, Google AdSense), GDPR rights, contact.
 
-- [EPL TV Schedule](https://www.cricfoot.net/league/epl/): English Premier League fixtures and broadcasters.
-- [UEFA Champions League TV Schedule](https://www.cricfoot.net/league/uefa-champions-league/): UCL matches and TV channels worldwide.
-- [La Liga TV Schedule](https://www.cricfoot.net/league/la-liga/): Spanish La Liga fixtures and broadcasters.
-- [Serie A TV Schedule](https://www.cricfoot.net/league/serie-a/): Italian Serie A fixtures and broadcasters.
-- [Bundesliga TV Schedule](https://www.cricfoot.net/league/bundesliga/): German Bundesliga fixtures and broadcasters.
-- [Ligue 1 TV Schedule](https://www.cricfoot.net/league/ligue-1/): French Ligue 1 fixtures and broadcasters.
+## League Pages
 
-## Schedule pages
+Each league page at `/league/[league-name]/` shows the 30-day fixture list with kick-off times and TV channels. If no upcoming fixtures exist, recent past results are shown instead.
 
-- [Daily Schedule](https://www.cricfoot.net/schedules/2026-06-18/): Full match list for any specific date (format: /schedules/YYYY-MM-DD/).
+- [EPL – English Premier League](https://www.cricfoot.net/league/epl/): league_id 17
+- [UEFA Champions League](https://www.cricfoot.net/league/uefa-champions-league/): league_id 7
+- [La Liga](https://www.cricfoot.net/league/la-liga/): league_id 8
+- [Serie A](https://www.cricfoot.net/league/serie-a/): league_id 23
+- [Bundesliga](https://www.cricfoot.net/league/bundesliga/): league_id 35
+- [Ligue 1](https://www.cricfoot.net/league/ligue-1/): league_id 34
+- [International Friendlies](https://www.cricfoot.net/league/friendly/): league_id 851
+- [UEFA Europa League](https://www.cricfoot.net/league/uefa-europa-league/)
+- [FA Cup](https://www.cricfoot.net/league/fa-cup/)
+- [Carabao Cup](https://www.cricfoot.net/league/carabao-cup/)
+- [Copa del Rey](https://www.cricfoot.net/league/copa-del-rey/)
+- [Coppa Italia](https://www.cricfoot.net/league/coppa-italia/)
+- [DFB-Pokal](https://www.cricfoot.net/league/dfb-pokal/)
+- [MLS](https://www.cricfoot.net/league/mls/)
+- [Liga MX](https://www.cricfoot.net/league/liga-mx/)
+- [Brazilian Série A](https://www.cricfoot.net/league/brazilian-serie-a/)
+- [Argentine Primera División](https://www.cricfoot.net/league/argentine-primera-division/)
+- [Eredivisie](https://www.cricfoot.net/league/eredivisie/)
+- [Portuguese Primeira Liga](https://www.cricfoot.net/league/portuguese-primeira-liga/)
+- [Turkish Süper Lig](https://www.cricfoot.net/league/turkish-super-lig/)
+- [Scottish Premiership](https://www.cricfoot.net/league/scottish-premiership/)
+- [J1 League](https://www.cricfoot.net/league/j1-league/)
+- [K League](https://www.cricfoot.net/league/k-league/)
 
-## Data and coverage
+League pages also have country sub-pages at `/league/[league-name]/country/[country-name]/` showing fixtures filtered to channels available in that country.
 
-- Match data is sourced from a third-party football data API and refreshed hourly.
-- Kick-off times are stored as UTC Unix timestamps and converted to local time in the browser.
-- TV channel listings cover 150+ countries.
-- Historical schedules are available from 2026-01-01.
-- The site does not stream or broadcast any content — it is a TV guide only.
+## Watch Pages
 
-## Tech stack
+Pages at `/watch/[league-slug]/` and `/watch/[league-slug]/[country]/` show where to watch a specific league, listing all broadcaster countries and channels.
 
-- Framework: Next.js 15 (App Router, static export)
-- Hosting: GitHub Pages (custom domain cricfoot.net)
+## What CricFoot Is
+
+CricFoot is your ultimate TV guide for live football and soccer matches worldwide. It provides:
+
+- Comprehensive daily match schedule — every fixture, every day
+- Country-specific TV channel info — know exactly what to watch in your region
+- Browse by channel — see all matches on a specific broadcaster
+- Browse by league — all fixtures for your favourite competition
+- Local kick-off times — automatically converted to your timezone
+- Venue information — stadium and location for every match
+- Search and filter — find any match, team or channel instantly
+- 150+ countries covered
+- Historical schedules from 2026-01-01
+
+## About the Data
+
+Match data is sourced from a third-party football data API and refreshed hourly. Kick-off times are stored as UTC Unix timestamps and converted to local time in the browser. TV channel listings cover 150+ countries. The site does not stream or broadcast any content — it is a TV guide only.
+
+## FAQ
+
+**Where can I watch Premier League matches on TV?**
+Click any EPL fixture on the Premier League page to see the full list of broadcasting TV channels country by country. Every listed broadcaster holds official rights for its region.
+
+**Where can I watch the FIFA World Cup 2026?**
+Every World Cup 2026 match is broadcast worldwide by official rights holders. In the United States, coverage is on Fox/Telemundo. In the United Kingdom, matches are shown on ITV/BBC. Click any fixture on the World Cup page for the full country-by-country channel list.
+
+**When is the FIFA World Cup 2026?**
+The 2026 FIFA World Cup runs from June 11 to July 19, 2026, hosted across the United States, Canada and Mexico. It is the first World Cup with 48 teams and 104 matches. The final is played at MetLife Stadium, New Jersey.
+
+**Are kick-off times shown in my local time?**
+Yes — every kick-off time on CricFoot is automatically converted to your device's local timezone, so the time shown is the time the match starts where you live.
+
+**Is CricFoot streaming matches?**
+No. CricFoot is a free TV guide only. It shows which official channels broadcast each match in every country. To watch, use your TV or streaming subscription with the listed broadcaster in your region.
+
+**How often is the schedule updated?**
+The schedule is rebuilt hourly via automated GitHub Actions. New fixtures, kick-off time changes and channel updates all appear within the hour.
+
+## Privacy and Legal
+
+CricFoot collects no personal data directly. Third-party services used: Google Analytics 4 (anonymised usage data, consent-gated), Google AdSense (ads), whos.amung.us (visitor analytics). Cookies: cookie-consent (CricFoot), _ga/_gid (Google Analytics), __gads/DSID (Google AdSense). GDPR rights apply for EEA visitors. Contact: mail.yosintv@gmail.com.
+
+CricFoot does not sell, rent, or share personal data with third parties for their own marketing purposes.
+
+## Tech Stack
+
+- Framework: Next.js 15 App Router with static export (`output: 'export'`)
+- Hosting: GitHub Pages with custom domain cricfoot.net
 - Rebuild: GitHub Actions cron (hourly)
-- No server-side rendering; all pages are pre-rendered at build time.
+- Data API: third-party football fixtures API, fetched at build time
+- No server-side rendering; all pages are pre-rendered HTML
+- Monetisation: Google AdSense (pub-5525538810839147)
+
+## Contact
+
+Email: mail.yosintv@gmail.com
+Website: https://www.cricfoot.net
