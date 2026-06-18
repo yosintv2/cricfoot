@@ -1,0 +1,41 @@
+# CricFoot
+
+> Free worldwide football TV guide — every live match, kick-off time in your local timezone, and the TV channels broadcasting each fixture, updated hourly.
+
+CricFoot (cricfoot.net) is a free, ad-supported football television schedule. It covers hundreds of competitions worldwide and shows users exactly which channel to watch on, country by country. Kick-off times are automatically converted to the visitor's local timezone. The site is rebuilt hourly via GitHub Actions and served as a static export.
+
+## Key pages
+
+- [Home / Today's Matches](https://www.cricfoot.net/): Full live football match list for today and the next 30 days, grouped by league with kick-off times and TV channels.
+- [World Cup 2026](https://www.cricfoot.net/world-cup-2026): FIFA World Cup 2026 fixture hub — schedule, groups, and TV coverage.
+- [All Channels](https://www.cricfoot.net/channels): Every TV channel carrying live football, with match counts and country coverage.
+- [Countries](https://www.cricfoot.net/countries): Browse TV coverage by country — see which channels broadcast football in your region.
+- [About](https://www.cricfoot.net/about): What CricFoot is, how it works, and data sourcing.
+
+## Top league pages
+
+- [EPL TV Schedule](https://www.cricfoot.net/league/epl/): English Premier League fixtures and broadcasters.
+- [UEFA Champions League TV Schedule](https://www.cricfoot.net/league/uefa-champions-league/): UCL matches and TV channels worldwide.
+- [La Liga TV Schedule](https://www.cricfoot.net/league/la-liga/): Spanish La Liga fixtures and broadcasters.
+- [Serie A TV Schedule](https://www.cricfoot.net/league/serie-a/): Italian Serie A fixtures and broadcasters.
+- [Bundesliga TV Schedule](https://www.cricfoot.net/league/bundesliga/): German Bundesliga fixtures and broadcasters.
+- [Ligue 1 TV Schedule](https://www.cricfoot.net/league/ligue-1/): French Ligue 1 fixtures and broadcasters.
+
+## Schedule pages
+
+- [Daily Schedule](https://www.cricfoot.net/schedules/2026-06-18/): Full match list for any specific date (format: /schedules/YYYY-MM-DD/).
+
+## Data and coverage
+
+- Match data is sourced from a third-party football data API and refreshed hourly.
+- Kick-off times are stored as UTC Unix timestamps and converted to local time in the browser.
+- TV channel listings cover 150+ countries.
+- Historical schedules are available from 2026-01-01.
+- The site does not stream or broadcast any content — it is a TV guide only.
+
+## Tech stack
+
+- Framework: Next.js 15 (App Router, static export)
+- Hosting: GitHub Pages (custom domain cricfoot.net)
+- Rebuild: GitHub Actions cron (hourly)
+- No server-side rendering; all pages are pre-rendered at build time.
