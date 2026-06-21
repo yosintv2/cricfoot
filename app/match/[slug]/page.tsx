@@ -1,16 +1,15 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { fetchMatches } from '@/lib/api';
-import { toSlug, countryFlag, dateFromYMD, fmtDate, getLeagueFlag, matchSlug, pairSlug, scheduleDays } from '@/lib/utils';
+import { toSlug, countryFlag, dateFromYMD, fmtDate, getLeagueFlag, matchSlug, pairSlug, allScheduleDays } from '@/lib/utils';
 import { Match } from '@/types';
 import Faq from '@/components/Faq';
 
 export async function generateStaticParams() {
-  const days = scheduleDays();
   const params: { slug: string }[] = [];
   const seen = new Set<string>();
   await Promise.all(
-    days.map(async ymd => {
+    allScheduleDays().map(async ymd => {
       const matches = await fetchMatches(ymd);
       matches.forEach(m => {
         if (!m.fixture) return;
