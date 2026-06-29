@@ -33,7 +33,7 @@ export const WORLD_CUP_ID = 16;
 
 export const QUICK_LEAGUES: QuickLeague[] = [
   { label: 'World Cup',   flag: '🏆', id: WORLD_CUP_ID, href: '/world-cup-2026' },
-  { label: 'UEFA Champions League', flag: '🏆', id: 894801 },
+  { label: 'UEFA Champions League', flag: '🏆', id: 77 },
   { label: 'EPL',         flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', id: 17 },
   { label: 'La Liga',     flag: '🇪🇸', id: 8 },
   { label: 'Serie A',     flag: '🇮🇹', id: 23 },
