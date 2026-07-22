@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { fetchMatches } from '@/lib/api';
-import { dateFromYMD, fmtDate, isoFromYMD, scheduleDays } from '@/lib/utils';
+import { dateFromYMD, fmtDate, isoFromYMD, prevDay, nextDay } from '@/lib/utils';
 import DaySchedule from '@/components/DaySchedule';
 import DateTabs from '@/components/DateTabs';
 import Faq from '@/components/Faq';
@@ -44,14 +44,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function SchedulePage({ params }: Props) {
   const { date } = await params;
   const ymd = ymdFromParam(date);
-  const windowDays = scheduleDays();
-
-  if (!ymd || !scheduleDays().includes(ymd)) {
+  if (!ymd) {
     return (
       <div className="state-center">
         <div className="state-icon">📅</div>
-        <div className="state-title">No schedule for this date</div>
-        <div className="state-sub">TV listings are available from June 2026 through the next 30 days.</div>
+        <div className="state-title">Invalid date</div>
+        <div className="state-sub">Please use the format YYYY-MM-DD.</div>
         <Link href="/" className="btn-back" style={{ marginTop: 20, display: 'inline-flex' }}>
           ← View today&apos;s matches
         </Link>
@@ -63,9 +61,8 @@ export default async function SchedulePage({ params }: Props) {
   const label = fmtDate(dateFromYMD(ymd));
   const leagues = [...new Set(matches.map(m => m.league).filter(Boolean))];
 
-  const idx = windowDays.indexOf(ymd);
-  const prevYmd = idx > 0 ? windowDays[idx - 1] : null;
-  const nextYmd = idx < windowDays.length - 1 ? windowDays[idx + 1] : null;
+  const prevYmd = prevDay(ymd);
+  const nextYmd = nextDay(ymd);
 
   const jsonLd = {
     '@context': 'https://schema.org',
