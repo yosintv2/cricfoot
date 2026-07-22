@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { fetchMatches } from '@/lib/api';
-import { dateFromYMD, fmtDate, isoFromYMD, prevDay, nextDay } from '@/lib/utils';
+import { dateFromYMD, fmtDate, isoFromYMD, scheduleDays, prevDay, nextDay } from '@/lib/utils';
 import DaySchedule from '@/components/DaySchedule';
 import DateTabs from '@/components/DateTabs';
 import Faq from '@/components/Faq';
@@ -57,6 +57,7 @@ export default async function SchedulePage({ params }: Props) {
     );
   }
 
+  const windowDays = scheduleDays();
   const matches = await fetchMatches(ymd);
   const label = fmtDate(dateFromYMD(ymd));
   const leagues = [...new Set(matches.map(m => m.league).filter(Boolean))];
