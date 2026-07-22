@@ -4,16 +4,8 @@ import { fromSlug, toSlug, scheduleDays, todayYMD, dateFromYMD, fmtDate } from '
 import ChannelPageClient from '@/components/ChannelPageClient';
 import Faq from '@/components/Faq';
 
-export async function generateStaticParams() {
-  const allMatches = (await Promise.all(scheduleDays().map(fetchMatches))).flat();
-  const channels = new Set<string>();
-  allMatches.forEach(m =>
-    (m.tv_channels ?? []).forEach(tv =>
-      (tv.channels ?? []).forEach(ch => channels.add(ch))
-    )
-  );
-  return [...channels].map(ch => ({ name: toSlug(ch) }));
-}
+export const runtime = 'edge';
+export const dynamic = 'force-dynamic';
 
 interface Props {
   params: Promise<{ name: string }>;

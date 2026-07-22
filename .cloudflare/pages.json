@@ -1,6 +1,6 @@
 {
   "build": {
-    "command": "npm run build",
-    "destination": "out"
+    "command": "npm run pages:build",
+    "destination": ".vercel/output/static"
   }
 }

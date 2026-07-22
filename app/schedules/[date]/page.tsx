@@ -1,14 +1,13 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { fetchMatches } from '@/lib/api';
-import { dateFromYMD, fmtDate, isoFromYMD, scheduleDays, allScheduleDays } from '@/lib/utils';
+import { dateFromYMD, fmtDate, isoFromYMD, scheduleDays } from '@/lib/utils';
 import DaySchedule from '@/components/DaySchedule';
 import DateTabs from '@/components/DateTabs';
 import Faq from '@/components/Faq';
 
-export async function generateStaticParams() {
-  return allScheduleDays().map(ymd => ({ date: isoFromYMD(ymd) }));
-}
+export const runtime = 'edge';
+export const dynamic = 'force-dynamic';
 
 interface Props {
   params: Promise<{ date: string }>;
@@ -47,7 +46,7 @@ export default async function SchedulePage({ params }: Props) {
   const ymd = ymdFromParam(date);
   const windowDays = scheduleDays();
 
-  if (!ymd || !allScheduleDays().includes(ymd)) {
+  if (!ymd || !scheduleDays().includes(ymd)) {
     return (
       <div className="state-center">
         <div className="state-icon">📅</div>

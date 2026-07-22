@@ -12,14 +12,8 @@ const STATIC_LEAGUES = [
   'Scottish Premiership',
 ];
 
-export async function generateStaticParams() {
-  const allMatches = (await Promise.all(scheduleDays().map(fetchMatches))).flat();
-  const slugs = new Set<string>();
-  STATIC_LEAGUES.forEach(l => slugs.add(toSlug(l)));
-  QUICK_LEAGUES.forEach(l => slugs.add(toSlug(l.label)));
-  allMatches.forEach(m => { if (m.league) slugs.add(toSlug(m.league)); });
-  return [...slugs].map(name => ({ name }));
-}
+export const runtime = 'edge';
+export const dynamic = 'force-dynamic';
 
 interface Props {
   params: Promise<{ name: string }>;

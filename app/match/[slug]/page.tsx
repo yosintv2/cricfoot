@@ -1,28 +1,12 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { fetchMatches } from '@/lib/api';
-import { toSlug, countryFlag, dateFromYMD, fmtDate, getLeagueFlag, matchSlug, pairSlug, allScheduleDays } from '@/lib/utils';
+import { toSlug, countryFlag, dateFromYMD, fmtDate, getLeagueFlag, matchSlug, pairSlug } from '@/lib/utils';
 import { Match } from '@/types';
 import Faq from '@/components/Faq';
 
-export async function generateStaticParams() {
-  const params: { slug: string }[] = [];
-  const seen = new Set<string>();
-  await Promise.all(
-    allScheduleDays().map(async ymd => {
-      const matches = await fetchMatches(ymd);
-      matches.forEach(m => {
-        if (!m.fixture) return;
-        const slug = matchSlug(ymd, m.fixture);
-        if (!seen.has(slug)) {
-          seen.add(slug);
-          params.push({ slug });
-        }
-      });
-    })
-  );
-  return params;
-}
+export const runtime = 'edge';
+export const dynamic = 'force-dynamic';
 
 interface Props {
   params: Promise<{ slug: string }>;

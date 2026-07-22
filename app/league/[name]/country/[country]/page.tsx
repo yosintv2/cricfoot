@@ -5,28 +5,11 @@ import { QUICK_LEAGUES } from '@/config/leagues';
 import LeaguePageClient from '@/components/LeaguePageClient';
 import Faq from '@/components/Faq';
 
+export const runtime = 'edge';
+export const dynamic = 'force-dynamic';
+
 interface Props {
   params: Promise<{ name: string; country: string }>;
-}
-
-export async function generateStaticParams() {
-  const allMatches = (await Promise.all(scheduleDays().map(fetchMatches))).flat();
-  const combos = new Set<string>();
-
-  allMatches.forEach(m => {
-    if (!m.league) return;
-    // Use QUICK_LEAGUES label slug when the league matches by id, else use the league name slug
-    const cfg = QUICK_LEAGUES.find(l => l.id != null && l.id === m.league_id);
-    const leagueSlug = cfg ? toSlug(cfg.label) : toSlug(m.league);
-    (m.tv_channels ?? []).forEach(tv => {
-      if (tv.country) combos.add(`${leagueSlug}|${toSlug(tv.country)}`);
-    });
-  });
-
-  return [...combos].map(combo => {
-    const [name, country] = combo.split('|');
-    return { name, country };
-  });
 }
 
 async function getData(nameParam: string, countryParam: string) {

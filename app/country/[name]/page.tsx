@@ -5,16 +5,8 @@ import { countryFlag, fromSlug, scheduleDays, toSlug } from '@/lib/utils';
 import DayFixtureList from '@/components/DayFixtureList';
 import Faq from '@/components/Faq';
 
-export async function generateStaticParams() {
-  const allMatches = (await Promise.all(scheduleDays().map(fetchMatches))).flat();
-  const slugs = new Set<string>();
-  allMatches.forEach(m =>
-    (m.tv_channels ?? []).forEach(tv => {
-      if (tv.country && toSlug(tv.country)) slugs.add(toSlug(tv.country));
-    })
-  );
-  return [...slugs].map(name => ({ name }));
-}
+export const runtime = 'edge';
+export const dynamic = 'force-dynamic';
 
 interface Props {
   params: Promise<{ name: string }>;

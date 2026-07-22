@@ -6,15 +6,8 @@ import { Match } from '@/types';
 import DayFixtureList from '@/components/DayFixtureList';
 import Faq from '@/components/Faq';
 
-export async function generateStaticParams() {
-  const allMatches = (await Promise.all(scheduleDays().map(fetchMatches))).flat();
-  const slugs = new Set<string>();
-  allMatches.forEach(m => {
-    const teams = splitFixture(m.fixture);
-    if (teams) slugs.add(pairSlug(teams[0], teams[1]));
-  });
-  return [...slugs].map(slug => ({ slug }));
-}
+export const runtime = 'edge';
+export const dynamic = 'force-dynamic';
 
 interface Props {
   params: Promise<{ slug: string }>;

@@ -7,26 +7,10 @@ import MatchCard from '@/components/MatchCard';
 import DayLabel from '@/components/DayLabel';
 import Faq from '@/components/Faq';
 
+export const runtime = 'edge';
+export const dynamic = 'force-dynamic';
+
 interface Props { params: Promise<{ slug: string; country: string }> }
-
-export async function generateStaticParams() {
-  const allMatches = (await Promise.all(scheduleDays().map(fetchMatches))).flat();
-  const combos = new Set<string>();
-
-  allMatches.forEach(m => {
-    if (!m.league) return;
-    const cfg = QUICK_LEAGUES.find(l => l.id != null && l.id === m.league_id);
-    const leagueSlug = cfg ? toSlug(cfg.label) : toSlug(m.league);
-    (m.tv_channels ?? []).forEach(tv => {
-      if (tv.country) combos.add(`${leagueSlug}|${toSlug(tv.country)}`);
-    });
-  });
-
-  return [...combos].map(combo => {
-    const [slug, country] = combo.split('|');
-    return { slug, country };
-  });
-}
 
 async function getData(slugParam: string, countryParam: string) {
   const slug = decodeURIComponent(slugParam);

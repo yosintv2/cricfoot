@@ -7,18 +7,10 @@ import MatchCard from '@/components/MatchCard';
 import DayLabel from '@/components/DayLabel';
 import Faq from '@/components/Faq';
 
-interface Props { params: Promise<{ slug: string }> }
+export const runtime = 'edge';
+export const dynamic = 'force-dynamic';
 
-export async function generateStaticParams() {
-  const allMatches = (await Promise.all(scheduleDays().map(fetchMatches))).flat();
-  const slugs = new Set<string>();
-  allMatches.forEach(m => {
-    if (!m.league) return;
-    const cfg = QUICK_LEAGUES.find(l => l.id != null && l.id === m.league_id);
-    slugs.add(cfg ? toSlug(cfg.label) : toSlug(m.league));
-  });
-  return [...slugs].map(slug => ({ slug }));
-}
+interface Props { params: Promise<{ slug: string }> }
 
 async function getData(slugParam: string) {
   const slug = decodeURIComponent(slugParam);

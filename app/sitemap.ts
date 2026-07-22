@@ -1,9 +1,10 @@
 import { MetadataRoute } from 'next';
 import { fetchMatches } from '@/lib/api';
-import { toSlug, matchSlug, pairSlug, splitFixture, scheduleDays, allScheduleDays, isoFromYMD } from '@/lib/utils';
+import { toSlug, matchSlug, pairSlug, splitFixture, scheduleDays, isoFromYMD } from '@/lib/utils';
 import { QUICK_LEAGUES } from '@/config/leagues';
 
 
+export const runtime = 'edge';
 export const dynamic = 'force-static';
 
 const SITE_URL = 'https://www.cricfoot.net';
@@ -110,7 +111,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     };
   });
 
-  const scheduleUrls: MetadataRoute.Sitemap = allScheduleDays().map(ymd => ({
+  const scheduleUrls: MetadataRoute.Sitemap = scheduleDays().map(ymd => ({
     url: `${SITE_URL}/schedules/${isoFromYMD(ymd)}/`,
     lastModified: now,
     changeFrequency: 'daily',
